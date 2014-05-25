@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4CC21E4B-0E97-4911-A94D-2B1B506743FD}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>App.Secure</RootNamespace>
+    <AssemblyName>App.Secure</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidApplication>true</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <AndroidSupportedAbis>armeabi,armeabi-v7a</AndroidSupportedAbis>
+    <MandroidI18n />
+    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion />
+    <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+    <AndroidSupportedAbis>armeabi;armeabi-v7a</AndroidSupportedAbis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidSupportedAbis>armeabi;armeabi-v7a</AndroidSupportedAbis>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Arshu.AppWeb, Version=1.0.0.0, Culture=neutral, PublicKeyToken=965eb7c7ced7f21b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Components\Android\Arshu.AppWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Arshu.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=965eb7c7ced7f21b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Components\Android\Arshu.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Arshu.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=965eb7c7ced7f21b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Components\Android\Arshu.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Data.Sqlite" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\App.Secure\App_Service\App.Secure\DataModel\DataSecure.cs">
+      <Link>App_Service\App.Secure\DataModel\DataSecure.cs</Link>
+    </Compile>
+    <Compile Include="..\App.Secure\App_Service\App.Secure\DataModel\DataSource.cs">
+      <Link>App_Service\App.Secure\DataModel\DataSource.cs</Link>
+    </Compile>
+    <Compile Include="..\App.Secure\App_Service\App.Secure\DataSource\DataEntities.cs">
+      <Link>App_Service\App.Secure\DataSource\DataEntities.cs</Link>
+    </Compile>
+    <Compile Include="..\App.Secure\App_Service\App.Secure\DataSource\DataSource.cs">
+      <Link>App_Service\App.Secure\DataSource\DataSource.cs</Link>
+    </Compile>
+    <Compile Include="..\App.Secure\App_Service\App.Secure\DataSource\FileSource.cs">
+      <Link>App_Service\App.Secure\DataSource\FileSource.cs</Link>
+    </Compile>
+    <Compile Include="..\App.Secure\App_Service\App.Secure\Service\JsonAuthSecureHandler.cs">
+      <Link>App_Service\App.Secure\Service\JsonAuthSecureHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\App.Secure\App_Service\App.Secure\Service\JsonSecureHandler.cs">
+      <Link>App_Service\App.Secure\Service\JsonSecureHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\App.Secure\App_Service\App.Secure\ViewTemplate\Template.cs">
+      <Link>App_Service\App.Secure\ViewTemplate\Template.cs</Link>
+    </Compile>
+    <Compile Include="MainActivity.cs" />
+    <Compile Include="Resources\Resource.Designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="..\..\Packer\InputWebApp\App.Secure.v1.zip">
+      <Link>Assets\Apps\App.Secure.v1.zip</Link>
+    </AndroidAsset>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Drawable\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="..\App.Secure\App_Data\SetupData.bson.txt">
+      <Link>Assets\SetupData.bson.txt</Link>
+    </AndroidAsset>
+    <Content Include="..\App.Secure\App_Service\App.Secure\View\Common\liTwoColumn.html">
+      <Link>App_Service\App.Secure\View\Common\liTwoColumn.html</Link>
+    </Content>
+    <Content Include="..\App.Secure\App_Service\App.Secure\View\Common\selectOption.html">
+      <Link>App_Service\App.Secure\View\Common\selectOption.html</Link>
+    </Content>
+    <Content Include="Properties\AndroidManifest.xml" />
+    <AndroidResource Include="Resources\Drawable\background.png" />
+    <AndroidResource Include="Resources\Drawable\backupbg.png" />
+    <AndroidResource Include="Resources\Drawable\background_tiled.xml" />
+    <AndroidResource Include="Resources\Drawable\progress.xml" />
+    <AndroidResource Include="Resources\Drawable\spin.png" />
+    <AndroidResource Include="Resources\Drawable\splash.png" />
+    <AndroidResource Include="Resources\Values\themes.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+     Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

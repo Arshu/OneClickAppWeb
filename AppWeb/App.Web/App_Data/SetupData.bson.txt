@@ -1,0 +1,7 @@
+[{
+	"AppName" : "App.Web.v1",        
+	"AppLabel" : "AppWeb",        
+	"AppVersion" : "Mvp 1",        
+    "AppTypeGUID" : "725cfec0-cf84-4baf-9a71-08ec927a6e6b", 
+	"DefaultApp" :"App.Web.v1"	       
+}]

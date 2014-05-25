@@ -1,0 +1,25 @@
+
+<script src="/App_Resource/Js/main.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    var htmlInfoElm = document.getElementById('htmlInfo');
+    if (htmlInfoElm) {
+        htmlInfoElm.innerHTML = '(' + document.getElementsByTagName('*').length + ')';
+        var eCD = new Date();
+        var eT = eCD.getTime();
+        var tT = (eT - sT) / 1000;
+        var loadingTimeElm = document.getElementById("loadingTime");
+        if (loadingTimeElm) {
+            loadingTimeElm.innerHTML = "(" + tT + ") secs";
+            var oldonload = window.onload;
+            window.onload = function () {
+                var lEcd = new Date();
+                var lEt = lEcd.getTime();
+                var lTt = (lEt - sT) / 1000;
+                loadingTimeElm.innerHTML = "(" + lTt + ") secs";
+                if (oldonload) {
+                    oldonload();
+                }
+            };
+        }
+    }
+</script>

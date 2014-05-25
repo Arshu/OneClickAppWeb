@@ -1,0 +1,29 @@
+<ul data-role="listview" data-inset="true">
+    <li>
+        <label for="userId" class="ui-hidden-accessible">
+            User Id:</label>
+        <input name="userId" id="userId" type="text" value="" placeholder="Enter User Id..." />
+    </li>
+    <li>
+        <label for="userEmail" class="ui-hidden-accessible">
+            User Email:</label>
+        <input name="userEmail" id="userEmail" type="text" value="" placeholder="Enter User Email..." />
+    </li>
+    <li>
+        <label for="userPassword" class="ui-hidden-accessible">
+            User Password:</label>
+        <input name="userPassword" id="userPassword" type="password" value="" placeholder="Enter User Password..." />
+    </li>
+    <li>
+        <label for="userPasswordConfirm" class="ui-hidden-accessible">
+            Confirm Password:</label>
+        <input name="userPasswordConfirm" id="userPasswordConfirm" type="password" value="" placeholder="Enter Confirm Password..." />
+    </li>
+    <li>
+        <div id="registermsg"></div>
+    </li>
+    <li>
+        <button onclick="btnRegisterUser('userId', 'userEmail', 'userPassword', 'userPasswordConfirm', 'registermsg');">
+            Register</button>
+    </li>
+</ul>

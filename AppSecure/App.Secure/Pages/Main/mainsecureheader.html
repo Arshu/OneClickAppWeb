@@ -1,0 +1,20 @@
+<div class="topaction" id="topaction" style="z-index: 100;">
+    <a title="Header Links" style="text-indent:20px;" class="toplink" onclick="hideObj('headerArrow'); toggleDisplay('actionbar');toggleDisplay('moreactionbar'); toggleObjClass('topaction', 'topaction-opened');">Secure</a>
+</div>
+<div id="actionbar" class="action-bar">
+    <a href="/Index.ashx?Register" data-ajax="false">
+        <i class="action-bar-button icon-user" style="cursor: pointer">Register</i>
+    </a>
+    <a href="#" onclick="btnLogOffUser('logoffmsg')" class="pull-right" data-ajax="false" class="pull-left" style="padding-right:50px">
+        <i class="action-bar-button icon-user" style="cursor: pointer">LogOff</i>
+    </a>
+</div>
+<div id="moreactionbar" style="display: none;" class="action-bar">
+    <a href="/Index.ashx?Register" data-ajax="false">
+        <i class="action-bar-button icon-user" style="cursor: pointer">Register</i>
+    </a>
+    <a href="/Index.ashx?Roles" class="pull-right" data-ajax="false" style="padding-right:40px">
+        <i class="action-bar-button icon-user" style="cursor: pointer">Roles</i>
+    </a>
+</div>
+ <div id="logoffmsg"></div>

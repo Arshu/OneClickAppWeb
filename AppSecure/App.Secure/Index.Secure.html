@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<!--[if gt IE 9]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <title>Secure App</title>
+	<meta name="apple-mobile-web-app-title" context="Secure App">
+      
+    <meta charset="UTF-8" />       
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+    <!-- Kills text zoom in iOS.-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">    
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
+    <link rel="SHORTCUT ICON" href="/favicon.ico"/>
+
+    {{CommonHeader}}
+
+</head>
+<body style="padding: 0px;background-image:url('/App_Resource/background.png');">
+
+    <div id="{{PageId}}" data-role="page" style="padding: 0px;background-image:url('/App_Resource/background.png');"> 
+        <div data-role="content" style="padding: 0px;">
+            <div id="mainHeader" >{{MainSecureHeader}}</div>
+            <div id="mainContent" data-role="content">{{MainSecureContent}}</div>
+			<div id="mainFooter" style="padding:15px;">{{MainFooter}}</div>
+        </div>        
+    </div>
+    <div id="commonFooter">{{CommonFooter}}</div>
+        
+</body>
+</html>

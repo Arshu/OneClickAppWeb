@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4A5D5830-8ADB-432F-B80B-D97D3C7A9390}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>App.Web</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <AssemblyName>MvpHashnote</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <MtouchDebug>True</MtouchDebug>
+    <AssemblyName>MvpHashnote</AssemblyName>
+    <MtouchExtraArgs>
+    </MtouchExtraArgs>
+    <MtouchArch>ARMv7</MtouchArch>
+    <MtouchOptimizePNGs>True</MtouchOptimizePNGs>
+    <MtouchI18n>
+    </MtouchI18n>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <MtouchLink>None</MtouchLink>
+    <AssemblyName>MvpHashnote</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;IOS;GRID</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <MtouchDebug>True</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <IpaPackageName>app.web.v1</IpaPackageName>
+    <CrashReportingApiKey>
+    </CrashReportingApiKey>
+    <BuildIpa>True</BuildIpa>
+    <MtouchExtraArgs>--dsym=false</MtouchExtraArgs>
+    <MtouchArch>ARMv7</MtouchArch>
+    <MtouchOptimizePNGs>True</MtouchOptimizePNGs>
+    <MtouchI18n>
+    </MtouchI18n>
+    <AssemblyName>AppWebIOS</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <DefineConstants>IOS;GRID</DefineConstants>
+    <BuildIpa>True</BuildIpa>
+    <IpaPackageName>app.web.v1</IpaPackageName>
+    <MtouchArch>ARMv7</MtouchArch>
+    <MtouchUseLlvm>True</MtouchUseLlvm>
+    <CodesignProvision>BA43723D-60D0-4082-85EA-27DEB8448EB9</CodesignProvision>
+    <AssemblyName>AppWebIOS</AssemblyName>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchUseThumb>true</MtouchUseThumb>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\Ad-Hoc</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <BuildIpa>True</BuildIpa>
+    <IpaPackageName>app.web.v1</IpaPackageName>
+    <AssemblyName>AppWebIOS</AssemblyName>
+    <MtouchUseLlvm>true</MtouchUseLlvm>
+    <MtouchUseThumb>true</MtouchUseThumb>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchArch>ARMv7</MtouchArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\AppStore</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <BuildIpa>True</BuildIpa>
+    <IpaPackageName>app.web.v1</IpaPackageName>
+    <AssemblyName>AppWebIOS</AssemblyName>
+    <MtouchUseLlvm>true</MtouchUseLlvm>
+    <MtouchUseThumb>true</MtouchUseThumb>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchArch>ARMv7</MtouchArch>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="AppDelegate.cs" />
+    <Compile Include="Properties\IOSAssemblyInfo.cs" />
+    <Compile Include="WebViewController.cs" />
+    <BundleResource Include="App_Resource\background.png" />
+    <ITunesArtwork Include="iTunesArtwork" />
+    <ITunesArtwork Include="iTunesArtwork%402x" />
+    <BundleResource Include="..\..\Packer\InputWebApp\App.Web.v1.zip">
+      <Link>Assets\Apps\App.Web.v1.zip</Link>
+    </BundleResource>
+    <None Include="Resources\Icon-60%402x.png" />
+    <None Include="Resources\Icon-76.png" />
+    <None Include="Resources\Icon-76%402x.png" />
+    <None Include="Resources\Icon-Small-40.png" />
+    <None Include="Resources\Icon-Small-40%402x.png" />
+    <None Include="Info.plist" />
+    <BundleResource Include="Resources\Default.png" />
+    <BundleResource Include="Resources\Default%402x.png" />
+    <BundleResource Include="Resources\Default-568h%402x.png" />
+    <BundleResource Include="Resources\Default-Portrait~ipad.png" />
+    <BundleResource Include="Resources\Default-Portrait%402x~ipad.png" />
+    <BundleResource Include="Resources\Default-Landscape~ipad.png" />
+    <BundleResource Include="Resources\Default-Landscape%402x~ipad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Arshu.AppWeb">
+      <HintPath>..\..\Components\IOS\Arshu.AppWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Arshu.Web">
+      <HintPath>..\..\Components\IOS\Arshu.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="monotouch" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon-72.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon-72%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon-Small-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon-Small-50%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon-Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon-Small%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="..\App.Web\App_Data\SetupData.bson.txt">
+      <Link>Assets\SetupData.bson.txt</Link>
+    </BundleResource>
+  </ItemGroup>
+</Project>
