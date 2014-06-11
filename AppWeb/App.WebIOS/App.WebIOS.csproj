@@ -138,7 +138,7 @@
     <BundleResource Include="App_Resource\background.png" />
     <ITunesArtwork Include="iTunesArtwork" />
     <ITunesArtwork Include="iTunesArtwork%402x" />
-    <BundleResource Include="..\..\Packer\InputWebApp\App.Web.v1.zip">
+    <BundleResource Include="..\..\InputWebApp\App.Web.v1.zip">
       <Link>Assets\Apps\App.Web.v1.zip</Link>
     </BundleResource>
     <None Include="Resources\Icon-60%402x.png" />

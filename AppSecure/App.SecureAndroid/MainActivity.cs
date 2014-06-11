@@ -85,6 +85,22 @@ namespace App.Secure
 
         #endregion
 
+        #region Override OnKeyDown
+
+        public override bool OnKeyDown(Keycode keyCode, KeyEvent e)
+        {
+            if (keyCode == Keycode.Back)
+            {
+                if (_arshuWebGrid != null)
+                {
+                    _arshuWebGrid.BackView();
+                }
+            }
+            return base.OnKeyDown(keyCode, e);
+        }
+
+        #endregion
+
         #region Rotation Overrides
 
         public override void OnConfigurationChanged(Android.Content.Res.Configuration newConfig)
@@ -116,7 +132,7 @@ namespace App.Secure
 
                 _arshuWebGrid.CurrentPageAnimation = PageAnimation.FlipLeft;
                 _arshuWebGrid.StartAnimationTime = 2000;
-                _arshuWebGrid.EndAnimationTime = 1000;
+                _arshuWebGrid.EndAnimationTime = 500;
                 _arshuWebGrid.ShowInstallLink = true;
                 _arshuWebGrid.RestartOnRotate = false;
 

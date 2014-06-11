@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type='text/javascript'>var sCD = new Date(); var sT = sCD.getTime(); var done = false;</script>
+    <title>Arshu UDP Peer World</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+
+    <!-- Disable Format Detection -->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="format-detection" content="address=no" />
+
+    <!-- Kills text zoom in iOS. Media Queries manage font sizes -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
+    <link rel="SHORTCUT ICON" href="/favicon.ico" />
+
+    <link href="/App_Resource/Css/main.min.css" rel="stylesheet" type="text/css" />
+    <script src="/App_Resource/Js/main.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        var nextRequestId = 0;
+        var jsonRequestPath = "/Handler/JsonPeer.ashx";
+
+        function registerPeerService(serviceTypeId, serviceNameId, servicePortId, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+            var valid = true;
+
+            var serviceTypeElm = document.getElementById(serviceTypeId);
+            var serviceNameElm = document.getElementById(serviceNameId);
+            var servicePortElm = document.getElementById(servicePortId);
+
+            var serviceType = serviceTypeElm.value;
+            if (serviceType.length === 0) {
+                showError('ServiceType cannot be empty', msgId);
+                valid = false;
+            }
+
+            if (valid == true) {
+                var serviceName = serviceNameElm.value;
+                if (serviceName.length === 0) {
+                    showError('Service Name cannot be empty', msgId);
+                    valid = false;
+                }
+            }
+
+            if (valid == true) {
+                var servicePort = servicePortElm.value;
+                if (servicePort.length === 0) {
+                    showError('Service Port cannot be empty', msgId);
+                    valid = false;
+                } else if (isNumber(servicePort) == false) {
+                    showError('Service Port has to be Number', msgId);
+                    valid = false;
+                }
+            }
+
+            if (valid === true) {
+                var paramValues = '{';
+                paramValues += '"serviceType" : "' + serviceType + '"';
+                paramValues += ', "serviceName" : "' + serviceName + '"';
+                paramValues += ', "servicePort" : ' + servicePort;
+                paramValues += ', "serviceFrequency" : 30';
+                paramValues += ', "broadcastAddress" : ""';
+                paramValues += ', "enableBroadcast" : true';
+                paramValues += ', "exclusiveAddressUse" : false';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "RegisterPeerService",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+                           if (retResult.hasOwnProperty('message') === true) {
+                               var retMessage = retResult.message;
+                               showSuccess(retMessage, msgId);
+                           }
+                           else if (retResult.hasOwnProperty('error') === true) {
+                               var retError = retResult.error;
+                               showError(retError, msgId);
+                           }
+                       }
+                   });
+            }
+        }
+
+        function isPeerRegistered(msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+            var valid = true;
+
+            if (valid === true) {
+                var paramValues = '{';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "IsPeerRegistered",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+                           if (retResult.hasOwnProperty('message') === true) {
+                               var retMessage = retResult.message;
+                               showSuccess(retMessage, msgId);
+                           }
+                           else if (retResult.hasOwnProperty('error') === true) {
+                               var retError = retResult.error;
+                               showError(retError, msgId);
+                           }
+                       }
+                   });
+            }
+        }
+
+        function unRegisteredPeer(msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+            var valid = true;
+
+            if (valid === true) {
+                var paramValues = '{';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "UnRegisterPeerService",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+                           if (retResult.hasOwnProperty('message') === true) {
+                               var retMessage = retResult.message;
+                               showSuccess(retMessage, msgId);
+                           }
+                           else if (retResult.hasOwnProperty('error') === true) {
+                               var retError = retResult.error;
+                               showError(retError, msgId);
+                           }
+                       }
+                   });
+            }
+        }
+
+        function sendPeerMessage(peerMessageId, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+            var valid = true;
+
+            var peerMessageElm = document.getElementById(peerMessageId);
+
+            var peerMessage = peerMessageElm.value;
+            if (peerMessage.length === 0) {
+                showError('Peer Message cannot be empty', msgId);
+                valid = false;
+            }
+
+            if (valid === true) {
+                var paramValues = '{';
+                paramValues += '"peerMessage" : "' + peerMessage + '"';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "SendPeerMessage",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+                           if (retResult.hasOwnProperty('message') === true) {
+                               var retMessage = retResult.message;
+                               showSuccess(retMessage, msgId);
+                           }
+                           else if (retResult.hasOwnProperty('error') === true) {
+                               var retError = retResult.error;
+                               showError(retError, msgId);
+                           }
+                       }
+                   });
+            }
+        }
+
+        function isPeerBrowserStarted(msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+            var valid = true;
+
+            if (valid === true) {
+                var paramValues = '{';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "IsPeerBrowserStarted",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+                           if (retResult.hasOwnProperty('message') === true) {
+                               var retMessage = retResult.message;
+                               showSuccess(retMessage, msgId);
+                           }
+                           else if (retResult.hasOwnProperty('error') === true) {
+                               var retError = retResult.error;
+                               showError(retError, msgId);
+                           }
+                       }
+                   });
+            }
+        }
+
+        function startPeerBrowser(serviceTypeId, peerClientInfoId, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+            var valid = true;
+
+            var serviceTypeElm = document.getElementById(serviceTypeId);
+            var peerClientInfoElm = document.getElementById(peerClientInfoId);
+            peerClientInfoElm.innerHTML = "";
+
+            var serviceType = serviceTypeElm.value;
+            if (serviceType.length === 0) {
+                showError('ServiceType cannot be empty', msgId);
+                valid = false;
+            }
+
+            if (valid === true) {
+                var paramValues = '{';
+                paramValues += '"serviceType" : "' + serviceType + '"';
+                paramValues += '"receiveFromLocal" : true';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "StartPeerBrowser",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+                           if (retResult.hasOwnProperty('message') === true) {
+                               var retMessage = retResult.message;
+                               showSuccess(retMessage, msgId);
+                           }
+                           else if (retResult.hasOwnProperty('error') === true) {
+                               var retError = retResult.error;
+                               showError(retError, msgId);
+                           }
+                       }
+                   });
+            }
+        }
+
+        function stopPeerBrowser(msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+            var valid = true;
+
+            if (valid === true) {
+                var paramValues = '{';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "StopPeerBrowser",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+                           if (retResult.hasOwnProperty('message') === true) {
+                               var retMessage = retResult.message;
+                               showSuccess(retMessage, msgId);
+                           }
+                           else if (retResult.hasOwnProperty('error') === true) {
+                               var retError = retResult.error;
+                               showError(retError, msgId);
+                           }
+                       }
+                   });
+
+            }
+        }
+
+        function getPeerClient(serviceTypeId, peerClientInfoId, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+            var valid = true;
+
+            var serviceTypeElm = document.getElementById(serviceTypeId);
+            var peerClientInfoElm = document.getElementById(peerClientInfoId);
+            peerClientInfoElm.innerHTML = "";
+
+            var serviceType = serviceTypeElm.value;
+            if (serviceType.length === 0) {
+                showError('Service Type cannot be empty', msgId);
+                valid = false;
+            }
+
+            if (valid === true) {
+                var paramValues = '{';
+                paramValues += '"serviceType" : "' + serviceType + '"';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "GetPeerClientInfo",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+                           if (retResult.hasOwnProperty('message') === true) {
+                               var retMessage = retResult.message;
+                               showSuccess(retMessage, msgId);
+                           }
+                           else if (retResult.hasOwnProperty('error') === true) {
+                               var retError = retResult.error;
+                               showError(retError, msgId);
+                           }
+                           if (retResult.hasOwnProperty('peerlist') === true) {
+
+                               var peerlistInfo = "";
+                               var peerlist = retResult.peerlist;
+                               for (var key in peerlist) {
+                                   if (peerlist.hasOwnProperty(key)) {
+                                       var obj = peerlist[key];
+                                       for (var prop in obj) {
+                                           if (obj.hasOwnProperty(prop)) {
+                                               if (peerlistInfo.length > 0) peerlistInfo += " , "
+                                               peerlistInfo += prop + " = " + obj[prop];
+                                           }
+                                       }
+                                       if (peerlistInfo.length > 0) peerlistInfo += " <br/> "
+                                   }
+                               }
+                               peerClientInfoElm.innerHTML = peerlistInfo;
+                           }
+                       }
+                   });
+            }
+        }
+
+    </script>
+</head>
+<body style="background-color: #808080;">
+    <div style="text-align: center; margin: 0px 10px 0px 10px">
+        <div class="section" style="min-width:200px;">
+            <a href="/Pages/hello.html" class="success" style="position:absolute;left:0px;top:0px;width:50px;min-width:50px;">Home</a> 
+            <h1>Hello UDP Peer</h1>
+        </div>
+        <div class="section">
+            <label for="serviceType" class="blocklabel">Service Type</label>
+            <input type="text" class="input_full" id="serviceType" name="serviceType" placeholder="Enter Your Service Type" value="gridApp._tcp" />
+            <label for="serviceName" class="blocklabel">Service Name</label>
+            <input type="text" class="input_full" id="serviceName" name="serviceName" placeholder="Enter Your Service Name" value="Grid App" />
+            <label for="servicePort" class="blocklabel">Service Port</label>
+            <input type="text" class="input_full" id="servicePort" name="servicePort" placeholder="Enter Your Service Port" value="2000" />
+            <button class="btn success" onclick="registerPeerService('serviceType' , 'serviceName', 'servicePort', 'registerPeerServiceMsg', ['peerInfoMsg', 'sendPeerMsg', 'peerClientMsg'])">Register Peer Service</button>
+            <div id="registerPeerServiceMsg"></div>
+        </div>
+        <div class="section">
+            <button class="btn primary" onclick="isPeerRegistered('peerInfoMsg', ['registerPeerServiceMsg', 'sendPeerMsg', 'peerClientMsg'])">Is Peer Registered</button>
+            <button class="btn primary" onclick="unRegisteredPeer('peerInfoMsg', ['registerPeerServiceMsg', 'sendPeerMsg', 'peerClientMsg'])">UnRegister Peer</button>
+            <div id="peerInfoMsg"></div>
+        </div>
+        <div class="section">
+            <label for="peerMessage" class="blocklabel">Peer Message</label>
+            <textarea id="peerMessage" name="peerMessage" maxlength="100" rows="5" placeholder="Enter the Peer Message"></textarea>
+            <button class="btn success" onclick="sendPeerMessage('peerMessage', 'sendPeerMsg', ['registerPeerServiceMsg', 'peerInfoMsg', 'peerClientMsg'])">Send Peer Message</button>
+            <div id="sendPeerMsg"></div>
+        </div>
+        <div class="section">
+            <button class="btn primary" onclick="isPeerBrowserStarted('peerClientMsg', ['registerPeerServiceMsg', 'peerInfoMsg', 'sendPeerMsg'])">Is Peer Browser Started</button>
+            <button class="btn warning" onclick="startPeerBrowser('serviceType', 'peerClientInfo', 'peerClientMsg', ['registerPeerServiceMsg', 'peerInfoMsg', 'sendPeerMsg'])">Start Peer Browser</button>
+            <button class="btn primary" onclick="stopPeerBrowser('peerClientMsg', ['registerPeerServiceMsg', 'peerInfoMsg', 'sendPeerMsg'])">Stop Peer Browser</button>
+            <button class="btn warning" onclick="getPeerClient('serviceType', 'peerClientInfo', 'peerClientMsg', ['registerPeerServiceMsg', 'peerInfoMsg', 'sendPeerMsg'])">Get Peer Info</button>
+            <div id="peerClientInfo"></div>
+            <div id="peerClientMsg"></div>
+        </div>
+    </div>
+
+    <div style="width: 99%;">
+        <div style="text-align: center; margin: 10px auto; font-size: x-small;">
+            <div>
+                &copy; 2005-2013 <a data-ajax="false" href="http://www.htmltoapp.com">Html to app</a>
+                <span id="loadingTime" title="Page Loading Time" class="footertext"></span>
+                <span id="htmlInfo" title="Html Info (DOM Count)" class="footertext"></span>
+            </div>
+            <div>
+                <span id="ajaxTime" title="Ajax Processing Time" class="footertext"></span>
+            </div>
+            Android<span class="isIOSHide" style="color: red">*</span> and IOS<span class="isANDROIDHide" style="color: red">*</span> MVP Maker
+        </div>
+    </div>
+    <script type="text/javascript">
+        document.getElementById('htmlInfo').innerHTML = '(' + document.getElementsByTagName('*').length + ')';
+        var eCD = new Date();
+        var eT = eCD.getTime();
+        var tT = (eT - sT) / 1000;
+        document.getElementById("loadingTime").innerHTML = "(" + tT + ") secs";
+        var oldonload = window.onload;
+        window.onload = function () {
+            var lEcd = new Date();
+            var lEt = lEcd.getTime();
+            var lTt = (lEt - sT) / 1000;
+            document.getElementById("loadingTime").innerHTML = "(" + lTt + ") secs";
+            if (oldonload) {
+                oldonload();
+            }
+        };
+    </script>
+</body>
+</html>

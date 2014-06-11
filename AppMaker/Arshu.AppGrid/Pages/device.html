@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type='text/javascript'>var sCD = new Date(); var sT = sCD.getTime(); var done = false;</script>
+    <title>Arshu Device World</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+
+    <!-- Disable Format Detection -->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="format-detection" content="address=no" />
+
+    <!-- Kills text zoom in iOS. Media Queries manage font sizes -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
+    <link rel="SHORTCUT ICON" href="/favicon.ico" />
+
+    <link href="../App_Resource/Css/main.min.css" rel="stylesheet" type="text/css" />
+    <script src="../App_Resource/Js/main.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        var nextRequestId = 0;
+        var jsonRequestPath = "/Handler/JsonDevice.ashx";
+
+        function isNetworkAvailable(wifeOnly, statusElmId, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+
+            var statusElm = document.getElementById(statusElmId);
+
+            if (statusElm) {
+                var paramValues = '{';
+                paramValues += '"wifiOnly" : ' + wifeOnly;
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "IsNetworkAvailable",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+                           statusElm.value = retResult;
+
+                           if (retResult.hasOwnProperty('status') === true) {
+                               statusElm.innerHTML = retResult.status;
+                           }
+                           else if (retResult.hasOwnProperty('error') === true) {
+                               var retError = retResult.error;
+                               showError(retError, msgId);
+                           }
+                       }
+                   });
+            } else {
+                showError('Unable to Retrieve Status Element');
+            }
+        }
+
+        function enableLocationTracking(msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+
+            var paramValues = '{';
+            paramValues += '"minTimeInMs" : 5000';
+            paramValues += '"minDistance" : 50';
+            paramValues += '}';
+
+            var request = {
+                id: ++nextRequestId,
+                method: "EnableLocationTracking",
+                params: paramValues
+            };
+
+            asyncJsonRequest(jsonRequestPath, request, msgId,
+               function (response) {
+                   var haveResult = false;
+                   if (response.hasOwnProperty('Result') === true) {
+                       var retResult = response.Result;
+
+                       if (retResult.hasOwnProperty('message') === true) {
+                           showSuccess(retResult.message, msgId);
+                       }
+
+                       if (retResult.hasOwnProperty('error') === true) {
+                           var retError = retResult.error;
+                           showError(retError, msgId);
+                       }
+                   }
+               });
+        }
+
+        function disableLocationTracking(msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+
+            var paramValues = '{';
+            paramValues += '}';
+
+            var request = {
+                id: ++nextRequestId,
+                method: "DisableLocationTracking",
+                params: paramValues
+            };
+
+            asyncJsonRequest(jsonRequestPath, request, msgId,
+               function (response) {
+                   var haveResult = false;
+                   if (response.hasOwnProperty('Result') === true) {
+                       var retResult = response.Result;
+
+                       if (retResult.hasOwnProperty('message') === true) {
+                           showSuccess(retResult.message, msgId);
+                       }
+
+                       if (retResult.hasOwnProperty('error') === true) {
+                           var retError = retResult.error;
+                           showError(retError, msgId);
+                       }
+                   }
+               });
+        }
+
+        function getLocation(locationOnly, statusElmId, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+
+            var statusElm = document.getElementById(statusElmId);
+
+            if (statusElm) {
+                var paramValues = '{';
+                paramValues += '"locationOnly" : ' + locationOnly;
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "GetLocation",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+
+                           if (locationOnly === true) {
+                               if ((retResult.hasOwnProperty('latitude') === true) && (retResult.hasOwnProperty('longitude') === true)) {
+                                   statusElm.innerHTML = "latitude=" + retResult.latitude + ", longitude=" + retResult.longitude;
+                               }
+                           } else {
+                               if (retResult.hasOwnProperty('address') === true) {
+                                   statusElm.innerHTML = retResult.address;
+                                   if (retResult.hasOwnProperty('country') === true) {
+                                       statusElm.innerHTML = statusElm.innerHTML + ", " + retResult.country;
+                                   }
+                               }
+                           }
+
+                           if (retResult.hasOwnProperty('error') === true) {
+                               var retError = retResult.error;
+                               showError(retError, msgId);
+                           }
+                       }
+                   });
+            } else {
+                showError('Unable to Retrieve Status Element');
+            }
+        }
+
+        function launch(launchMethod, msgId, hideMsgIdList) {
+
+            var sneaky = new ScrollSneak(location.hostname)
+            sneaky.sneak;
+
+            hideMessage(msgId, hideMsgIdList);
+
+            var paramValues = '{';
+            paramValues += '}';
+
+            var request = {
+                id: ++nextRequestId,
+                method: launchMethod,
+                params: paramValues
+            };
+
+            asyncJsonRequest(jsonRequestPath, request, msgId,
+               function (response) {
+                   var haveResult = false;
+                   if (response.hasOwnProperty('Result') === true) {
+                       var retResult = response.Result;
+
+                       if (retResult.hasOwnProperty('message') === true) {
+                           showSuccess(retResult.message, msgId);
+                       }
+
+                       if (retResult.hasOwnProperty('reload') === true) {
+                           //window.location.reload(true);
+                           refreshView("");
+
+                       }
+
+                       if (retResult.hasOwnProperty('error') === true) {
+                           var retError = retResult.error;
+                           showError(retError, msgId);
+                       }
+                   }
+               });
+        }
+
+        function launchImage(launchMethod, msgId, hideMsgIdList) {
+
+            var sneaky = new ScrollSneak(location.hostname)
+            sneaky.sneak;
+
+            hideMessage(msgId, hideMsgIdList);
+
+            var paramValues = '{';
+            paramValues += '"maxImageSize" : 1000';
+            paramValues += ', "imageName" : ""';
+            paramValues += '}';
+
+            var request = {
+                id: ++nextRequestId,
+                method: launchMethod,
+                params: paramValues
+            };
+
+            asyncJsonRequest(jsonRequestPath, request, msgId,
+               function (response) {
+                   var haveResult = false;
+                   if (response.hasOwnProperty('Result') === true) {
+                       var retResult = response.Result;
+
+                       if (retResult.hasOwnProperty('message') === true) {
+                           showSuccess(retResult.message, msgId);
+                       }
+
+                       if (retResult.hasOwnProperty('reload') === true) {
+                           //window.location.reload(true);
+                           refreshView("");
+                       }
+
+                       if (retResult.hasOwnProperty('error') === true) {
+                           var retError = retResult.error;
+                           showError(retError, msgId);
+                       }
+                   }
+               });
+        }
+
+        function launchVideo(launchMethod, msgId, hideMsgIdList) {
+
+            var sneaky = new ScrollSneak(location.hostname)
+            sneaky.sneak;
+
+            hideMessage(msgId, hideMsgIdList);
+
+            var paramValues = '{';
+            paramValues += ' "videoName" : ""';
+            paramValues += '}';
+
+            var request = {
+                id: ++nextRequestId,
+                method: launchMethod,
+                params: paramValues
+            };
+
+            asyncJsonRequest(jsonRequestPath, request, msgId,
+               function (response) {
+                   var haveResult = false;
+                   if (response.hasOwnProperty('Result') === true) {
+                       var retResult = response.Result;
+
+                       if (retResult.hasOwnProperty('message') === true) {
+                           showSuccess(retResult.message, msgId);
+                       }
+
+                       if (retResult.hasOwnProperty('reload') === true) {
+                           //window.location.reload(true);
+                           refreshView("");
+                       }
+
+                       if (retResult.hasOwnProperty('error') === true) {
+                           var retError = retResult.error;
+                           showError(retError, msgId);
+                       }
+                   }
+               });
+        }
+
+        function launchAudio(launchMethod, msgId, hideMsgIdList) {
+
+            var sneaky = new ScrollSneak(location.hostname)
+            sneaky.sneak;
+
+            hideMessage(msgId, hideMsgIdList);
+
+            var paramValues = '{';
+            paramValues += '"audioName" : ""';
+            paramValues += '}';
+
+            var request = {
+                id: ++nextRequestId,
+                method: launchMethod,
+                params: paramValues
+            };
+
+            asyncJsonRequest(jsonRequestPath, request, msgId,
+               function (response) {
+                   var haveResult = false;
+                   if (response.hasOwnProperty('Result') === true) {
+                       var retResult = response.Result;
+
+                       if (retResult.hasOwnProperty('message') === true) {
+                           showSuccess(retResult.message, msgId);
+                       }
+
+                       if (retResult.hasOwnProperty('reload') === true) {
+                           //window.location.reload(true);
+                           refreshView("");
+                       }
+
+                       if (retResult.hasOwnProperty('error') === true) {
+                           var retError = retResult.error;
+                           showError(retError, msgId);
+                       }
+                   }
+               });
+        }
+
+        function pickPhotoFromCamera(wrapperElmId, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+
+            var wrapperElm = document.getElementById(wrapperElmId);
+
+            if (wrapperElm) {
+                var paramValues = '{';
+                paramValues += '"launchCameraIfNotAvailable" : ' + false;
+                paramValues += ', "maxImageSize" : 1000';
+                paramValues += ', "imageName" : ""';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "PickPhotoFromCamera",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+
+                           if (retResult.hasOwnProperty('message') === true) {
+                               //showMessage(retResult.message, msgId);
+                           }
+
+                           if (retResult.hasOwnProperty('error') === true) {
+                               //showError(retResult.error, msgId);
+                           }
+
+                           if (retResult.hasOwnProperty('itempath') === true) {
+                               var itemPath = retResult.itempath;
+                               var orientation = 0;
+                               if (retResult.hasOwnProperty('orientation') === true) {
+                                   orientation = retResult.orientation
+                               }
+
+                               var img = document.createElement("img");
+                               img.src = "/Index.ashx?File1=" + itemPath;
+                               img.width = 200;
+                               img.height = 200;
+
+                               while (wrapperElm.firstChild) wrapperElm.removeChild(wrapperElm.firstChild);
+                               wrapperElm.appendChild(img);
+                               wrapperElm.style.display = "block";
+                           }
+                       }
+                   });
+            } else {
+                showError('Unable to Retrieve Status Element', msgId);
+            }
+        }
+
+        function pickPhotoFromGallery(wrapperElmId, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+
+            var wrapperElm = document.getElementById(wrapperElmId);
+
+            if (wrapperElm)
+            {
+                var paramValues = '{';
+                paramValues += '"launchPhotoPickerIfNotAvailable" : ' + false;
+                paramValues += ', "maxImageSize" : 1000';
+                paramValues += ', "imageName" : ""';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "PickPhotoFromGallery",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+
+                           if (retResult.hasOwnProperty('message') === true) {
+                               //showMessage(retResult.message, msgId);
+                           }
+
+                           if (retResult.hasOwnProperty('error') === true) {
+                               //showError(retResult.error, msgId);
+                           }
+
+                           if (retResult.hasOwnProperty('itempath') === true)
+                           {
+                               var itemPath = retResult.itempath;
+
+                               var img = document.createElement("img");
+                               img.src = "/Index.ashx?File1=" + itemPath;
+                               img.width = 200;
+                               img.height = 200;
+
+                               while (wrapperElm.firstChild) wrapperElm.removeChild(wrapperElm.firstChild);
+                               wrapperElm.appendChild(img);
+                               wrapperElm.style.display = "block";
+                           }
+                       }
+                   });
+            } else {
+                showError('Unable to Retrieve Status Element', msgId);
+            }
+        }
+
+        function pickVideoFromGallery(wrapperElmId, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+
+            var wrapperElm = document.getElementById(wrapperElmId);
+
+            if (wrapperElm) {
+
+                var paramValues = '{';
+                paramValues += '"launchVideoPickerIfNotAvailable" : ' + false;
+                paramValues += ', "videoName" : ""';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "PickVideoFromGallery",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+
+                           if (retResult.hasOwnProperty('message') === true) {
+                               //showMessage(retResult.message, msgId);
+                           }
+
+                           if (retResult.hasOwnProperty('error') === true) {
+                               //showError(retResult.error, msgId);
+                           }
+
+                           if (retResult.hasOwnProperty('itempath') === true) {
+
+                                var itemPath = retResult.itempath;
+                                var videoExtension = itemPath.split('.').pop();
+                                var fileName = itemPath.split('/').pop();
+                                var videoPath = "/Index.ashx?File1=" + itemPath;
+
+                                var videoLink = document.getElementById('galleryVideoLink');
+                                if (videoLink) {
+                                    videoLink.setAttribute("href", itemPath);
+                                    videoLink.setAttribute("class", "video");
+                                    videoLink.innerHTML = itemPath;
+                                }
+
+                                wrapperElm.style.display = "block";
+                                showInfo(retResult.message, msgId);
+
+                                if (retResult.hasOwnProperty('show') === true) {
+                                    //var audioSourceElm = document.createElement('source');
+                                    //audioSourceElm.src = videoPath;
+                                    //audioSourceElm.type = "video/" + videoExtension;
+
+                                    var videoPlayer = document.getElementById('galleryVideoPlayer');
+                                    if (videoPlayer) {
+                                        videoPlayer.setAttribute("src", videoPath);
+                                        videoPlayer.style.display = "inline-block";
+                                        //videoPlayer.innerHTML = "";
+                                        //videoPlayer.appendChild(audioSourceElm);
+                                    }
+                                }
+                                else
+                                {
+                                    var videoPlayer = document.getElementById('galleryVideoPlayer');
+                                    if (videoPlayer)
+                                    {
+                                        wrapperElm.removeChild(videoPlayer);
+                                    }
+                                }
+                           }
+                       }
+                   });
+            } else {
+                showError('Unable to Retrieve Status Element', msgId);
+            }
+        }
+
+        function pickAudioFromGallery(wrapperElmId, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+
+            var wrapperElm = document.getElementById(wrapperElmId);
+
+            if (wrapperElm) {
+                var paramValues = '{';
+                paramValues += '"launchAudioPickerIfNotAvailable" : ' + false;
+                paramValues += ', "audioName" : ""';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "PickAudioFromGallery",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+
+                           if (retResult.hasOwnProperty('message') === true) {
+                               //showMessage(retResult.message, msgId);
+                           }
+
+                           if (retResult.hasOwnProperty('error') === true) {
+                               //showError(retResult.error, msgId);
+                           }
+
+                           if (retResult.hasOwnProperty('itempath') === true) {
+
+                                var itemPath = retResult.itempath;
+                                var audioExtension = itemPath.split('.').pop();;
+                                var fileName = itemPath.split('/').pop();
+                                var audioPath = "/Index.ashx?File1=" + itemPath;
+
+                                var audioLink = document.getElementById('galleryAudioLink');
+                                if (audioLink)
+                                {
+                                    audioLink.setAttribute("href", itemPath);
+                                    audioLink.setAttribute("class", "audio");
+                                    audioLink.innerHTML = itemPath;
+                                }
+
+                                wrapperElm.style.display = "block";
+
+                                showInfo(retResult.message, msgId);
+
+                                if (retResult.hasOwnProperty('show') === true) {
+                                    //var audioSourceElm = document.createElement('source');
+                                    //audioSourceElm.src = audioPath;
+                                    //audioSourceElm.type = "audio/" + audioExtension;
+
+                                    var audioPlayer = document.getElementById('galleryAudioPlayer');
+                                    if (audioPlayer) {
+                                        audioPlayer.setAttribute("src", audioPath);
+                                        audioPlayer.style.display = "inline-block";
+                                        //audioPlayer.innerHTML = "";
+                                        //audioPlayer.appendChild(audioSourceElm);
+                                    }
+                                }
+                                else {
+                                    var audioPlayer = document.getElementById('galleryAudioPlayer');
+                                    if (audioPlayer) {
+                                        wrapperElm.removeChild(audioPlayer);
+                                    }
+                                }
+                           }
+                       }
+                   });
+
+            } else {
+                showError('Unable to Retrieve Status Element', msgId);
+            }
+        }
+
+        function clearPicker(launchMethod, wrapperElmId, clearElmIdList, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+
+            var wrapperElm = document.getElementById(wrapperElmId);
+
+            if (wrapperElm)
+            {
+                var paramValues = '{';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: launchMethod,
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+
+                           if (retResult.hasOwnProperty('message') === true) {
+                               //showSuccess(retResult.message, msgId);
+                           }
+
+                           if (retResult.hasOwnProperty('reload') === true) {
+
+                               wrapperElm.style.display = "none";
+
+                               for (var i = 0; i < clearElmIdList.length; i++) {
+                                   if (clearElmIdList[i].length > 0) {
+                                       var clearElm = document.getElementById(clearElmIdList[i]);
+                                       if (clearElm) {
+                                           clearElm.innerHTML = "";
+                                       }
+                                   }
+                               }
+                           }
+
+                           if (retResult.hasOwnProperty('error') === true) {
+                               var retError = retResult.error;
+                               showError(retError, msgId);
+                           }
+                       }
+                   });
+            }
+        }
+
+        function refreshView(source) {
+            pickPhotoFromCamera('cameraPhoto', 'cameraMsg', ['networkMsg', 'locationMsg']);
+            pickPhotoFromGallery('galleryPhoto', 'photoMsg', ['networkMsg', 'locationMsg']);
+            pickVideoFromGallery('galleryVideo', 'videoMsg', ['networkMsg', 'locationMsg']);
+            pickAudioFromGallery('galleryAudio', 'audioMsg', ['networkMsg', 'locationMsg']);
+        }
+
+        function clearView(source) {
+            clearPicker('ClearCamera', 'cameraPhoto', ['cameraPhoto'], 'cameraMsg', ['networkMsg', 'locationMsg']);
+            clearPicker('ClearPhotoPicker', 'galleryPhoto', ['galleryPhoto'], 'photoMsg', ['networkMsg', 'locationMsg']);
+            clearPicker('ClearVideoPicker', 'galleryVideo', ['galleryVideoPlayer', 'galleryVideoLink'], 'videoMsg', ['networkMsg', 'locationMsg']);
+            clearPicker('ClearAudioPicker', 'galleryAudio', ['galleryAudioPlayer', 'galleryAudioLink'], 'audioMsg', ['networkMsg', 'locationMsg']);
+        }
+
+    </script>
+</head>
+<body style="background-color: #808080;">
+    <div style="text-align: center; margin: 10px 10px 0px 10px;">
+
+        <div class="section" style="min-width: 200px;">
+            <a href="/Pages/hello.html" class="success" style="position: absolute; left: 0px; top: 0px; width: 50px; min-width: 50px;">Home</a>
+            <h1>Hello Device</h1>
+        </div>
+
+        <div class="section">
+            <div id="networkStatus"></div>
+            <button class="btn primary" onclick="isNetworkAvailable(false, 'networkStatus', 'networkMsg', ['locationMsg', 'cameraMsg', 'photoMsg', 'videoMsg', 'audioMsg'])">Is Network Available</button>
+            <button class="btn success" onclick="isNetworkAvailable(true, 'wifiStatus', 'networkMsg', ['locationMsg', 'cameraMsg', 'photoMsg', 'videoMsg', 'audioMsg'])">Is Wifi Available</button>
+            <div id="wifiStatus"></div>
+            <div id="networkMsg"></div>
+        </div>
+        <div class="section">
+            <div id="locationInfo"></div>
+            <button class="btn success" onclick="enableLocationTracking('locationMsg', ['networkMsg', 'cameraMsg', 'photoMsg', 'videoMsg', 'audioMsg', 'locationMsg'])">Enable Location Tracking</button>
+            <button class="btn success" onclick="getLocation(true, 'locationInfo', 'locationMsg', ['networkMsg', 'cameraMsg', 'photoMsg', 'videoMsg', 'audioMsg', 'locationMsg'])">Get Location</button>
+            <button class="btn success" onclick="getLocation(false, 'addressInfo', 'locationMsg', ['networkMsg', 'cameraMsg', 'photoMsg', 'videoMsg', 'audioMsg', 'barcodeMsg', 'locationMsg'])">Get Address</button>
+            <button class="btn primary" onclick="disableLocationTracking('locationMsg', ['networkMsg', 'cameraMsg', 'photoMsg', 'videoMsg', 'audioMsg', 'locationMsg'])">Disable Location Tracking</button>
+            <div id="addressInfo"></div>
+            <div id="locationMsg"></div>
+        </div>
+        <div class="section">
+            <div id="cameraPhoto"></div>
+            <button class="btn primary" onclick="launchImage('LaunchCamera', 'cameraMsg', ['networkMsg', 'locationMsg', 'photoMsg', 'videoMsg', 'audioMsg'])">Launch Camera</button>
+            <div id="cameraMsg"></div>
+        </div>
+        <div class="section">
+            <div id="galleryPhoto"></div>
+            <button class="btn success" onclick="launchImage('LaunchPhotoPicker', 'photoMsg', ['networkMsg', 'locationMsg', 'cameraMsg', 'videoMsg', 'audioMsg'])">Launch Photo Picker</button>
+            <div id="photoMsg"></div>
+        </div>
+        <div class="section">
+            <div style="margin: 0 auto; text-align: center;">
+                <div id="galleryVideo" style="margin: 0 auto 0 auto; text-align: center; display: none;">
+                    <div id="galleryVideoLink" style="padding: 10px 5px; color: black;" onclick="return false;"></div>
+                    <video id="galleryVideoPlayer" controls style="max-width: 100%; display:none;">
+                    </video>
+                </div>
+            </div>
+            <button class="btn primary" onclick="launchVideo('LaunchVideoPicker', 'videoMsg', ['networkMsg', 'locationMsg', 'cameraMsg', 'photoMsg', 'audioMsg'])">Launch Video Picker</button>
+            <div id="videoMsg"></div>
+        </div>
+        <div class="section">
+
+            <div style="margin: 0 auto; text-align: center;">
+                <div id="galleryAudio" style="margin: 0 auto 0 auto; text-align: center; display: none;">
+                    <div id="galleryAudioLink" style="padding: 10px 5px; color: black;" onclick="return false;"></div>
+                    <audio id="galleryAudioPlayer" controls style="max-width: 100%; display:none;">
+                    </audio>
+                </div>
+            </div>
+            <button class="btn primary" onclick="launchAudio('LaunchAudioPicker', 'audioMsg', ['networkMsg', 'locationMsg', 'cameraMsg', 'photoMsg', 'videoMsg'])">Launch Audio Picker</button>
+            <div id="audioMsg"></div>
+        </div>
+        <div class="section">
+            <button class="btn primary" onclick="clearView('')">Clear Picker</button>
+        </div>
+    </div>
+
+    <div style="width: 99%;">
+        <div style="text-align: center; margin: 10px auto; font-size: x-small;">
+            <div>
+                &copy; 2005-2013 <a data-ajax="false" href="http://www.htmtoapp.com">Html to App</a>
+                <span id="loadingTime" title="Page Loading Time" class="footertext"></span>
+                <span id="htmlInfo" title="Html Info (DOM Count)" class="footertext"></span>
+            </div>
+            <div>
+                <span id="ajaxTime" title="Ajax Processing Time" class="footertext"></span>
+            </div>
+            Android<span class="isIOSHide" style="color: red">*</span> and IOS<span class="isANDROIDHide" style="color: red">*</span> MVP Maker
+        </div>
+    </div>
+    <script type="text/javascript">
+        document.getElementById('htmlInfo').innerHTML = '(' + document.getElementsByTagName('*').length + ')';
+        var eCD = new Date();
+        var eT = eCD.getTime();
+        var tT = (eT - sT) / 1000;
+        document.getElementById("loadingTime").innerHTML = "(" + tT + ") secs";
+        var oldonload = window.onload;
+        window.onload = function () {
+            var lEcd = new Date();
+            var lEt = lEcd.getTime();
+            var lTt = (lEt - sT) / 1000;
+            document.getElementById("loadingTime").innerHTML = "(" + lTt + ") secs";
+            if (oldonload) {
+                oldonload();
+            }
+        };
+    </script>
+</body>
+</html>

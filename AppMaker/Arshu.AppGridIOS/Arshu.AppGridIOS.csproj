@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProjectGuid>{2CE09913-C4B0-453A-BDA5-F3DA028558A1}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Arshu.AppGrid</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>ArshuAppGridIOS</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG;__IOS__;__MOBILE__</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchLink>None</MtouchLink>
+    <MtouchDebug>true</MtouchDebug>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchArch>ARMv7</MtouchArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchLink>None</MtouchLink>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchArch>ARMv7</MtouchArch>
+    <DefineConstants>__IOS__;__MOBILE__</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG;__IOS__;__MOBILE__</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchDebug>True</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <BuildIpa>True</BuildIpa>
+    <IpaMetadata>
+    </IpaMetadata>
+    <IpaPackageName>arshu.appgrid.v1</IpaPackageName>
+    <MtouchArch>ARMv7</MtouchArch>
+    <MtouchOptimizePNGs>True</MtouchOptimizePNGs>
+    <MtouchEnableGenericValueTypeSharing>False</MtouchEnableGenericValueTypeSharing>
+    <MtouchI18n>
+    </MtouchI18n>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchExtraArgs>-v -v -v</MtouchExtraArgs>
+    <MtouchArch>ARMv7</MtouchArch>
+    <MtouchOptimizePNGs>True</MtouchOptimizePNGs>
+    <BuildIpa>True</BuildIpa>
+    <IpaMetadata>
+    </IpaMetadata>
+    <IpaPackageName>arshu.appgrid.v1</IpaPackageName>
+    <MtouchI18n>
+    </MtouchI18n>
+    <DefineConstants>__IOS__;__MOBILE__</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\Ad-Hoc</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <BuildIpa>True</BuildIpa>
+    <IpaMetadata>
+    </IpaMetadata>
+    <IpaPackageName>arshu.appgrid.v1</IpaPackageName>
+    <DefineConstants>__IOS__;__MOBILE__</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\AppStore</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <BuildIpa>True</BuildIpa>
+    <IpaMetadata>
+    </IpaMetadata>
+    <IpaPackageName>arshu.appgrid.v1</IpaPackageName>
+    <MtouchExtraArgs>
+    </MtouchExtraArgs>
+    <MtouchArch>ARMv7</MtouchArch>
+    <MtouchOptimizePNGs>True</MtouchOptimizePNGs>
+    <MtouchI18n>
+    </MtouchI18n>
+    <DefineConstants>__IOS__;__MOBILE__</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\arshu.appgrid\app_service\arshu.appgrid\database\DataCommon.cs">
+      <Link>App_Service\Arshu.AppGrid\Database\DataCommon.cs</Link>
+    </Compile>
+    <Compile Include="..\arshu.appgrid\app_service\arshu.appgrid\gridpeer\GridPeerBrowser.cs">
+      <Link>App_Service\Arshu.AppGrid\GridPeer\GridPeerBrowser.cs</Link>
+    </Compile>
+    <Compile Include="..\arshu.appgrid\app_service\arshu.appgrid\gridpeer\GridPeerClient.cs">
+      <Link>App_Service\Arshu.AppGrid\GridPeer\GridPeerClient.cs</Link>
+    </Compile>
+    <Compile Include="..\arshu.appgrid\app_service\arshu.appgrid\gridpeer\GridPeerClientEventArgs.cs">
+      <Link>App_Service\Arshu.AppGrid\GridPeer\GridPeerClientEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\arshu.appgrid\app_service\arshu.appgrid\gridpeer\GridPeerService.cs">
+      <Link>App_Service\Arshu.AppGrid\GridPeer\GridPeerService.cs</Link>
+    </Compile>
+    <Compile Include="..\arshu.appgrid\app_service\arshu.appgrid\JsonDbHandler.cs">
+      <Link>App_Service\Arshu.AppGrid\JsonDbHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\arshu.appgrid\app_service\arshu.appgrid\JsonDeviceHandler.cs">
+      <Link>App_Service\Arshu.AppGrid\JsonDeviceHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\arshu.appgrid\app_service\arshu.appgrid\JsonFileHandler.cs">
+      <Link>App_Service\Arshu.AppGrid\JsonFileHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\arshu.appgrid\app_service\arshu.appgrid\JsonPeerHandler.cs">
+      <Link>App_Service\Arshu.AppGrid\JsonPeerHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\arshu.appgrid\app_service\arshu.appgrid\JsonSecureHandler.cs">
+      <Link>App_Service\Arshu.AppGrid\JsonSecureHandler.cs</Link>
+    </Compile>
+    <Compile Include="Main.cs" />
+    <Compile Include="AppDelegate.cs" />
+    <Compile Include="Properties\GridAppleAssemblyInfo.cs" />
+    <Compile Include="WebViewController.cs" />
+    <BundleResource Include="..\..\InputWebApp\Mvp.AppMaker.v1.zip">
+      <Link>Assets\Apps\Mvp.AppMaker.v1.zip</Link>
+    </BundleResource>
+    <BundleResource Include="..\..\InputWebApp\App.Web.v1.zip">
+      <Link>Assets\Apps\App.Web.v1.zip</Link>
+    </BundleResource>
+    <None Include="Info.plist" />
+    <ITunesArtwork Include="iTunesArtwork" />
+    <ITunesArtwork Include="iTunesArtwork%402x" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Arshu.AppWeb">
+      <HintPath>..\..\Components\IOS\Arshu.AppWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Arshu.Web">
+      <HintPath>..\..\Components\IOS\Arshu.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Data.Sqlite" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-72.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-72%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-Small-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-Small-50%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-Small%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default-568h%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default-Portrait~ipad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default-Landscape~ipad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default-Portrait%402x~ipad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default-Landscape%402x~ipad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="..\Arshu.AppGrid\App_Data\SetupData.bson.txt">
+      <Link>Assets\SetupData.bson.txt</Link>
+    </BundleResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="App_Resource\background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-60%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-76.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-76%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-Small-40.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Icon-Small-40%402x.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+</Project>

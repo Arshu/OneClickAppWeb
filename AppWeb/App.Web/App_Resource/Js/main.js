@@ -59,7 +59,11 @@ function ajaxStart(progressAnchorElmId) {
 
     var spinnerCenter = document.createElement("div");
     spinnerCenter.id = "spinner_center";
-    spinnerCenter.style = "display:block;position:absolute;top:25px;right:50%;";
+    //spinnerCenter.style = "display:block;position:absolute;top:15px;right:50%;";
+    spinnerCenter.style.display = "block";
+    spinnerCenter.style.position = "absolute";
+    spinnerCenter.style.top = "15px";
+    spinnerCenter.style.right = "50%";
 
     var anchorElm = document.getElementById(progressAnchorElmId);
     if (anchorElm) {
@@ -428,7 +432,7 @@ function showMessage(message, msgLabelId) {
         msgLabelElm.className = msgLabelElm.className.replace("error", "");
         msgLabelElm.className = msgLabelElm.className.replace("warning", "");
         msgLabelElm.className = msgLabelElm.className.replace("info", "");
-        msgLabelElm.innerHTML = message;
+        msgLabelElm.innerHTML = "<span style='word-space:normal'>" + message + "</span>";
         window.setTimeout("hideMessage('" + msgLabelId + "')", 5000);
     }
 }
@@ -438,7 +442,7 @@ function showSuccess(message, msgLabelId) {
     if (msgLabelElm) {
         msgLabelElm.style.display = "block";
         msgLabelElm.className = "success"
-        msgLabelElm.innerHTML = "<span>" + message + "</span>";
+        msgLabelElm.innerHTML = "<span style='word-space:normal'>" + message + "</span>";
         window.setTimeout("hideMessage('" + msgLabelId + "')", 5000);
     }
 }
@@ -448,7 +452,7 @@ function showError(message, msgLabelId) {
     if (msgLabelElm) {
         msgLabelElm.style.display = "block";
         msgLabelElm.className = "error"
-        msgLabelElm.innerHTML = "<span>" + message + "</span>";
+        msgLabelElm.innerHTML = "<span style='word-space:normal'>" + message + "</span>";
         window.setTimeout("hideMessage('" + msgLabelId + "')", 5000);
     }
 }
@@ -458,7 +462,7 @@ function showWarning(message, msgLabelId) {
     if (msgLabelElm) {        
         msgLabelElm.style.display = "block";
         msgLabelElm.className ="warning"
-        msgLabelElm.innerHTML = "<span>" + message + "</span>";
+        msgLabelElm.innerHTML = "<span style='word-space:normal'>" + message + "</span>";
         window.setTimeout("hideMessage('" + msgLabelId + "')", 5000);
     }
 }
@@ -468,7 +472,7 @@ function showInfo(message, msgLabelId, timeout) {
     if (msgLabelElm) {
         msgLabelElm.style.display = "block";
         msgLabelElm.className = "info"
-        msgLabelElm.innerHTML = "<span>" + message + "</span>";
+        msgLabelElm.innerHTML = "<span style='word-space:normal'>" + message + "</span>";
         if (timeout > 0) {
             window.setTimeout("hideMessage('" + msgLabelId + "')", timeout);
         }
@@ -520,8 +524,13 @@ var startEvent = isTouchSupported ? 'touchstart' : 'mousedown';
 var moveEvent = isTouchSupported ? 'touchmove' : 'mousemove';
 var endEvent = isTouchSupported ? 'touchend' : 'mouseup';
 
-//when window is resized
-window.addEventListener("resize", handleResize, false); //resizing is useful only when popups are opened
+//when window is resized. resizing is useful only when popups are opened
+if (!window.addEventListener) {
+    window.attachEvent("onresize", handleResize);
+}
+else {
+    window.addEventListener("resize", handleResize, false);
+}
 //re-position the modal pop up to the center of the page
 function handleResize() {
     if (modalWindowElement) {

@@ -118,9 +118,6 @@
     </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <BundleResource Include="..\..\packer\inputwebapp\App.Secure.v1.zip">
-      <Link>Assets\Apps\App.Secure.v1.zip</Link>
-    </BundleResource>
     <BundleResource Include="Resources\Default-568h%402x.png" />
     <BundleResource Include="Resources\Default-Landscape%402x~ipad.png" />
     <BundleResource Include="Resources\Default-Landscape~ipad.png" />
@@ -151,6 +148,12 @@
     <Content Include="..\app.secure\app_service\app.secure\view\common\selectOption.html">
       <Link>App_Service\App.Secure\View\Common\selectOption.html</Link>
     </Content>
+    <BundleResource Include="..\..\InputWebApp\App.Secure.v1.zip">
+      <Link>Assets\Apps\App.Secure.v1.zip</Link>
+    </BundleResource>
+    <BundleResource Include="..\..\InputWebApp\App.Web.v1.zip">
+      <Link>Assets\Apps\App.Web.v1.zip</Link>
+    </BundleResource>
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <ITunesArtwork Include="iTunesArtwork%402x" />

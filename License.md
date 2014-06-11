@@ -31,11 +31,11 @@
 
 The Reference <b>Arshu Portable App Runtime</b> Source is released under MIT License
 
-The <b>Arshu Web/OpenGL Component</b> used to create <b>Arshu Portable App Runtime</b> is released under a <b>Free with Branding</b> and Commercial License
+The <b>Arshu Web Component</b> used to create <b>Arshu Portable App Runtime</b> is released under a <b>Free with Branding</b> and Commercial License
 
 The <b>One Click Mobile Packer</b> to pack your <b>Portable Apps</b> into <b>Portable App Runtimes</b> to create <b>Native Apps</b> is released under a <b>Free with Restriction</b> and Commerical License</span>
 
-Native Apps are created by packing portable apps into portable app runtimes using the One Click Mobile Packer. Portable App Runtimes are created using the Arshu Web/OpenGL Component using Xamarin Tools
+Native Apps are created by packing portable apps into portable app runtimes using the One Click Mobile Packer. Portable App Runtimes are created using the Arshu Web Component using Xamarin Tools
 
 ##This project would not have been possible without the following Open Source Projects
 
@@ -430,52 +430,6 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 </div>
-
-
-#Open Source Used in OpenGL Arshu.GUI
-
-<h3><a href="javascript:void(0);" onclick="javascript:toggleDisplay('opentk');">OpenTK (MIT/X11 license )</a></h3>
-
-No Changes have been done
-<div id="opentk" style="display: none;">
-
-The <span> <a href="http://www.opentk.com/">Open Toolkit </a></span>is distributed under the permissive MIT/X11 license and is absolutely free.
-
-</div>
-
-<h3><a href="javascript:void(0);" onclick="javascript:toggleDisplay('gwen');">Gwen C++ (MIT License)</a></h3>
-No Changes have been done
-
-<div id="gwen" style="display: none;">
-
-Copyright (c) Garry Newman garrynewman@gmail.com
-<br />
-
-<a href="http://code.google.com/p/gwen/">Gwen C++ Project Site</a>
-
-</div>
-
-<h3><a href="javascript:void(0);" onclick="javascript:toggleDisplay('gwendotnet');">Gwen C# (MIT License)</a></h3>
-
-Major Changes have been done
-<div id="gwendotnet" style="display: none;">
-
-Copyright (c) <a href="http://omeg.pl/blog/">omeg</a>
-<br />
-<a href="http://code.google.com/p/gwen-dotnet/">Gwen DotNet Project Site</a>
-
-</div>
-
-<h3><a href="javascript:void(0);" onclick="javascript:toggleDisplay('crossgraphics');">CrossGraphics (MIT License)</a></h3>
-Minor Changes have been done
-
-<div id="crossgraphics" style="display: none;">
-
-The code is copyright Frank A. Krueger and is released under the MIT license.
-<br />
-<a href="https://github.com/praeclarum/CrossGraphics">CrossGraphics GitHub Link</a>
-
-</div>           
 
 </body>
 </html>

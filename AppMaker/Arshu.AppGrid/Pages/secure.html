@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type='text/javascript'>var sCD = new Date(); var sT = sCD.getTime(); var done = false;</script>
+    <title>Arshu Secure World</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+
+    <!-- Disable Format Detection -->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="format-detection" content="address=no" />
+
+    <!-- Kills text zoom in iOS. Media Queries manage font sizes -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
+    <link rel="SHORTCUT ICON" href="/favicon.ico" />
+
+    <link href="/App_Resource/Css/main.min.css" rel="stylesheet" type="text/css" />
+    <script src="/App_Resource/Js/main.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        var nextRequestId = 0;
+        var jsonRequestPath = "/Handler/JsonSecure.ashx";
+
+        function isRegisterd(msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+            var valid = true;
+
+            if (valid == true) {
+                var paramValues = '{';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "IsRegistered",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+                           if (retResult.hasOwnProperty('message') === true) {
+                               var retMessage = retResult.message;
+                               showSuccess(retMessage, msgId);
+                           }
+                           else if (retResult.hasOwnProperty('error') === true) {
+                               var retError = retResult.error;
+                               showError(retError, msgId);
+                           }
+                       }
+                   });
+            }
+        }
+
+        function registerUser(userEmailId, userPwdId, userPwdConfirmId, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+            var valid = true;
+
+            var userEmailElm = document.getElementById(userEmailId);
+            var userPwdElm = document.getElementById(userPwdId);
+            var userPwdConfirmElm = document.getElementById(userPwdConfirmId);
+
+            var userEmail = userEmailElm.value;
+            if (userEmail.length === 0) {
+                showError('Please enter the User Email', msgId);
+                valid = false;
+            }
+
+            if (valid == true) {
+                var userPwd = userPwdElm.value;
+                if (userPwd.length === 0) {
+                    showError('Please enter the User Password', msgId);
+                    valid = false;
+                }
+            }
+
+            if (valid == true) {
+                var userPwdConfirm = userPwdConfirmElm.value;
+                if (userPwdConfirm.length === 0) {
+                    showError('Please enter the User Confirm Password', msgId);
+                    valid = false;
+                }
+            }
+
+            if (valid == true) {
+                if (userPwd != userPwdConfirm) {
+                    showError('Password Does not Match', msgId);
+                    valid = false;
+                }
+            }
+
+            if (valid == true) {
+                var paramValues = '[ {"registerInfo" : { ';
+                paramValues += ' "registerId" : "' + userEmail + '"';
+                paramValues += ', "registerPwd" : "' + userPwd + '"';
+                paramValues += ', "registerName" : "' + userEmail + '"';
+                paramValues += ', "inviteCode" : ""';
+                paramValues += ', "checkRemote" : false';
+                paramValues += '} } ]';
+
+                /*
+                var paramValues = [ "registerInfo" : {
+                        "registerId" :  userEmail ,
+                        "registerPwd" :  userPwd ,
+                        "registerName" :  userEmail ,
+                        "inviteCode" : "",
+                        "checkRemote" : false
+                        } ];
+                */
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "RegisterUser",
+                    paramsArray: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+                           if (retResult.hasOwnProperty('message') === true) {
+                               var retMessage = retResult.message;
+                               showSuccess(retMessage, msgId);
+                           }
+                           else if (retResult.hasOwnProperty('error') === true) {
+                               var retError = retResult.error;
+                               showError(retError, msgId);
+                           }
+                       }
+                   });
+            }
+        }
+
+        function isLoggedIn(showOnLogon, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+            var valid = true;
+
+            if (valid == true) {
+                var paramValues = '{';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "IsLoggedIn",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+                           if (showOnLogon == false) {
+                               if (retResult.hasOwnProperty('message') === true) {
+                                   var retMessage = retResult.message;
+                                   showSuccess(retMessage, msgId);
+                               }
+                               else if (retResult.hasOwnProperty('error') === true) {
+                                   var retError = retResult.error;
+                                   showError(retError, msgId);
+                               }
+                           } else {
+                               if (retResult.hasOwnProperty('message') === true) {
+                                   var retMessage = retResult.message;
+                                   showSuccess(retMessage, msgId);
+                               }
+                           }
+                       }
+                   });
+            }
+        }
+
+        function loginUser(userEmailId, userPwdId, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+            var valid = true;
+
+            var userEmailElm = document.getElementById(userEmailId);
+            var userPwdElm = document.getElementById(userPwdId);
+
+            var userEmail = userEmailElm.value;
+            if (userEmail.length === 0) {
+                showError('Please enter the User Email', msgId);
+                valid = false;
+            }
+
+            if (valid == true) {
+                var userPwd = userPwdElm.value;
+                if (userPwd.length === 0) {
+                    showError('Please enter the User Password', msgId);
+                    valid = false;
+                }
+            }
+
+            if (valid == true) {
+                var paramValues = '{';
+                paramValues += '"userEmail" : "' + userEmail + '"';
+                paramValues += ', "userPassword" : "' + userPwd + '"';
+                paramValues += ', "rememberMe" : true';
+                paramValues += ', "allowUnApproved" : true';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "LoginUser",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+                           if (retResult.hasOwnProperty('message') === true) {
+                               var retMessage = retResult.message;
+                               showSuccess(retMessage, msgId);
+                           }
+                           else if (retResult.hasOwnProperty('error') === true) {
+                               var retError = retResult.error;
+                               showError(retError, msgId);
+                           }
+                       }
+                   });
+            }
+        }
+
+        function logout(msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+            var valid = true;
+
+            if (valid == true) {
+                var paramValues = '{';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "LogoutUser",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                   function (response) {
+                       var haveResult = false;
+                       if (response.hasOwnProperty('Result') === true) {
+                           var retResult = response.Result;
+                           if (retResult.hasOwnProperty('message') === true) {
+                               var retMessage = retResult.message;
+                               showSuccess(retMessage, msgId);
+                           }
+                           else if (retResult.hasOwnProperty('error') === true) {
+                               var retError = retResult.error;
+                               showError(retError, msgId);
+                           }
+                       }
+                   });
+            }
+        }
+
+        addLoadEvent(function () {
+            isLoggedIn(true, 'isLoggedInMsg', ['isRegisterdMsg', 'registerUserMsg', 'loginUserMsg', 'logoutMsg']);
+        })
+    </script>
+</head>
+<body style="background-color: #808080;">
+
+    <div style="text-align: center; margin: 0px 10px 0px 10px">
+
+        <div class="section" style="min-width:200px;">
+            <a href="/Pages/hello.html" class="success" style="position:absolute;left:0px;top:0px; width:50px;min-width:50px;">Home</a> 
+            <h1>Hello Secure</h1>
+        </div>
+
+        <div class="section" id="register">
+            <button class="btn primary" onclick="isRegisterd('isRegisterdMsg', ['registerUserMsg', 'isLoggedInMsg', 'loginUserMsg', 'logoutMsg'])">Is Registered</button>
+            <div id="isRegisterdMsg"></div>
+            <label for="userEmail" class="blocklabel">User Email</label>
+            <input type="text" class="input_full" id="userEmail" name="userEmail" placeholder="Enter User Email" value="test@arshu.com" />
+            <label for="userPwd" class="blocklabel">User Password</label>
+            <input type="password" class="input_full" id="userPwd" name="userPwd" placeholder="Enter User Password" value="test" />
+            <label for="userPwdConfirm" class="blocklabel">Confirm Password</label>
+            <input type="password" class="input_full" id="userPwdConfirm" name="userPwdConfirm" placeholder="Enter User Password Again" value="test" />
+            <button class="btn success" onclick="registerUser('userEmail' , 'userPwd', 'userPwdConfirm', 'registerUserMsg', ['isRegisterdMsg', 'isLoggedInMsg', 'loginUserMsg', 'logoutMsg'])">Register User</button>
+            <div id="registerUserMsg"></div>
+        </div>
+
+        <div class="section" id="login">
+            <button class="btn primary" onclick="isLoggedIn(false, 'isLoggedInMsg', ['isRegisterdMsg', 'registerUserMsg', 'loginUserMsg', 'logoutMsg'])">Is Logged In</button>
+            <div id="isLoggedInMsg"></div>
+            <label for="loginUserEmail" class="blocklabel">Login User Email</label>
+            <input type="text" class="input_full" id="loginUserEmail" name="loginUserEmail" placeholder="Enter Login User Email" value="test@arshu.com" />
+            <label for="loginUserPwd" class="blocklabel">Login User Password</label>
+            <input type="password" class="input_full" id="loginUserPwd" name="loginUserPwd" placeholder="Enter the Login User Password" value="test" />
+            <button class="btn success" onclick="loginUser('loginUserEmail' , 'loginUserPwd', 'loginUserMsg', ['isRegisterdMsg', 'registerUserMsg', 'isLoggedInMsg', 'logoutMsg'])">SignIn</button>
+            <div id="loginUserMsg"></div>
+        </div>
+
+        <div class="section" id="loginVerify">
+            <button class="btn success" onclick="logout('logoutMsg', ['isRegisterdMsg', 'registerUserMsg', 'isLoggedInMsg', 'loginUserMsg'])">Sign Out</button>
+            <div id="logoutMsg"></div>
+        </div>
+
+    </div>
+
+    <div style="width: 99%;">
+        <div style="text-align: center; margin: 10px auto; font-size: x-small;">
+            <div>
+                &copy; 2005-2014 <a data-ajax="false" href="http://www.htmltoapp.com">Html to App</a>
+                <span id="loadingTime" title="Page Loading Time" class="footertext"></span>
+                <span id="htmlInfo" title="Html Info (DOM Count)" class="footertext"></span>
+            </div>
+            <div>
+                <span id="ajaxTime" title="Ajax Processing Time" class="footertext"></span>
+            </div>
+            Android<span class="isIOSHide" style="color: red">*</span> and IOS<span class="isANDROIDHide" style="color: red">*</span> MVP Maker
+        </div>
+    </div>
+    <script type="text/javascript">
+        document.getElementById('htmlInfo').innerHTML = '(' + document.getElementsByTagName('*').length + ')';
+        var eCD = new Date();
+        var eT = eCD.getTime();
+        var tT = (eT - sT) / 1000;
+        document.getElementById("loadingTime").innerHTML = "(" + tT + ") secs";
+        var oldonload = window.onload;
+        window.onload = function () {
+            var lEcd = new Date();
+            var lEt = lEcd.getTime();
+            var lTt = (lEt - sT) / 1000;
+            document.getElementById("loadingTime").innerHTML = "(" + lTt + ") secs";
+            if (oldonload) {
+                oldonload();
+            }
+        };
+    </script>
+</body>
+</html>

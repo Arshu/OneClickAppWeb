@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type='text/javascript'>var sCD = new Date(); var sT = sCD.getTime(); var done = false;</script>
+    <title>Arshu Db World</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+
+    <!-- Disable Format Detection -->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="format-detection" content="address=no" />
+
+    <!-- Kills text zoom in iOS. Media Queries manage font sizes -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
+    <link rel="SHORTCUT ICON" href="/favicon.ico" />
+
+    <link href="/App_Resource/Css/main.min.css" rel="stylesheet" type="text/css" />
+    <script src="/App_Resource/Js/main.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        var nextRequestId = 0;
+        var jsonRequestPath = "/Handler/JsonDb.ashx";
+
+        function getSQLiteDatabase(databaseSelectId, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+            var valid = true;
+
+            var databaseSelectElm = document.getElementById(databaseSelectId);
+
+            if (valid === true) {
+                var paramValues = '{';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "GetSQLiteDatabases",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                    function (response) {
+                        var haveResult = false;
+                        if (response.hasOwnProperty('Result') === true) {
+                            var retResult = response.Result;
+                            if (retResult.hasOwnProperty('data') === true) {
+                                var retData = retResult.data;
+                                databaseSelectElm.options.length = 0;
+                                for (var key in retData) {
+                                    if (retData.hasOwnProperty(key)) {
+                                        databaseSelectElm.options[databaseSelectElm.options.length] = new Option(retData[key], key);
+                                        haveResult = true;
+                                    }
+                                }
+                            }
+                            else if (retResult.hasOwnProperty('error') === true) {
+                                var retError = retResult.error;
+                                showError(retError, msgId);
+                            }
+                        }
+
+                        if (haveResult === false) {
+                            databaseSelectElm.options.length = 0;
+                            databaseSelectElm.options[0] = new Option("No Databases Found", "0");
+                        }
+                    });
+            }
+        }
+
+        function getTables(databaseSelectId, tableSelectId, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+            var valid = true;
+
+            var databaseSelectElm = document.getElementById(databaseSelectId);
+            var tableSelectElm = document.getElementById(tableSelectId);
+
+            var dbName = databaseSelectElm.options[databaseSelectElm.selectedIndex].value;
+            if ((dbName.length === 0) || (dbName == "0")) {
+                showError('Please Load and Select a Database', msgId);
+                valid = false;
+            }
+
+            if (valid === true) {
+                var paramValues = '{';
+                paramValues += '"dbName" : "' + dbName + '"';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "GetTables",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                    function (response) {
+                        var haveResult = false;
+                        if (response.hasOwnProperty('Result') === true) {
+                            var retResult = response.Result;
+                            if (retResult.hasOwnProperty('data') === true) {
+                                var retData = retResult.data;
+                                tableSelectElm.options.length = 0;
+                                var firstRecord = true;
+                                for (var i = 0; i < retData.length; i++) {
+                                    if (firstRecord === true) {
+                                        tableSelectElm.options[tableSelectElm.options.length] = new Option(retData[i], retData[i], true, true);
+                                    } else {
+                                        tableSelectElm.options[tableSelectElm.options.length] = new Option(retData[i], retData[i]);
+                                    }
+                                    haveResult = true;
+                                    firstRecord = false;
+                                }
+                            }
+                            else if (retResult.hasOwnProperty('error') === true) {
+                                var retError = retResult.error;
+                                showError(retError, msgId);
+                            }
+                        }
+
+                        if (haveResult === false) {
+                            tableSelectElm.options.length = 0;
+                            tableSelectElm.options[0] = new Option("No Tables Found", "0");
+                        }
+
+                    });
+            }
+        }
+
+        function doGenSql(databaseSelectId, tableSelectId, recordCountId, selectStatementId, insertStatementId, updateStatementId, deleteStatementId, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+            var valid = true;
+
+            var databaseSelectElm = document.getElementById(databaseSelectId);
+            var tableSelectElm = document.getElementById(tableSelectId);
+
+            var dbName = databaseSelectElm.options[databaseSelectElm.selectedIndex].value;
+            if ((dbName.length === 0) || (dbName == "0")) {
+                showError('Please Load and Select a Database', msgId);
+                valid = false;
+            }
+
+            if (valid == true) {
+                var tableName = tableSelectElm.options[tableSelectElm.selectedIndex].value;
+                if ((tableName.length === 0) || (tableName == "0")) {
+                    showError('Please Load and Select a Table', msgId);
+                    valid = false;
+                }
+            }
+
+            var recordNo = 0;
+            var recordCountElm = document.getElementById(recordCountId);
+            recordNo = recordCountElm.value;
+            if (recordNo.length == 0) recordNo = 0;
+
+            var selectStatementElm = document.getElementById(selectStatementId);
+            selectStatementElm.innerHTML = '';
+
+            var insertStatementElm = document.getElementById(insertStatementId);
+            insertStatementElm.innerHTML = '';
+
+            var updateStatementElm = document.getElementById(updateStatementId);
+            updateStatementElm.innerHTML = '';
+
+            var deleteStatementElm = document.getElementById(deleteStatementId);
+            deleteStatementElm.innerHTML = '';
+
+            if (valid === true) {
+                var paramValues = '{';
+                paramValues += '"dbName" : "' + dbName + '"';
+                paramValues += '"dbTableName" : "' + tableName + '"';
+                paramValues += '"recordNo" : "' + recordNo + '"';
+                paramValues += '"fieldSeparator" : "\n"';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: "DoGenSql",
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                    function (response) {
+                        var haveResult = false;
+                        if (response.hasOwnProperty('Result') === true) {
+                            var retResult = response.Result;
+
+                            if (retResult.hasOwnProperty('recordCount') === true) {
+                                recordCountElm.value = retResult.recordCount;
+                                haveResult = true;
+                            }
+                            if (retResult.hasOwnProperty('selectSql') === true) {
+                                selectStatementElm.value = retResult.selectSql;
+                                haveResult = true;
+                            }
+                            if (retResult.hasOwnProperty('insertSql') === true) {
+                                insertStatementElm.value = retResult.insertSql;
+                                haveResult = true;
+                            }
+
+                            if (retResult.hasOwnProperty('updateSql') === true) {
+                                updateStatementElm.value = retResult.updateSql;
+                                haveResult = true;
+                            }
+
+                            if (retResult.hasOwnProperty('deleteSql') === true) {
+                                deleteStatementElm.value = retResult.deleteSql;
+                                haveResult = true;
+                            }
+
+                            if (retResult.hasOwnProperty('error') === true) {
+                                var retError = retResult.error;
+                                showError(retError);
+                            }
+                        }
+
+                        if (haveResult === false) {
+                            dbDataElm.innerHTML = "No Sql Statements Generated";
+                        }
+
+                    });
+            }
+        }
+
+        function doSqlStatement(databaseSelectId, sqlMethod, sqlStatementId, dbDataId, msgId, hideMsgIdList) {
+
+            hideMessage(msgId, hideMsgIdList);
+            var valid = true;
+
+            var dbDataElm = document.getElementById(dbDataId);
+            dbDataElm.innerHTML = '';
+
+            var databaseSelectElm = document.getElementById(databaseSelectId);
+            var sqlStatementElm = document.getElementById(sqlStatementId);
+
+            var dbName = databaseSelectElm.options[databaseSelectElm.selectedIndex].value;
+            if ((dbName.length === 0) || (dbName == "0")) {
+                showError('Please Load and Select a Database', msgId);
+                valid = false;
+            }
+
+            var sqlStatement = sqlStatementElm.value;
+            if (valid == true) {
+                if ((sqlStatement.length === 0)) {
+                    showError('Please Generate or Enter the Sql Statement', msgId);
+                    valid = false;
+                }
+            }
+
+            if (valid === true) {
+                var paramValues = '{';
+                paramValues += '"dbName" : "' + dbName + '"';
+                paramValues += '"sqlStatement" : "' + sqlStatement + '"';
+                paramValues += '}';
+
+                var request = {
+                    id: ++nextRequestId,
+                    method: sqlMethod,
+                    params: paramValues
+                };
+
+                asyncJsonRequest(jsonRequestPath, request, msgId,
+                    function (response) {
+                        var haveResult = false;
+                        var noerror = true;
+                        if (response.hasOwnProperty('Result') === true) {
+                            var retResult = response.Result;
+                            if (retResult.hasOwnProperty('data') === true) {
+                                var retData = retResult.data;
+                                dbDataElm.innerHTML = "Return Result=" + JSON.stringify(retData, null, " ");
+                                haveResult = true;
+                            }
+                            else if (retResult.hasOwnProperty('error') === true) {
+                                var retError = retResult.error;
+                                showError(retError);
+                                noerror = false;
+                            }
+                        }
+
+                        if ((haveResult === false) && (noerror === true)) {
+                            dbDataElm.innerHTML = "No Results Found";
+                        } else if (noerror === false) {
+                            dbDataElm.innerHTML = "Error:Please See the Error Message Above";
+                        }
+
+                    });
+            }
+        }
+
+    </script>
+</head>
+<body style="background-color: #808080;">
+    <div style="text-align: center; margin: 10px 10px 0px 10px">
+
+        <div class="section" style="min-width:200px;">
+            <a href="/Pages/hello.html" class="success" style="position:absolute;left:0px;top:0px;width:50px;min-width:50px;">Home</a> 
+            <h1>Hello db</h1>
+        </div>
+
+        <div class="section">
+            <button class="btn success" onclick="getSQLiteDatabase('databases', 'getSQLiteDatabaseMsg', ['getTablesMsg', 'doGenSqlMsg'])">Get Databases</button>
+            <div id="getSQLiteDatabaseMsg"></div>
+            <label for="databases" class="blocklabel">Databases</label>
+            <div class="select-wrapper">
+                <div class="select-style">
+                    <select name="databases" id="databases">
+                        <option value="0" selected="selected">No Databases Retrieved</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <button class="btn success" onclick="getTables('databases', 'tables', 'getTablesMsg', ['getSQLiteDatabaseMsg', 'doGenSqlMsg'])">Get Tables</button>
+            <div id="getTablesMsg"></div>
+            <label for="tables" class="blocklabel">Tables</label>
+            <div class="select-wrapper">
+                <div class="select-style">
+                    <select name="tables" id="tables">
+                        <option value="0" selected="selected">No Tables Retrieved</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <label for="recordCount" class="blocklabel">Total Records / Record No</label>
+            <input type="text" class="input_full" id="recordCount" name="recordCount" placeholder="Enter the Record No" value="0" />
+            <button class="btn success" onclick="doGenSql('databases', 'tables', 'recordCount', 'selectStatement', 'insertStatement', 'updateStatement', 'deleteStatement', 'doGenSqlMsg', ['getSQLiteDatabaseMsg', 'getTablesMsg'])">Generate Sql</button>
+            <div id="doGenSqlMsg"></div>
+        </div>
+        <div class="section">
+            <div>
+                <label for="sql">Sql Type</label>
+                <input type="radio" name="sql" id="sql" value="Select" title="Select" checked="checked" onclick="showSelectedSection(this, 'selectStatementSection', ['insertStatementSection', 'updateStatementSection', 'deleteStatementSection'])" />
+                <input type="radio" name="sql" value="Insert" title="Insert" onclick="showSelectedSection(this, 'insertStatementSection', ['selectStatementSection', 'updateStatementSection', 'deleteStatementSection'])" />
+                <input type="radio" name="sql" value="Update" title="Update" onclick="showSelectedSection(this, 'updateStatementSection', ['selectStatementSection', 'insertStatementSection', 'deleteStatementSection'])" />
+                <input type="radio" name="sql" value="Delete" title="Delete" onclick="showSelectedSection(this, 'deleteStatementSection', ['selectStatementSection', 'insertStatementSection', 'updateStatementSection'])" />
+            </div>
+            <div id="selectStatementSection">
+                <label for="selectStatement" class="blocklabel">Select Statement</label>
+                <textarea id="selectStatement" name="selectStatement" rows="10" placeholder="Enter the Select Statement" style="height: 150px;"></textarea>
+                <br />
+                <button class="btn success" onclick="doSqlStatement('databases', 'DoSelect', 'selectStatement', 'dbData', 'doSqlStatementMsg', ['getSQLiteDatabaseMsg', 'getTablesMsg', 'doGenSqlMsg'])">Do Select</button>
+            </div>
+            <div id="insertStatementSection" style="display: none;">
+                <label for="insertStatement" class="blocklabel">Insert Statement</label>
+                <textarea id="insertStatement" name="insertStatement" rows="10" placeholder="Enter the Insert Statement" style="height: 150px;"></textarea>
+                <br />
+                <button class="btn primary" onclick="doSqlStatement('databases', 'DoInsert','insertStatement', 'dbData', 'doSqlStatementMsg', ['getSQLiteDatabaseMsg', 'getTablesMsg', 'doGenSqlMsg'])">Do Insert</button>
+            </div>
+            <div id="updateStatementSection" style="display: none;">
+                <label for="updateStatement" class="blocklabel">Update Statement</label>
+                <textarea id="updateStatement" name="updateStatement" rows="10" placeholder="Enter the Update Statement" style="height: 150px;"></textarea>
+                <br />
+                <button class="btn primary" onclick="doSqlStatement('databases', 'DoUpdate', 'updateStatement', 'dbData', 'doSqlStatementMsg', ['getSQLiteDatabaseMsg', 'getTablesMsg', 'doGenSqlMsg'])">Do Update</button>
+            </div>
+            <div id="deleteStatementSection" style="display: none;">
+                <label for="deleteStatement" class="blocklabel">Delete Statement</label>
+                <textarea id="deleteStatement" name="deleteStatement" rows="10" placeholder="Enter the Delete Statement" style="height: 150px;"></textarea>
+                <br />
+                <button class="btn primary" onclick="doSqlStatement('databases', 'DoDelete', 'deleteStatement', 'dbData', 'doSqlStatementMsg', ['getSQLiteDatabaseMsg', 'getTablesMsg', 'doGenSqlMsg'])">Do Delete</button>
+            </div>
+            <div id="doSqlStatementMsg"></div>
+            <div id="dbData"></div>
+        </div>
+    </div>
+
+    <div style="width: 99%;">
+        <div style="text-align: center; margin: 10px auto; font-size: x-small;">
+            <div>
+                &copy; 2005-2014 <a data-ajax="false" href="http://www.htmltoapp.com">Html to App</a>
+                <span id="loadingTime" title="Page Loading Time" class="footertext"></span>
+                <span id="htmlInfo" title="Html Info (DOM Count)" class="footertext"></span>
+            </div>
+            <div>
+                <span id="ajaxTime" title="Ajax Processing Time" class="footertext"></span>
+            </div>
+            Android<span class="isIOSHide" style="color: red">*</span> and IOS<span class="isANDROIDHide" style="color: red">*</span> MVP Maker
+        </div>
+    </div>
+    <script type="text/javascript">
+        document.getElementById('htmlInfo').innerHTML = '(' + document.getElementsByTagName('*').length + ')';
+        var eCD = new Date();
+        var eT = eCD.getTime();
+        var tT = (eT - sT) / 1000;
+        document.getElementById("loadingTime").innerHTML = "(" + tT + ") secs";
+        var oldonload = window.onload;
+        window.onload = function () {
+            var lEcd = new Date();
+            var lEt = lEcd.getTime();
+            var lTt = (lEt - sT) / 1000;
+            document.getElementById("loadingTime").innerHTML = "(" + lTt + ") secs";
+            if (oldonload) {
+                oldonload();
+            }
+        };
+    </script>
+</body>
+</html>
