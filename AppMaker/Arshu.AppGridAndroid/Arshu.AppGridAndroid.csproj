@@ -49,6 +49,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Components\Android\Arshu.AppWeb.dll</HintPath>
     </Reference>
+    <Reference Include="Arshu.Data">
+      <HintPath>..\..\Components\Android\Arshu.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Arshu.Web">
       <HintPath>..\..\Components\Android\Arshu.Web.dll</HintPath>
     </Reference>
@@ -61,6 +64,30 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\datamodel\DataSecure.cs">
+      <Link>App_Service\App.Secure\DataModel\DataSecure.cs</Link>
+    </Compile>
+    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\datamodel\DataSource.cs">
+      <Link>App_Service\App.Secure\DataModel\DataSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\datasource\DataEntities.cs">
+      <Link>App_Service\App.Secure\DataSource\DataEntities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\datasource\DataSource.cs">
+      <Link>App_Service\App.Secure\DataSource\DataSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\datasource\FileSource.cs">
+      <Link>App_Service\App.Secure\DataSource\FileSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\service\JsonAuthSecureHandler.cs">
+      <Link>App_Service\App.Secure\Service\JsonAuthSecureHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\service\JsonSecureHandler.cs">
+      <Link>App_Service\App.Secure\Service\JsonSecureHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\viewtemplate\Template.cs">
+      <Link>App_Service\App.Secure\ViewTemplate\Template.cs</Link>
+    </Compile>
     <Compile Include="..\Arshu.AppGrid\App_Service\Arshu.AppGrid\Database\DataCommon.cs">
       <Link>App_Service\Arshu.AppGrid\Database\DataCommon.cs</Link>
     </Compile>
@@ -88,8 +115,8 @@
     <Compile Include="..\Arshu.AppGrid\App_Service\Arshu.AppGrid\JsonPeerHandler.cs">
       <Link>App_Service\Arshu.AppGrid\JsonPeerHandler.cs</Link>
     </Compile>
-    <Compile Include="..\Arshu.AppGrid\App_Service\Arshu.AppGrid\JsonSecureHandler.cs">
-      <Link>App_Service\Arshu.AppGrid\JsonSecureHandler.cs</Link>
+    <Compile Include="..\Arshu.AppGrid\App_Service\Arshu.AppGrid\JsonSecurityHandler.cs">
+      <Link>App_Service\Arshu.AppGrid\JsonSecurityHandler.cs</Link>
     </Compile>
     <Compile Include="Properties\GridAndroidAssemblyInfo.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -102,6 +129,9 @@
     <AndroidResource Include="..\..\InputWebApp\App.Web.v1.zip">
       <Link>Assets\Apps\App.Web.v1.zip</Link>
     </AndroidResource>
+    <AndroidAsset Include="..\..\InputWebApp\App.Secure.v1.zip">
+      <Link>Assets\Apps\App.Secure.v1.zip</Link>
+    </AndroidAsset>
     <None Include="Properties\arshu.keystore" />
     <AndroidResource Include="Resources\Layout\ZxingOverlay.axml" />
   </ItemGroup>
@@ -112,6 +142,12 @@
     <AndroidAsset Include="..\Arshu.AppGrid\App_Data\SetupData.bson.txt">
       <Link>Assets\SetupData.bson.txt</Link>
     </AndroidAsset>
+    <Content Include="..\..\appsecure\app.secure\app_service\app.secure\view\common\liTwoColumn.html">
+      <Link>App_Service\App.Secure\View\Common\liTwoColumn.html</Link>
+    </Content>
+    <Content Include="..\..\appsecure\app.secure\app_service\app.secure\view\common\selectOption.html">
+      <Link>App_Service\App.Secure\View\Common\selectOption.html</Link>
+    </Content>
     <Content Include="Properties\AndroidManifest.xml" />
     <AndroidResource Include="Resources\Drawable\background.png" />
     <AndroidResource Include="Resources\Drawable\background_tiled.xml" />

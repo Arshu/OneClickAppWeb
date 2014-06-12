@@ -233,6 +233,37 @@ namespace App.Secure
 
         #endregion
 
+        #region Get Login User
+
+        public static string GetLoginUser()
+        {
+            string loginUserId = "";
+            if (BaseSecurity.IsAuthenticated() == true)
+            {
+                bool isDefault = false;
+                loginUserId = BaseSecurity.GetLoginUserID(out isDefault);
+            }
+            return loginUserId;
+        }
+
+        #endregion
+
+        #region Change Password
+
+        public static bool ChangePassword(string userId, string oldPassword, string newPassword, out string retMessage)
+        {
+            bool ret = false;
+            string message = "";
+            if (BaseSecurity.IsAuthenticated() == true)
+            {
+                ret = BaseSecurity.ChangePassword(userId, oldPassword, newPassword, out message);
+            }
+            retMessage = message;
+            return ret;
+        }
+
+        #endregion
+
         #region Security Store
 
         #region Get Roles

@@ -161,6 +161,84 @@ namespace App.Secure
 
         #endregion
 
+        #region Get Login User
+
+        [JsonRpcMethod("GetLoginUser", Idempotent = true)]
+        [JsonRpcHelp("Get Login User and Returns Json[data, message, error]")]
+        public JsonObject GetLoginUser()
+        {
+            JsonObject retMessage = new JsonObject();
+
+            string message = "";
+            bool ret = DataSecure.IsAuthenticated(out message);
+            if (ret == true)
+            {
+                string loginUserId = DataSecure.GetLoginUser();
+                retMessage.Add("data", loginUserId);
+                retMessage.Add("message", "Successfully Retrieved User");
+            }
+            else
+            {
+                if (message.Trim().Length == 0)
+                {
+                    retMessage.Add("error", "User is not Authenticated");
+                }
+                else
+                {
+                    retMessage.Add("error", message);
+                }
+            }
+
+            return retMessage;
+        }
+
+        #endregion
+
+        #region Change Password
+
+        [JsonRpcMethod("ChangePassword", Idempotent = false)]
+        [JsonRpcHelp("Change Password and Returns Json[message, error]")]
+        public JsonObject ChangePassword(string userId, string oldPassword, string newPassword)
+        {
+            JsonObject retMessage = new JsonObject();
+
+            string message = "";
+            bool ret = DataSecure.IsAuthenticated(out message);
+            if (ret == true)
+            {
+                if (DataSecure.ChangePassword(userId, oldPassword, newPassword, out message) == true)
+                {
+                    retMessage.Add("message", "Successfully Changed Password");
+                }
+                else
+                {
+                    if (message.Trim().Length == 0)
+                    {
+                        retMessage.Add("error", "Error in Changing Password");
+                    }
+                    else
+                    {
+                        retMessage.Add("error", message);
+                    }
+                }
+            }
+            else
+            {
+                if (message.Trim().Length == 0)
+                {
+                    retMessage.Add("error", "User is not Authenticated");
+                }
+                else
+                {
+                    retMessage.Add("error", message);
+                }
+            }
+
+            return retMessage;
+        }
+
+        #endregion
+
         #region Get Role Option List
 
         [JsonRpcMethod("GetRoleOptionListHtml", Idempotent = true)]

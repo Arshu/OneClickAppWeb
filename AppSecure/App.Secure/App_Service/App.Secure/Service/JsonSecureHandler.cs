@@ -40,7 +40,7 @@ namespace App.Secure
 
             string message = "";
             bool ret = DataSecure.IsAuthenticated(out message);
-            if (ret == false)
+            if (ret == true)
             {
                 if (message.Trim().Length == 0)
                 {

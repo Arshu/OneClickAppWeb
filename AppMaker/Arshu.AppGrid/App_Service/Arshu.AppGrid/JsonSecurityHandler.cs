@@ -17,21 +17,21 @@ using Arshu.Web.Security;
 
 namespace Arshu.AppGrid
 {
-    [JsonRpcHelp("Json Secure Handler", IsSecure = false)]
-    public class JsonSecureHandler : JsonRpcHandler
+    [JsonRpcHelp("Json Security Handler", IsSecure = false)]
+    public class JsonSecurityHandler : JsonRpcHandler
     {
-        public static string JsonBaseHandlerName = "JsonSecure.ashx";
-        public static string JsonBaseHandlerTypeName = typeof(JsonSecureHandler).FullName;
+        public static string JsonBaseHandlerName = "JsonSecurity.ashx";
+        public static string JsonBaseHandlerTypeName = typeof(JsonSecurityHandler).FullName;
 
-        private static JsonSecureService service = new JsonSecureService();
-        public JsonSecureHandler()
+        private static JsonSecurityService service = new JsonSecurityService();
+        public JsonSecurityHandler()
         {
-            if (service == null) service = new JsonSecureService();
+            if (service == null) service = new JsonSecurityService();
         }
     }
 
-    [JsonRpcHelp("Json Secure Service")]
-    public class JsonSecureService : JsonRpcService
+    [JsonRpcHelp("Json Security Service")]
+    public class JsonSecurityService : JsonRpcService
     {
         [JsonRpcMethod("RegisterUser")]
         [JsonRpcHelp("Register User and Returns Json[status, message, error]")]

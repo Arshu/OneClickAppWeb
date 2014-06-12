@@ -1,4 +1,8 @@
-
+<script type="text/javascript">
+    $(document).bind('pageinit', function (event) {
+        isAuthenticated('/Index.ashx', '');
+    });
+</script>
 <div id="aboutContent" style="display:none">
 {{AboutContent}}
 </div>

@@ -92,9 +92,7 @@
     <Compile Include="App_Service\Arshu.AppGrid\JsonDeviceHandler.cs" />
     <Compile Include="App_Service\Arshu.AppGrid\JsonFileHandler.cs" />
     <Compile Include="App_Service\Arshu.AppGrid\JsonPeerHandler.cs" />
-    <Compile Include="App_Service\Arshu.AppGrid\JsonSecureHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="App_Service\Arshu.AppGrid\JsonSecurityHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -106,9 +104,9 @@
     <Content Include="Handler\JsonPeer.ashx" />
     <Content Include="App_Resource\Media\audio.ogg" />
     <Content Include="App_Resource\Media\video.ogv" />
-    <Content Include="Handler\JsonSecure.ashx" />
     <Content Include="Index.ashx" />
     <Content Include="JsonRpc.ashx" />
+    <Content Include="Handler\JsonSecurity.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
