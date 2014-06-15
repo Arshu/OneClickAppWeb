@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 using Arshu.Web.Basic.Log;
 using Arshu.Web.Common;
@@ -16,10 +17,13 @@ namespace App.Secure
     {        
         #region Init User
 
-        public static bool InitUser(string userAlias, string userId, string userPwd, out string retMessage)
+        public static bool InitUser(out string retMessage)
         {
             bool ret = false;
             string message = "";
+            string userAlias = "Admin";
+            string userId = "Admin";
+            string userPwd = "Admin";
 
             //Only for empty Security Store, the User is auto created 
             //from first login details
@@ -140,12 +144,13 @@ namespace App.Secure
 
         #region Login User
 
-        public static bool LoginUser(string userId, string userPwd, bool rememberMe, out string retMessage)
+        public static bool LoginUser(string userId, string userPwd, bool rememberMe, out string retMessage, out string retWarnMessage)
         {
             bool ret = false;
             string message = "";
 
-            ret = InitUser(userId, userId, userPwd, out message);
+            string warnMessage = "";
+            ret = InitUser(out warnMessage);
             if (ret == true)
             {
                 if (BaseSecurity.IsAuthenticated() == true) BaseSecurity.SignOut();
@@ -153,6 +158,7 @@ namespace App.Secure
             }
 
             retMessage = message;
+            retWarnMessage = warnMessage;
             return ret;
         }
 
@@ -160,6 +166,7 @@ namespace App.Secure
 
         #region Register User
 
+        private static Regex _validNameRegEx = new Regex(@"^[a-zA-Z][a-zA-Z0-9\._\-]{0,22}?[a-zA-Z0-9]{0,2}$", RegexOptions.Compiled);
         public static bool RegisterUser(string userId, string userEmail, string userPwd, out string retMessage)
         {
             bool ret = false;
@@ -172,6 +179,15 @@ namespace App.Secure
             {
                 message = "User Id is already registered [" + message + "]";
                 validationFail = true;
+            }
+
+            if (validationFail == false)
+            {
+                if (_validNameRegEx.IsMatch(userId) == false)
+                {
+                    message = "User id [" + userEmail + "] is not valid.";
+                    validationFail = true;
+                }
             }
 
             if (validationFail == false)
@@ -193,12 +209,27 @@ namespace App.Secure
                     validationFail = true;
                 }
             }
-            //SYD_User existingUser = DataSource.GetSydUserByAlias(userAlias);
-            //if (existingUser != null)
-            //{
-            //    message = "User Alias is already registered";
-            //    validationFail = true;
-            //}
+
+            if (validationFail == false)
+            {
+                SYD_User existingUser = DataSource.GetSydUserByAlias(userId);
+                if (existingUser != null)
+                {
+                    message = "User Alias [" + userId + "] is already registered";
+                    validationFail = true;
+                }
+            }
+
+            string userHash = DataSource.GetUserHash(userId, userPwd);
+            if (validationFail == false)
+            {
+                SYD_User existingUser = DataSecure.GetSydUser(userHash);
+                if (existingUser != null)
+                {
+                    message = "User [" + userId + "] is already registered";
+                    validationFail = true;
+                }
+            }
 
             if (validationFail == false)
             {
@@ -209,7 +240,7 @@ namespace App.Secure
 
                     SYD_User sydUser = new SYD_User();
                     sydUser.UserAlias = userId;
-                    sydUser.UserHash = DataSource.GetUserHash(userId, userPwd);
+                    sydUser.UserHash = userHash;
                     sydUser.IsAdmin = false;
                     long userNo = DataSource.InsertSydUser(out message, sydUser);
                     if (userNo != 0)

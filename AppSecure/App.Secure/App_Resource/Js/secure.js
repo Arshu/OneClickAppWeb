@@ -266,7 +266,7 @@ function logOffUser(msgElmId) {
 }
 
 //Login User
-function loginUser(userName, userPassword, rememberMe, msgElmId) {
+function loginUser(userName, userPassword, rememberMe, msgElmId, warnElmId) {
     var valid = true;
 
     //Validate Arguments
@@ -298,6 +298,12 @@ function loginUser(userName, userPassword, rememberMe, msgElmId) {
 
                        var retError = retResult.error;
                        showError(retError, msgElmId);
+                   }
+
+                   if (retResult.hasOwnProperty('warn') === true) {
+
+                       var retWarn = retResult.warn;
+                       showWarning(retWarn, warnElmId);
                    }
                }
            });

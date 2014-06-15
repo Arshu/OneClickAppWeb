@@ -59,7 +59,7 @@ namespace App.Secure.Views
             }
         }
 
-		private const string TemplateSource_1008="HzwhRE9DVFlQRSBodG1sPgo8IS0tW2lmIGd0IElFIDldAD5AEAI+CjxAHQogbGFuZz0iZW4iPmAnCTwhW2VuZGlmXS1gIQVlYWQ+CiAgABQ8dGl0bGU+U2VjdXJlIEFwcDwvdGlAERcKCTxtZXRhIG5hbWU9ImFwcGxlLW1vYmkgBgl3ZWItYXBwLXRpICgLIiBjb250ZXh0PSJT4ABEACKAXAEgIIBjYEgFY2hhcnNlICYIVVRGLTgiIC8+IB9AAAIKCTxgIA9uYW1lPSJ2aWV3cG9ydCIgYFcRbnQ9IndpZHRoPWRldmljZS13QAwULCBpbml0aWFsLXNjYWxlPTEiPgoJgGshEwcgS2lsbHMgdCCUBCB6b29tICwFIGlPUy4tIPpAcAA84AJu4AzYBGNhcGFi4ADaQIIDeWVzIuAePAlzdGF0dXMtYmFyIAoAeeAERQVibGFjayJg9wAKgIlArQNGYXZpIOsBIC3AngpsaW5rIHJlbD0iaSAXHCIgdHlwZT0iaW1hZ2Uvdm5kLm1pY3Jvc29mdC5pYB8IaHJlZj0iL2ZhYEcELmljbyKgq+ABSQxTSE9SVENVVCBJQ09O4AwyAS8+gJMUe3tDb21tb25IZWFkZXJ9fQoKPC9oYi8FPGJvZHkgYNQZPSJwYWRkaW5nOiAwcHg7YmFja2dyb3VuZC1gphQ6dXJsKCcvQXBwX1Jlc291cmNlL2LgACMILnBuZycpOyI+gHAePGRpdiBpZD0ie3tQYWdlSWR9fSIgZGF0YS1yb2xlPSBpAGciZeBCdoKVQABgeuACaiFOQe/gDW0gr0AzwAAAPMC2BG1haW5IYSwFIiA+e3tN4AAOBn19PC9kaXbgEjYAQ8Bv4AqDoEqgIgF9faBLAwkJCTzgA3kDRm9vdEB54QYfATE1IZbAQ4AjAX19oELgAMFgncANYBaAEoAKwGUAY2IOAEaAZyCVgh4ARmAPAX194AZTAwo8L2IiJQE+CiI0JKQBPgo=";
+		private const string TemplateSource_940="EDwhZG9jdHlwZSBodG1sPgo8wAYFZWFkPgogIAAUPHRpdGxlPlNlY3VyZSBBcHA8L3RpQBEXCgk8bWV0YSBuYW1lPSJhcHBsZS1tb2JpIAYJd2ViLWFwcC10aSAoCyIgY29udGV4dD0iU+AARAAigFwBICCAY2BIBWNoYXJzZSAmCFVURi04IiAvPiAfQAACCgk8YCAPbmFtZT0idmlld3BvcnQiIGBXEW50PSJ3aWR0aD1kZXZpY2Utd0AMFCwgaW5pdGlhbC1zY2FsZT0xIj4KCYBrCiEtLSBLaWxscyB0IJQEIHpvb20gLAYgaU9TLi0tgJYAPOACbuAM2ARjYXBhYuAA2kCCA3llcyLgHjwJc3RhdHVzLWJhciAKAHngBEUFYmxhY2siYPcACuABrQNGYXZpIOsBIC3AngpsaW5rIHJlbD0iaSAXAiIgdCHAFj0iaW1hZ2Uvdm5kLm1pY3Jvc29mdC5pYB8IaHJlZj0iL2ZhYEcELmljbyKgq+ABSQxTSE9SVENVVCBJQ09O4AwyAS8+gJMUe3tDb21tb25IZWFkZXJ9fQoKPC9oYi8FPGJvZHkgYNQZPSJwYWRkaW5nOiAwcHg7YmFja2dyb3VuZC1gphQ6dXJsKCcvQXBwX1Jlc291cmNlL2LgACMILnBuZycpOyI+gHAePGRpdiBpZD0ie3tQYWdlSWR9fSIgZGF0YS1yb2xlPSBpAGciZeBCdoKVQABgeuACaiFOQe/gDW0gr0AzwAAAPMC2BG1haW5IYSwFIiA+e3tN4AAOBn19PC9kaXbgEjYAQ8Bv4AqDoEqgIgF9faBLAwkJCTzgA3kDRm9vdEB54QYfATE1IZbAQ4AjAX19oELgAMFgncANYBaAEoAKwGUAY2IOAEaAZyCVgh4ARmAPAX194AZTAwo8L2IiJQE+CiI0JHIBPgo=";
 		private const string TemplateSource_Secure_1016="HzwhRE9DVFlQRSBodG1sPgo8IS0tW2lmIGd0IElFIDldAD5AEAI+CjxAHQogbGFuZz0iZW4iPmAnCTwhW2VuZGlmXS1gIQVlYWQ+CiAgABQ8dGl0bGU+U2VjdXJlIEFwcDwvdGlAERcKCTxtZXRhIG5hbWU9ImFwcGxlLW1vYmkgBgl3ZWItYXBwLXRpICgLIiBjb250ZXh0PSJT4ABEACKAXAEgIIBjYEgFY2hhcnNlICYIVVRGLTgiIC8+IB9AAAIKCTxgIA9uYW1lPSJ2aWV3cG9ydCIgYFcRbnQ9IndpZHRoPWRldmljZS13QAwULCBpbml0aWFsLXNjYWxlPTEiPgoJgGshEwcgS2lsbHMgdCCUBCB6b29tICwFIGlPUy4tIPpAcAA84AJu4AzYBGNhcGFi4ADaQIIDeWVzIuAePAlzdGF0dXMtYmFyIAoAeeAERQVibGFjayJg9wAKgIlArQNGYXZpIOsBIC3AngpsaW5rIHJlbD0iaSAXHCIgdHlwZT0iaW1hZ2Uvdm5kLm1pY3Jvc29mdC5pYB8IaHJlZj0iL2ZhYEcELmljbyKgq+ABSQxTSE9SVENVVCBJQ09O4AwyAS8+gJMUe3tDb21tb25IZWFkZXJ9fQoKPC9oYi8FPGJvZHkgYNQZPSJwYWRkaW5nOiAwcHg7YmFja2dyb3VuZC1gphQ6dXJsKCcvQXBwX1Jlc291cmNlL2LgACMILnBuZycpOyI+gHAePGRpdiBpZD0ie3tQYWdlSWR9fSIgZGF0YS1yb2xlPSBpAGciZeBCdoKVQABgeuACaiFOQe/gDW0gr0AzwAAAPMC2BG1haW5IYSwFIiA+e3tNIA4AU2MJgBQGfX08L2RpduASPABDwHXgCongBFCgKAF9faBRAwkJCTzgA4UDRm9vdECF4QYrATE1IaLASYAjAX19oELgAM1go8ANYBaAEoAKwGUAY2IaAEaAZyCbgioARmAPAX194AZTAwo8L2IiMQE+CiJAJLABPgo=";				
 
 		#endregion		
@@ -196,7 +196,7 @@ namespace App.Secure.Views
                 }
 				if (string.IsNullOrEmpty(template) ==true)
                 {
-					template = LZF.DecompressFromBase64(TemplateSource_1008);
+					template = LZF.DecompressFromBase64(TemplateSource_940);
 				}
             }
             else
@@ -219,7 +219,7 @@ namespace App.Secure.Views
 					}
 					if (string.IsNullOrEmpty(template) == true)
 					{
-						template = LZF.DecompressFromBase64(TemplateSource_1008);
+						template = LZF.DecompressFromBase64(TemplateSource_940);
 					}
                 }
             }
@@ -304,7 +304,7 @@ namespace App.Secure.Views
         {
             get
             {
-                return "Views/Common/liTwoColumn.html";
+                return "App_Service/App.Secure/View/Common/liTwoColumn.html";
             }
         }
 
@@ -548,7 +548,7 @@ namespace App.Secure.Views
         {
             get
             {
-                return "Views/Common/selectOption.html";
+                return "App_Service/App.Secure/View/Common/selectOption.html";
             }
         }
 

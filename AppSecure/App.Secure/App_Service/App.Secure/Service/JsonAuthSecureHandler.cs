@@ -99,37 +99,6 @@ namespace App.Secure
 
         #endregion
 
-        #region Login User
-
-        [JsonRpcMethod("LoginUser", Idempotent = false)]
-        [JsonRpcHelp("Login User and Returns Json[message, error]")]
-        public JsonObject LoginUser(string userName, string userPassword, bool rememberMe)
-        {
-            JsonObject retMessage = new JsonObject();
-
-            string message = "";
-            bool ret = DataSecure.LoginUser(DecodeUrl(userName), DecodeUrl(userPassword), rememberMe, out message);
-            if (ret == true)
-            {
-                retMessage.Add("message", "Successfully Logged the User");
-            }
-            else
-            {
-                if (message.Trim().Length == 0)
-                {
-                    retMessage.Add("error", "Error in Loging the User");
-                }
-                else
-                {
-                    retMessage.Add("error", message);
-                }
-            }
-
-            return retMessage;
-        }
-
-        #endregion
-
         #region RegisterUser
 
         [JsonRpcMethod("RegisterUser", Idempotent = false)]

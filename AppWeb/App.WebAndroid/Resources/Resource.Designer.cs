@@ -51,19 +51,16 @@ namespace App.Web
 			public const int background_tiled = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int backupbg = 2130837506;
+			public const int icon = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int icon = 2130837507;
+			public const int progress = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int progress = 2130837508;
+			public const int spin = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int spin = 2130837509;
-			
-			// aapt resource value: 0x7f020006
-			public const int splash = 2130837510;
+			public const int splash = 2130837509;
 			
 			static Drawable()
 			{

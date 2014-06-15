@@ -128,15 +128,17 @@ namespace App.Secure.Data
                             string dbPath = "";
 
                             foreach (string itemDataFile in dataFileList)
-                            {                                
+                            {               
+								string itemDataName = IOManager.GetFileName(itemDataFile).ToUpper();                 
                                 string dbFileExtension = IOManager.GetExtension(itemDataFile).ToUpper() ;
 
                                 if ((dbFileExtension == ".MDF") || (dbFileExtension == ".DB") || (dbFileExtension == ".SQLITE"))
                                 {
                                     #region Get the DB Path
 
-                                    //DB Name is Contained in App Name
-                                    if (setupData.AppName.ToUpper().Contains(dbPartialName.ToUpper()) == true)
+                                    //DB Name is Contained in App Name and file name
+                                    if ((setupData.AppName.ToUpper().Contains(dbPartialName.ToUpper()) == true)
+                                        && (itemDataName.Contains(dbPartialName.ToUpper()) == true))
                                     {
                                         if (dbPath.Trim().Length == 0)
                                         {
@@ -316,7 +318,7 @@ namespace App.Secure.Data
 				{
 					_db = DataStore.HaveDb(ConnectionString, ProviderNameFactory, out message);
 					if (_db != null) 
-                    {
+					{
                         message = "";
 
                         _db.OnDBException -= new PetaPoco.DBException(OnDBException);

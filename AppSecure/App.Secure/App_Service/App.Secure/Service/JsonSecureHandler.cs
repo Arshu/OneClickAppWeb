@@ -102,13 +102,14 @@ namespace App.Secure
         #region Login User
 
         [JsonRpcMethod("LoginUser", Idempotent = false)]
-        [JsonRpcHelp("Login User and Returns Json[message, error]")]
+        [JsonRpcHelp("Login User and Returns Json[message, error, warn]")]
         public JsonObject LoginUser(string userName, string userPassword, bool rememberMe)
         {
             JsonObject retMessage = new JsonObject();
 
             string message = "";
-            bool ret = DataSecure.LoginUser(DecodeUrl(userName), DecodeUrl(userPassword), rememberMe, out message);
+            string warnMessage = "";
+            bool ret = DataSecure.LoginUser(DecodeUrl(userName), DecodeUrl(userPassword), rememberMe, out message, out warnMessage);
             if (ret == true)
             {
                 retMessage.Add("message", "Successfully Logged the User");
@@ -122,6 +123,11 @@ namespace App.Secure
                 else
                 {
                     retMessage.Add("error", message);
+                }
+
+                if (warnMessage.Trim().Length > 0)
+                {
+                    retMessage.Add("warn", warnMessage);
                 }
             }
 
