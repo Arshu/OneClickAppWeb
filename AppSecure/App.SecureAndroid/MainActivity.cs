@@ -10,10 +10,10 @@ using Android.OS;
 using Arshu.Web.Common;
 using Arshu.AppWeb;
 
-#if DEBUG
-[assembly: Application(Debuggable = true, HardwareAccelerated = true)]
+#if RELEASE 
+[assembly: Application(Debuggable = false)] 
 #else
-[assembly: Application(Debuggable = false, HardwareAccelerated=true)]
+[assembly: Application(Debuggable = true)]
 #endif
 
 namespace App.Secure
@@ -132,9 +132,8 @@ namespace App.Secure
 
                 _arshuWebGrid.CurrentPageAnimation = PageAnimation.FlipLeft;
                 _arshuWebGrid.StartAnimationTime = 2000;
-                _arshuWebGrid.EndAnimationTime = 1000;
+                _arshuWebGrid.EndAnimationTime = 500;
                 _arshuWebGrid.ShowInstallLink = true;
-                _arshuWebGrid.ShowBackLink = true;
                 _arshuWebGrid.RestartOnRotate = false;
 
                 SetContentView(rootView, webviewLayoutParams);
@@ -181,7 +180,6 @@ namespace App.Secure
             if (_arshuWebGrid != null)
             {
                 _arshuWebGrid.ConfigView();
-                ConfigureWebView();
                 _arshuWebGrid.StartWebServer(false);
             }
         }
@@ -209,22 +207,7 @@ namespace App.Secure
             if (_arshuWebGrid != null)
             {
                 _arshuWebGrid.ConfigView();
-                ConfigureWebView();
                 _arshuWebGrid.ReloadView();
-            }
-        }
-
-        #endregion
-
-        #region Configure WebView
-
-        private void ConfigureWebView()
-        {
-            if (_arshuWebGrid != null)
-            {
-                if (_arshuWebGrid.MainWebView != null)
-                {
-                }
             }
         }
 

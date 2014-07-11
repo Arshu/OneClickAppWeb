@@ -8,22 +8,25 @@ using Android.OS;
 using Arshu.Web.Common;
 using Arshu.AppWeb;
 
-#if DEBUG 
-[assembly: Application(Debuggable = true, HardwareAccelerated=true)] 
+#if RELEASE 
+[assembly: Application(Debuggable = false)] 
 #else
-[assembly: Application(Debuggable = false, HardwareAccelerated=true)]
+[assembly: Application(Debuggable = true)]
 #endif
 
 namespace App.Web
 {
+    //Main Launcher App
+    //[Activity(Label = "AppName", Theme = "@android:style/Theme.NoTitleBar", MainLauncher = true)]
+    //[IntentFilter(new[] { Intent.ActionMain }, Categories = new[] { Intent.CategoryHome, Intent.CategoryDefault })]
+
     [Activity(Label = "AppWeb", 
 	          MainLauncher = true, 
 	          Icon = "@drawable/icon", 
-	          Theme = "@style/Theme.GridBackground",               
+	          Theme = "@style/Theme.GridBackground", 
 	          WindowSoftInputMode = SoftInput.AdjustPan,
               ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize,
-	          LaunchMode = Android.Content.PM.LaunchMode.SingleTop),
-    ]             
+	          LaunchMode = Android.Content.PM.LaunchMode.SingleTop)]             
     [IntentFilter(new[] { Intent.ActionMain },
         Categories = new string[] { Intent.CategoryLauncher, Intent.CategoryDefault })]
     public class MainActivity : Activity
@@ -39,12 +42,12 @@ namespace App.Web
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            
+
             ArshuWebGrid.DrawablePackageName = "app.web.v1";
 
             _arshuWebGrid = new ArshuWebGrid(this, bundle);
             if (_arshuWebGrid != null)
-            {
+            {                
                 InitWebGrid();
             }
         }
@@ -130,11 +133,9 @@ namespace App.Web
                 _arshuWebGrid.InitView(rootView, webviewLayoutParams);
 
                 _arshuWebGrid.CurrentPageAnimation = PageAnimation.FlipLeft;
-                _arshuWebGrid.ThreadsPerProcessor = 1;
-                _arshuWebGrid.StartAnimationTime = 2000;
-                _arshuWebGrid.EndAnimationTime = 1000;
+				_arshuWebGrid.StartAnimationTime = 2000;
+                _arshuWebGrid.EndAnimationTime = 500;
                 _arshuWebGrid.ShowInstallLink = true;
-                _arshuWebGrid.ShowBackLink = true;
                 _arshuWebGrid.RestartOnRotate = true;
 
                 SetContentView(rootView, webviewLayoutParams);
@@ -181,8 +182,7 @@ namespace App.Web
             if (_arshuWebGrid != null)
             {
                 _arshuWebGrid.ConfigView();
-                ConfigureWebView();
-				_arshuWebGrid.StartWebServer(false);
+                _arshuWebGrid.StartWebServer(false);
             }
         }
 
@@ -209,22 +209,7 @@ namespace App.Web
             if (_arshuWebGrid != null)
             {
                 _arshuWebGrid.ConfigView();
-                ConfigureWebView();
                 _arshuWebGrid.ReloadView();
-            }
-        }
-
-        #endregion
-
-        #region Configure WebView
-
-        private void ConfigureWebView()
-        {
-            if (_arshuWebGrid != null)
-            {
-                if (_arshuWebGrid.MainWebView != null)
-                {
-                }
             }
         }
 

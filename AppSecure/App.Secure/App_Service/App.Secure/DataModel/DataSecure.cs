@@ -287,14 +287,7 @@ namespace App.Secure
             string message = "";
             if (BaseSecurity.IsAuthenticated() == true)
             {
-                if (BaseSecurity.ValidateUser(userId, oldPassword) == true)
-                {
-                    ret = BaseSecurity.ChangePassword(userId, oldPassword, newPassword, out message);
-                }
-                else
-                {
-                    message = "Invalid Old Password";
-                }
+                ret = BaseSecurity.ChangePassword(userId, oldPassword, newPassword, out message);
             }
             retMessage = message;
             return ret;

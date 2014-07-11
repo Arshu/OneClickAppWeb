@@ -293,36 +293,6 @@
             }
         }
 
-        function showSqlSection(selectElm, showElmId, hideElmIdList, btnElmIdList) {
-
-            if (hideElmIdList) {
-                for (var i = 0; i < hideElmIdList.length; i++) {
-                    var hideElm = document.getElementById(hideElmIdList[i]);
-                    if (hideElm) {
-                        hideElm.style.display = "none";
-                    }
-                }
-            }
-
-            if (btnElmIdList) {
-                for (var i = 0; i < btnElmIdList.length; i++) {
-                    var btnElm = document.getElementById(btnElmIdList[i]);
-                    if (btnElm) {
-                        btnElm.className = "btn";
-                    }
-                }
-            }
-
-            if (selectElm) {
-                selectElm.className = "btn success";
-            }
-
-            var showElm = document.getElementById(showElmId);
-            if ((selectElm) && (showElm)) {
-                showElm.style.display = "block";
-            }
-        }
-
     </script>
 </head>
 <body style="background-color: #808080;">
@@ -364,12 +334,12 @@
             <div id="doGenSqlMsg"></div>
         </div>
         <div class="section">
-            <div style="margin: 10px 0 10px 0px; padding: 5px 0 5px 0px">
+            <div>
                 <label for="sql">Sql Type</label>
-                <button id="selectSql" name="selectSql" class="btn success" style="min-width:30px" title="Select" onclick="showSqlSection(this, 'selectStatementSection', ['insertStatementSection', 'updateStatementSection', 'deleteStatementSection'], ['selectSql', 'insertSql', 'updateSql', 'deleteSql'])" >Sel</button>
-                <button id="insertSql" name="insertSql" class="btn" style="min-width:30px" title="Insert" onclick="showSqlSection(this, 'insertStatementSection', ['selectStatementSection', 'updateStatementSection', 'deleteStatementSection'], ['selectSql', 'insertSql', 'updateSql', 'deleteSql'])" >Ins</button>
-                <button id="updateSql" name="updateSql" class="btn" style="min-width:30px" title="Update" onclick="showSqlSection(this, 'updateStatementSection', ['selectStatementSection', 'insertStatementSection', 'deleteStatementSection'], ['selectSql', 'insertSql', 'updateSql', 'deleteSql'])" >Upd</button>               
-                <button id="deleteSql" name="deleteSql" class="btn" style="min-width:30px" title="Delete" onclick="showSqlSection(this, 'deleteStatementSection', ['selectStatementSection', 'insertStatementSection', 'updateStatementSection'], ['selectSql', 'insertSql', 'updateSql', 'deleteSql'])" >Del</button>
+                <input type="radio" name="sql" id="sql" value="Select" title="Select" checked="checked" onclick="showSelectedSection(this, 'selectStatementSection', ['insertStatementSection', 'updateStatementSection', 'deleteStatementSection'])" />
+                <input type="radio" name="sql" value="Insert" title="Insert" onclick="showSelectedSection(this, 'insertStatementSection', ['selectStatementSection', 'updateStatementSection', 'deleteStatementSection'])" />
+                <input type="radio" name="sql" value="Update" title="Update" onclick="showSelectedSection(this, 'updateStatementSection', ['selectStatementSection', 'insertStatementSection', 'deleteStatementSection'])" />
+                <input type="radio" name="sql" value="Delete" title="Delete" onclick="showSelectedSection(this, 'deleteStatementSection', ['selectStatementSection', 'insertStatementSection', 'updateStatementSection'])" />
             </div>
             <div id="selectStatementSection">
                 <label for="selectStatement" class="blocklabel">Select Statement</label>

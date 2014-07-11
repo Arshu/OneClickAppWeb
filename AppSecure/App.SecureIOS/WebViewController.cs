@@ -1,6 +1,6 @@
 using System;
 using System.Drawing;
-using Mono.Data.Sqlite;
+//using Mono.Data.Sqlite;
 
 using MonoTouch.CoreFoundation;
 using MonoTouch.UIKit;
@@ -116,7 +116,6 @@ namespace App.Secure
 				_arshuWebGrid.StartAnimationTime = 2000;
 				_arshuWebGrid.EndAnimationTime = 1000;
                 _arshuWebGrid.ShowInstallLink = true;
-                _arshuWebGrid.ShowBackLink = true;
                 _arshuWebGrid.RestartOnRotate = false;
                 _arshuWebGrid.UseDocumentFolder = true;
 			}
@@ -132,7 +131,6 @@ namespace App.Secure
             {
                 _arshuWebGrid.ConfigView();
                 _arshuWebGrid.StartWebServer(false);
-                ConfigureWebView();
             }
         }
 
@@ -160,28 +158,6 @@ namespace App.Secure
             {
                 _arshuWebGrid.ConfigView();
                 _arshuWebGrid.ReloadView();
-                ConfigureWebView();
-            }
-        }
-
-        #endregion
-
-        #region Configure WebView
-
-        private void ConfigureWebView()
-        {
-            if (_arshuWebGrid != null)
-            {
-                if (_arshuWebGrid.MainWebView != null)
-                {
-                    // if this is false, page will be 'zoomed in' to normal size
-                    _arshuWebGrid.MainWebView.ScalesPageToFit = true;
-
-                    //_arshuWebGrid.MainWebView.UserInteractionEnabled = false;
-                    //_arshuWebGrid.MainWebView.ScrollView.ScrollEnabled = false;
-                    _arshuWebGrid.MainWebView.ScrollView.BouncesZoom = false;
-                    _arshuWebGrid.MainWebView.ScrollView.Bounces = false;
-                }
             }
         }
 
@@ -203,11 +179,11 @@ namespace App.Secure
 				_isNull = true;
 			}
 
-            SqliteFactory sqliteFactory = new SqliteFactory();
-            if ((sqliteFactory == null) && (_isNull == false))
-            {
-                _isNull = true;
-            }
+            //SqliteFactory sqliteFactory = new SqliteFactory();
+            //if ((sqliteFactory == null) && (_isNull == false))
+            //{
+            //    _isNull = true;
+            //}
 		}
 
 		#endregion

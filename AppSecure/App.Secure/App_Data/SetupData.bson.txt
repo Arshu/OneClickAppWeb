@@ -1,7 +1,7 @@
 [{
 	"AppName" : "App.Secure.v1",        
 	"AppLabel" : "AppSecure",        
-	"AppVersion" : "AppSecure v1",        
+	"AppVersion" : "Secure 1",        
     "AppTypeGUID" : "725cfec0-cf84-4baf-9a71-08ec927a6e6b",
 	"DefaultApp" :"App.Secure.v1"	        
 }]

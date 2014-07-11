@@ -117,7 +117,6 @@ namespace App.Web
 				_arshuWebGrid.StartAnimationTime = 2000;
 				_arshuWebGrid.EndAnimationTime = 1000;
                 _arshuWebGrid.ShowInstallLink = true;
-                _arshuWebGrid.ShowBackLink = true;
                 _arshuWebGrid.RestartOnRotate = true;
                 _arshuWebGrid.UseDocumentFolder = true;
 			}
@@ -133,7 +132,6 @@ namespace App.Web
             {
                 _arshuWebGrid.ConfigView();
                 _arshuWebGrid.StartWebServer(false);
-                ConfigureWebView();
             }
         }
 
@@ -161,28 +159,6 @@ namespace App.Web
             {
                 _arshuWebGrid.ConfigView();
                 _arshuWebGrid.ReloadView();
-                ConfigureWebView();
-            }
-        }
-
-        #endregion
-
-        #region Configure WebView
-
-        private void ConfigureWebView()
-        {
-            if (_arshuWebGrid != null)
-            {
-                if (_arshuWebGrid.MainWebView != null)
-                {
-                    // if this is false, page will be 'zoomed in' to normal size
-                    _arshuWebGrid.MainWebView.ScalesPageToFit = true;
-
-                    //_arshuWebGrid.MainWebView.UserInteractionEnabled = false;
-                    //_arshuWebGrid.MainWebView.ScrollView.ScrollEnabled = false;
-                    _arshuWebGrid.MainWebView.ScrollView.BouncesZoom = false;
-                    _arshuWebGrid.MainWebView.ScrollView.Bounces = false;
-                }
             }
         }
 
