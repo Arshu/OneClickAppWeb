@@ -118,7 +118,7 @@ namespace App.Secure
             {
                 if (message.Trim().Length == 0)
                 {
-                    retMessage.Add("error", "Error in Loging the User");
+                    retMessage.Add("error", "Invalid UserName and Password");
                 }
                 else
                 {
