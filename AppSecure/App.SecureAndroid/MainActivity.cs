@@ -136,6 +136,7 @@ namespace App.Secure
                 _arshuWebGrid.ShowInstallLink = true;
                 _arshuWebGrid.ShowBackLink = true;
                 _arshuWebGrid.RestartOnRotate = false;
+                _arshuWebGrid.SnapShotCount = 10;
 
                 SetContentView(rootView, webviewLayoutParams);
             }

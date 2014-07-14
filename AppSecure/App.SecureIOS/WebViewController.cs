@@ -119,6 +119,7 @@ namespace App.Secure
                 _arshuWebGrid.ShowBackLink = true;
                 _arshuWebGrid.RestartOnRotate = false;
                 _arshuWebGrid.UseDocumentFolder = true;
+                _arshuWebGrid.SnapShotCount = 10;
 			}
 		}
 

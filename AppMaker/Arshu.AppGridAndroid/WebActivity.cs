@@ -403,6 +403,7 @@ namespace Arshu.AppGrid
                 _arshuWebGrid.ShowInstallLink = true;
                 _arshuWebGrid.ShowBackLink = true;
                 _arshuWebGrid.RestartOnRotate = true;
+                _arshuWebGrid.SnapShotCount = 10;
 
                 SetContentView(rootView, webviewLayoutParams);
             }
