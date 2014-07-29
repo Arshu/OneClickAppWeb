@@ -74,6 +74,15 @@ namespace App.Web
         }
 
 		#endregion        
-	}   
+
+        #region Local Notification
+
+        //public override void ReceivedLocalNotification(UIApplication application, UILocalNotification notification)
+        //{
+        //    base.ReceivedLocalNotification(application, notification);
+        //}
+
+        #endregion
+    }   
 }
 

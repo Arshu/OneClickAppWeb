@@ -31,17 +31,17 @@
 
 The Reference <b>Arshu Portable App Runtime</b> Source is released under MIT License
 
-The <b>Arshu Web Component</b> used to create <b>Arshu Portable App Runtime</b> is released under a <b>Free with Branding</b> and Commercial License
+The <b>Arshu Web/OpenGL Component</b> used to create <b>Arshu Portable App Runtime</b> is released under a <b>Free with Branding</b> and Commercial License
 
 The <b>One Click Mobile Packer</b> to pack your <b>Portable Apps</b> into <b>Portable App Runtimes</b> to create <b>Native Apps</b> is released under a <b>Free with Restriction</b> and Commerical License</span>
 
-Native Apps are created by packing portable apps into portable app runtimes using the One Click Mobile Packer. Portable App Runtimes are created using the Arshu Web Component using Xamarin Tools
+Native Apps are created by packing portable apps into portable app runtimes using the One Click Mobile Packer. Portable App Runtimes are created using the Arshu Web/OpenGL Component using Xamarin Tools
 
 ##This project would not have been possible without the following Open Source Projects
 
 #Open Source Used in One Click Packer
 
-<a href="javascript:void(0);" onclick="javascript:toggleDisplay('AndroidXml');">Android XML parser for .NET (MIT License)</a>
+<h3><a href="javascript:void(0);" onclick="javascript:toggleDisplay('AndroidXml');">Android XML parser for .NET (MIT License)</a></h3>
 
 Implemented Writing Android Manifest changes to the Original Files</span>
 
@@ -61,6 +61,23 @@ The above copyright notice and this permission notice shall be included in all c
 <br />
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+</div>
+
+<h3><a href="javascript:void(0);" onclick="javascript:toggleDisplay('sharpZip');">SharpZipLib (GPL Licensed with Exception)</a></h3>
+
+Uses only the Zip related code
+
+<div id="sharpZip" style="display: none;">
+
+The library is released under the GPL with the following exception:
+
+Linking this library statically or dynamically with other modules is making a combined work based on this library. Thus, the terms and conditions of the GNU General Public License cover the whole combination.
+
+As a special exception, the copyright holders of this library give you permission to link this library with independent modules to produce an executable, regardless of the license terms of these independent modules, and to copy and distribute the resulting executable under terms of your choice, provided that you also meet, for each linked independent module, the terms and conditions of the license of that module. An independent module is a module which is not derived from or based on this library. If you modify this library, you may extend this exception to your version of the library, but you are not obligated to do so. If you do not wish to do so, delete this exception statement from your version.
+
+<br/>
+<br/>
+Bottom line In plain English this means you can use this library in commercial closed-source applications.
 </div>
 
 #Open Source Used in Arshu Web
@@ -101,6 +118,8 @@ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED WAR
 Alternatively, the contents of this file may be used under the terms of the GNU General Public License version 2 (the "GPL"), in which case the provisions of the GPL are applicable instead of the above. If you wish to allow the use of your version of this file only under the terms of the GPL and not to allow others to use your version of this file under the BSD license, indicate your decision by deleting the provisions above and replace them with the notice and other provisions required by the GPL. If you do not delete the provisions above, a recipient may use your version of this file under either the BSD or the GPL.
 
 </div>
+
+
 
 <h3><a href="javascript:void(0);" onclick="javascript:toggleDisplay('bcrypt');">BCrypt (BSD Licensed)</a></h3>
 
@@ -430,6 +449,52 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 </div>
+
+
+#Open Source Used in OpenGL Arshu.GUI
+
+<h3><a href="javascript:void(0);" onclick="javascript:toggleDisplay('opentk');">OpenTK (MIT/X11 license )</a></h3>
+
+No Changes have been done
+<div id="opentk" style="display: none;">
+
+The <span> <a href="http://www.opentk.com/">Open Toolkit </a></span>is distributed under the permissive MIT/X11 license and is absolutely free.
+
+</div>
+
+<h3><a href="javascript:void(0);" onclick="javascript:toggleDisplay('gwen');">Gwen C++ (MIT License)</a></h3>
+No Changes have been done
+
+<div id="gwen" style="display: none;">
+
+Copyright (c) Garry Newman garrynewman@gmail.com
+<br />
+
+<a href="http://code.google.com/p/gwen/">Gwen C++ Project Site</a>
+
+</div>
+
+<h3><a href="javascript:void(0);" onclick="javascript:toggleDisplay('gwendotnet');">Gwen C# (MIT License)</a></h3>
+
+Major Changes have been done
+<div id="gwendotnet" style="display: none;">
+
+Copyright (c) <a href="http://omeg.pl/blog/">omeg</a>
+<br />
+<a href="http://code.google.com/p/gwen-dotnet/">Gwen DotNet Project Site</a>
+
+</div>
+
+<h3><a href="javascript:void(0);" onclick="javascript:toggleDisplay('crossgraphics');">CrossGraphics (MIT License)</a></h3>
+Minor Changes have been done
+
+<div id="crossgraphics" style="display: none;">
+
+The code is copyright Frank A. Krueger and is released under the MIT license.
+<br />
+<a href="https://github.com/praeclarum/CrossGraphics">CrossGraphics GitHub Link</a>
+
+</div>           
 
 </body>
 </html>
