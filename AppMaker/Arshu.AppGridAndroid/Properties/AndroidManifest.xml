@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="arshu.appgrid.v1" android:versionCode="21" android:installLocation="preferExternal" android:versionName="21">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="arshu.appgrid.v1" android:versionCode="22" android:installLocation="preferExternal" android:versionName="22">
 	<application android:icon="@drawable/Icon" android:hardwareAccelerated="true" android:label="AppMaker"></application>
 	<uses-sdk android:minSdkVersion="8" />
 	<uses-feature android:name="android.hardware.nfc" android:required="false" />
