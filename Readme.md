@@ -9,8 +9,6 @@ Also contains a MIT License C#/Html Secure AppWeb example showing the usage of e
 
 AppWeb Runtimes can be built using Cross Platform AppWeb Components using Xamarin Tools 
 
-More Information at [HtmlToApp](http://htmltoapp.com/ "Web Site") web site.
-
 <ol>
 	<li>
 		Convert any Html5 Web App (portable AppWebs) using Native AppWeb Runtime into Mobile Hybrid Native Apps   
@@ -58,7 +56,3 @@ More Information at [HtmlToApp](http://htmltoapp.com/ "Web Site") web site.
 		Open the OneClickAppWeb.sln file or the respective Android/IOS/Web project file using Xamarin Tools to compile and create the sample Native Mobile App.
     </li>
 </ol>
-
-## Getting Started
-
-More Information at [Getting Started](GettingStarted.md "Getting Started").
