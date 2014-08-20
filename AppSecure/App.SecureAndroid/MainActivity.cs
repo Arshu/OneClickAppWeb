@@ -6,6 +6,7 @@ using Android.Views;
 using Android.Widget;
 using Android.Util;
 using Android.OS;
+using Android.Graphics;
 
 using Arshu.Web.Common;
 using Arshu.AppWeb;
@@ -131,6 +132,7 @@ namespace App.Secure
                 _arshuWebGrid.InitView(rootView, webviewLayoutParams);
 
                 _arshuWebGrid.CurrentPageAnimation = PageAnimation.FlipLeft;
+                _arshuWebGrid.RequireWifi = false;
                 _arshuWebGrid.StartAnimationTime = 2000;
                 _arshuWebGrid.EndAnimationTime = 1000;
                 _arshuWebGrid.ShowInstallLink = true;
@@ -144,15 +146,19 @@ namespace App.Secure
 
         private RelativeLayout.LayoutParams GetWebLayoutParams()
         {
-            DisplayMetrics metrics = new DisplayMetrics();
             Display display = this.WindowManager.DefaultDisplay;
-            display.GetMetrics(metrics);
-            int displayHeight = display.Height;
+
+            //DisplayMetrics metrics = new DisplayMetrics();
+            //display.GetMetrics(metrics);
+
+            Point size = new Point();
+            display.GetSize(size);
+            int displayHeight = size.X;
+            int displayWidth = size.Y;
             int statusBarHeight = GetStatusBarHeight();
 
             int webViewHeight = displayHeight - statusBarHeight;
-            RelativeLayout.LayoutParams webviewLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FillParent, webViewHeight);
-            //RelativeLayout.LayoutParams webviewLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FillParent, RelativeLayout.LayoutParams.FillParent);
+            RelativeLayout.LayoutParams webviewLayoutParams = new RelativeLayout.LayoutParams(displayWidth, webViewHeight);            //RelativeLayout.LayoutParams webviewLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FillParent, RelativeLayout.LayoutParams.FillParent);
             //webviewLayoutParams.AddRule(LayoutRules.AlignParentTop);
             webviewLayoutParams.AddRule(LayoutRules.AlignParentBottom);
             webviewLayoutParams.AddRule(LayoutRules.AlignParentLeft);

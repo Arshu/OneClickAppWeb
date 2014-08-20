@@ -114,6 +114,7 @@ namespace App.Web
                 _arshuWebGrid.InitView(rootView, screenSize.Width, screenSize.Height, heightOffset); 
 
 				_arshuWebGrid.CurrentPageAnimation = PageAnimation.FlipRight;
+                _arshuWebGrid.RequireWifi = false;
 				_arshuWebGrid.StartAnimationTime = 2000;
 				_arshuWebGrid.EndAnimationTime = 1000;
                 _arshuWebGrid.ShowInstallLink = true;

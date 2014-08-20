@@ -58,7 +58,7 @@ namespace Arshu.AppGrid
                 ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize,
                 LaunchMode = Android.Content.PM.LaunchMode.SingleTop)
     ]
-    [IntentFilter(new[] { Intent.ActionMain }, 
+    [IntentFilter(new[] { Intent.ActionMain },
         Categories = new string[] { Intent.CategoryLauncher, Intent.CategoryBrowsable })
     ]
     public class WebActivity : Activity, ILocationListener
@@ -398,6 +398,7 @@ namespace Arshu.AppGrid
                 _arshuWebGrid.InitView(rootView, webviewLayoutParams);
 
                 _arshuWebGrid.CurrentPageAnimation = PageAnimation.FlipLeft;
+                _arshuWebGrid.RequireWifi = false;
                 _arshuWebGrid.StartAnimationTime = 2000;
                 _arshuWebGrid.EndAnimationTime = 1000;
                 _arshuWebGrid.ShowInstallLink = true;
@@ -411,15 +412,19 @@ namespace Arshu.AppGrid
 
         private RelativeLayout.LayoutParams GetWebLayoutParams()
         {
-            DisplayMetrics metrics = new DisplayMetrics();
             Display display = this.WindowManager.DefaultDisplay;
-            display.GetMetrics(metrics);
-            int displayHeight = display.Height;
+
+            //DisplayMetrics metrics = new DisplayMetrics();
+            //display.GetMetrics(metrics);
+
+            Point size = new Point();
+            display.GetSize(size);
+            int displayHeight = size.X;
+            int displayWidth = size.Y;
             int statusBarHeight = GetStatusBarHeight();
 
             int webViewHeight = displayHeight - statusBarHeight;
-            RelativeLayout.LayoutParams webviewLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FillParent, webViewHeight);
-            //RelativeLayout.LayoutParams webviewLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FillParent, RelativeLayout.LayoutParams.FillParent);
+            RelativeLayout.LayoutParams webviewLayoutParams = new RelativeLayout.LayoutParams(displayWidth, webViewHeight);            //RelativeLayout.LayoutParams webviewLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FillParent, RelativeLayout.LayoutParams.FillParent);
             //webviewLayoutParams.AddRule(LayoutRules.AlignParentTop);
             webviewLayoutParams.AddRule(LayoutRules.AlignParentBottom);
             webviewLayoutParams.AddRule(LayoutRules.AlignParentLeft);
@@ -600,6 +605,7 @@ namespace Arshu.AppGrid
                         _locationManager.RemoveUpdates(_gridActivity);
                     });
                     _enableLocationTracking = false;
+                    _locationError = "Location Tracking Not Enabled";
                     ret = true;
                 }
             }
@@ -659,6 +665,10 @@ namespace Arshu.AppGrid
                                     _lastLocation.Add("longitude", _lastKnownLocation.Longitude.ToString());
                                     SetAddress();
                                 }
+                                else
+                                {
+                                    _locationError = "Last known location not available";
+                                }
                             }
                             catch (Java.Lang.Exception ex)
                             {
@@ -713,6 +723,10 @@ namespace Arshu.AppGrid
                                     _lastAddress.Add("locality", _lastKnownAddress.Locality);
                                     _lastAddress.Add("country", _lastKnownAddress.CountryName);
                                     _locationError = "";
+                                }
+                                else
+                                {
+                                    _locationError = "Last known Address not available";
                                 }
                             }
                             ret = true;
@@ -1111,30 +1125,32 @@ namespace Arshu.AppGrid
 
         private static Android.Net.Uri GetContentUriFromPath(Context context, string filePath)
         {
-            //Android.Database.ICursor cursor = context.ContentResolver.Query(
-            //        MediaStore.Images.Media.ExternalContentUri,
-            //        new String[] { MediaStore.Images.Media.InterfaceConsts.Id },
-            //        MediaStore.Images.Media.InterfaceConsts.Data + "=? ",
-            //        new String[] { filePath }, null);
-            //if (cursor != null && cursor.MoveToFirst())
-            //{
-            //    int id = cursor.GetInt(cursor.GetColumnIndex(MediaStore.MediaColumns.Id));
-            //    Android.Net.Uri baseUri = Android.Net.Uri.Parse("content://media/external/images/media");
-            //    return Android.Net.Uri.WithAppendedPath(baseUri, "" + id);
-            //}
-            //else
-            //{
-            if (File.Exists(filePath))
+            Android.Database.ICursor cursor = context.ContentResolver.Query(
+                    MediaStore.Images.Media.ExternalContentUri,
+                    new String[] { MediaStore.Images.Media.InterfaceConsts.Id },
+                    MediaStore.Images.Media.InterfaceConsts.Data + "=? ",
+                    new String[] { filePath }, null);
+            if (cursor != null && cursor.MoveToFirst())
             {
-                ContentValues values = new ContentValues();
-                values.Put(MediaStore.Images.Media.InterfaceConsts.Data, filePath);
-                return context.ContentResolver.Insert(MediaStore.Images.Media.ExternalContentUri, values);
+                int id = cursor.GetInt(cursor.GetColumnIndex(MediaStore.MediaColumns.Id));
+                Android.Net.Uri baseUri = Android.Net.Uri.Parse("content://media/external/images/media");
+                Android.Net.Uri contentUri = Android.Net.Uri.WithAppendedPath(baseUri, "" + id);
+                return contentUri;
             }
             else
             {
-                return null;
+                if (File.Exists(filePath))
+                {
+                    ContentValues values = new ContentValues();
+                    values.Put(MediaStore.Images.Media.InterfaceConsts.Data, filePath);
+                    Android.Net.Uri contentUri = context.ContentResolver.Insert(MediaStore.Images.Media.ExternalContentUri, values);
+                    return contentUri;
+                }
+                else
+                {
+                    return null;
+                }
             }
-            //}
         }
 
         #endregion

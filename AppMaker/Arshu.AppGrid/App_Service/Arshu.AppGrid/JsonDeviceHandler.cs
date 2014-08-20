@@ -51,6 +51,39 @@ namespace Arshu.AppGrid
         }
 
         #endregion
+     
+        #region Network
+
+        [JsonRpcMethod("IsNetworkAvailable", Idempotent = false)]
+        [JsonRpcHelp("Check if the Network is Available. Returns JsonObject(status)")]
+        public JsonObject IsNetworkAvailable(bool wifiOnly)
+        {
+            var retMessage = new JsonObject();
+#if __ANDROID__
+            bool networkAvailable = false;
+            networkAvailable = Arshu.AppWeb.Utility.IsNetworkAvailable(wifiOnly);
+            retMessage.Add("status", networkAvailable.ToString());
+#elif __IOS__
+            bool networkAvailable = false;
+            //MonoTouch.ObjCRuntime.Runtime.StartWWAN (new Uri("www.google.com"));
+            NetworkStatus networkStatus = Arshu.AppWeb.Reachability.LocalWifiConnectionStatus();
+            if ((networkStatus == NetworkStatus.ReachableViaWiFiNetwork) && (wifiOnly ==true))
+            {
+                networkAvailable = true;
+            }
+            else if ((networkStatus == NetworkStatus.ReachableViaCarrierDataNetwork) && (wifiOnly == false))
+            {
+                networkAvailable = true;
+            }
+            retMessage.Add("status", networkAvailable.ToString());
+#else
+            retMessage.Add("status", "true");
+#endif
+
+            return retMessage;
+        }
+
+        #endregion
 
         #region Location
 
@@ -398,39 +431,6 @@ namespace Arshu.AppGrid
         }
 
         #endregion
-     
-        #region Network
-
-        [JsonRpcMethod("IsNetworkAvailable", Idempotent = false)]
-        [JsonRpcHelp("Check if the Network is Available. Returns JsonObject(status)")]
-        public JsonObject IsNetworkAvailable(bool wifiOnly)
-        {
-            var retMessage = new JsonObject();
-#if __ANDROID__
-            bool networkAvailable = false;
-            networkAvailable = Arshu.AppWeb.Utility.IsNetworkAvailable(wifiOnly);
-            retMessage.Add("status", networkAvailable.ToString());
-#elif __IOS__
-            bool networkAvailable = false;
-            //MonoTouch.ObjCRuntime.Runtime.StartWWAN (new Uri("www.google.com"));
-            NetworkStatus networkStatus = Arshu.AppWeb.Reachability.LocalWifiConnectionStatus();
-            if ((networkStatus == NetworkStatus.ReachableViaWiFiNetwork) && (wifiOnly ==true))
-            {
-                networkAvailable = true;
-            }
-            else if (((networkStatus == NetworkStatus.ReachableViaWiFiNetwork) || (networkStatus == NetworkStatus.ReachableViaCarrierDataNetwork)) && (wifiOnly == false))
-            {
-                networkAvailable = true;
-            }
-            retMessage.Add("status", networkAvailable.ToString());
-#else
-            retMessage.Add("status", "true");
-#endif
-
-            return retMessage;
-        }
-
-        #endregion
 
         #region Media - Image
 
@@ -588,7 +588,7 @@ namespace Arshu.AppGrid
 #if __ANDROID__
             string error = WebActivity._imageError;
             string itemPath = WebActivity.GetPathFromURI(WebActivity._photoURI);
-            if (itemPath.Trim().Length > 0)
+            if ((itemPath != null) && (itemPath.Trim().Length > 0))
             {
                 if (itemPath.Trim().StartsWith("/") == false) itemPath = "/" + itemPath;
                 retMessage.Add("itempath", itemPath);
@@ -713,7 +713,7 @@ namespace Arshu.AppGrid
 #if __ANDROID__
             string error = WebActivity._videoError;
             string itemPath = WebActivity.GetPathFromURI(WebActivity._videoURI);
-            if (itemPath.Trim().Length > 0)
+            if ((itemPath != null) && (itemPath.Trim().Length > 0))
             {
                 if (itemPath.Trim().StartsWith("/") == false) itemPath = "/" + itemPath;
                 retMessage.Add("itempath", itemPath);
@@ -838,7 +838,7 @@ namespace Arshu.AppGrid
 #if __ANDROID__
             string error = WebActivity._audioError;
             string itemPath = WebActivity.GetPathFromURI(WebActivity._audioURI);
-            if (itemPath.Trim().Length > 0)
+            if ((itemPath != null) && (itemPath.Trim().Length > 0))
             {
                  if (itemPath.Trim().StartsWith("/") == false) itemPath = "/" + itemPath;
                 retMessage.Add("itempath", itemPath);

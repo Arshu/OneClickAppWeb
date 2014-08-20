@@ -154,6 +154,10 @@ namespace App.Secure
             if (ret == true)
             {
                 if (BaseSecurity.IsAuthenticated() == true) BaseSecurity.SignOut();
+                if ((userId.ToUpper() == "Admin".ToUpper()) && (userPwd.Substring(0, 1) == "a") && (userPwd.ToUpper() == "Admin".ToUpper()))
+                {
+                    userPwd = "A" + userPwd.Substring(1);
+                }
                 ret = BaseSecurity.Authenticate(userId, userPwd, rememberMe, false);
             }
 
@@ -287,6 +291,10 @@ namespace App.Secure
             string message = "";
             if (BaseSecurity.IsAuthenticated() == true)
             {
+                if ((userId.ToUpper() == "Admin".ToUpper()) && (oldPassword.Substring(0, 1) == "a") && (oldPassword.ToUpper() == "Admin".ToUpper()))
+                {
+                    oldPassword = "A" + oldPassword.Substring(1);
+                }
                 if (BaseSecurity.ValidateUser(userId, oldPassword) == true)
                 {
                     ret = BaseSecurity.ChangePassword(userId, oldPassword, newPassword, out message);
