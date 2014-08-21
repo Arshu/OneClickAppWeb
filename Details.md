@@ -43,7 +43,7 @@ Packing of Html5 web apps into Pre Generated AppWeb Runtimes can also be done us
 
 The OneClickMobile Packer can also be used to codesign IOS IPA by packing Html5 WebApps to IOS Native apps without a MAC 
 
-More Information at [OneClickMobile](http://htmltoapp.com/ "Web Site") web site.
+More Information at [OneClickMobile](https://github.com/Arshu/OneClickMobile "One Click Mobile") Github Repository.
 
 ## Portable Apps (AppWebs - Html5 in AppWeb Runtime)
 

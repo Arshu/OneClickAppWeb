@@ -86,7 +86,6 @@
     <Content Include="App_Resource\Js\secure.js" />
     <Content Include="App_Resource\Js\secure.min.js" />
     <Content Include="App_Resource\splash.png" />
-    <Content Include="favicon.ico" />
     <Content Include="Index.html" />
     <Content Include="Index.Secure.html" />
     <Content Include="Pages\About\aboutcontent.html" />

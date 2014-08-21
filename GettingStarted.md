@@ -54,4 +54,7 @@
 
 ## Creating a custom AppWeb Runtime 
 
+Open the provided example AppWeb Solution OneClickAppWeb.sln or OneClickAppSecure.sln to find example usable of the App Web Component to create your own AppWeb Runtime
+
+
 
