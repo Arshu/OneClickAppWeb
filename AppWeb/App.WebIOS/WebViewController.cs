@@ -1,56 +1,61 @@
 using System;
-using System.Drawing;
-//using Mono.Data.Sqlite;
+using Mono.Data.Sqlite;
 
-using MonoTouch.CoreFoundation;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
+using CoreFoundation;
+using CoreGraphics;
+using UIKit;
+using Foundation;
+using QuickLook;
 
+using Arshu.Web.Basic.Log;
 using Arshu.Web.Common;
 using Arshu.AppWeb;
 
 namespace App.Web
 {
-    [Register("WebViewController")]
-    public class WebViewController : UIViewController
-    {
-        #region Variable
+	[Register ("WebViewController")]
+	public class WebViewController : UIViewController
+	{
+		#region Variable
 
-        ArshuWebGrid _arshuWebGrid = null;        
-        private float heightOffset = 25.0f;
+		public NSUrl _appUri;
+		private static ArshuWebGrid _arshuWebGrid = null;
+		private float heightOffset = 0;
+		//25.0f;
 
-        #endregion
+		#endregion
 
 		#region Constructor
 
-        public WebViewController()
-        {
-            _arshuWebGrid = new ArshuWebGrid(this);
-
+		public WebViewController ()
+		{
+			_arshuWebGrid = new ArshuWebGrid (this);
+			SetNeedsStatusBarAppearanceUpdate ();
+			//this.ModalPresentationCapturesStatusBarAppearance = true; 
 			DummyObjectRegister ();
-        }
+		}
 
 		#endregion
 
 		#region Basic Overrides
 
-        public override void DidReceiveMemoryWarning()
-        {
-            Console.WriteLine("DidReceiveMemoryWarning");
-            // Releases the view if it doesn't have a superview.
-            base.DidReceiveMemoryWarning();
-        }
+		public override void DidReceiveMemoryWarning ()
+		{
+			Console.WriteLine ("DidReceiveMemoryWarning");
+			// Releases the view if it doesn't have a superview.
+			base.DidReceiveMemoryWarning ();
+		}
 
 		/// <summary>
 		/// Views the did load.
 		/// </summary>
-        public override void ViewDidLoad()
-        {
-            Console.WriteLine("ViewDidLoad");
-            InitWebGrid();
+		public override void ViewDidLoad ()
+		{
+			Console.WriteLine ("ViewDidLoad");
+			InitWebGrid ();
 
-            base.ViewDidLoad();
-        }
+			base.ViewDidLoad ();
+		}
 
 		#endregion
 
@@ -58,161 +63,216 @@ namespace App.Web
 
 		public override void WillRotate (UIInterfaceOrientation toInterfaceOrientation, double duration)
 		{
-            Console.WriteLine("WillRotate - Reload Web Grid [" + UIDevice.CurrentDevice.Orientation + "]");
-            ReloadWebGrid();
+			Console.WriteLine ("WillRotate - Reload Web Grid [" + UIDevice.CurrentDevice.Orientation + "]");
+			ReloadWebGrid ();
 
 			base.WillRotate (toInterfaceOrientation, duration);
 		}
 
 		#endregion
 
-        #region Get Screen Rectangle
-
-        public Size GetScreenSize()
-        {
-            int deviceWidth = (int) UIScreen.MainScreen.Bounds.Width;
-            int deviceHeight = (int) UIScreen.MainScreen.Bounds.Height;
-
-            int screenWidth = deviceWidth;
-            int screenHeight = deviceHeight;
-
-            UIDeviceOrientation currentOrientation = UIDevice.CurrentDevice.Orientation;
-
-			if ((currentOrientation != UIDeviceOrientation.LandscapeLeft)
-				&& (currentOrientation != UIDeviceOrientation.LandscapeRight))
-            {
-                // portrait
-                screenWidth = deviceWidth;
-                screenHeight = deviceHeight;
-            }
-            else
-            {
-                // landsacpe
-                screenWidth = deviceHeight;
-                screenHeight = deviceWidth;
-            }
-            return new Size(screenWidth, screenHeight);
-        }
-
-        #endregion
 
 
+		#region Init WebGrid
 
-        #region Init WebGrid
-
-        /// <summary>
+		/// <summary>
 		/// Inits the web grid.
 		/// </summary>
 		/// <param name="rootView">Root view.</param>
-		private void InitWebGrid()
+		private void InitWebGrid ()
 		{
-            DummyObjectRegister();
-            UIView rootView = this.View;
-			if (_arshuWebGrid != null)
-			{				
-                Size screenSize = GetScreenSize();
-                _arshuWebGrid.InitView(rootView, screenSize.Width, screenSize.Height, heightOffset); 
+			DummyObjectRegister ();
+			UIView rootView = this.View;
+			if (_arshuWebGrid != null) {
+				CGSize screenSize = _arshuWebGrid.GetScreenSize ();
+				_arshuWebGrid.InitView (rootView, screenSize.Width, screenSize.Height, heightOffset); 
 
 				_arshuWebGrid.CurrentPageAnimation = PageAnimation.FlipRight;
-                _arshuWebGrid.RequireWifi = false;
+				_arshuWebGrid.RequireWifi = false;
 				_arshuWebGrid.StartAnimationTime = 2000;
 				_arshuWebGrid.EndAnimationTime = 1000;
-                _arshuWebGrid.ShowInstallLink = true;
-                _arshuWebGrid.ShowBackLink = true;
-                _arshuWebGrid.RestartOnRotate = true;
-                _arshuWebGrid.UseDocumentFolder = true;
-                _arshuWebGrid.SnapShotCount = 10;
+				_arshuWebGrid.ShowInstallLink = true;
+				_arshuWebGrid.ShowBackLink = true;
+				_arshuWebGrid.RestartOnRotate = true;
+				_arshuWebGrid.UseDocumentFolder = true;
 			}
 		}
 
 		#endregion
 
-        #region Start WebGrid
+		#region Start WebGrid
 
-        public void StartWebGrid()
-        {
-            if (_arshuWebGrid != null)
-            {
-                _arshuWebGrid.ConfigView();
-                _arshuWebGrid.StartWebServer(false);
-                ConfigureWebView();
-            }
-        }
+		public void StartWebGrid ()
+		{
+			if (_arshuWebGrid != null) {
+				_arshuWebGrid.ConfigView ();
+				ConfigureWebView ();
 
-        #endregion
+				ImportApp ();
+				_arshuWebGrid.StartWebServer (false);                
+			}
+		}
 
-        #region Stop WebGrid
+		#endregion
 
-        public void StopWebGrid()
-        {
-            if (_arshuWebGrid != null)
-            {
-                _arshuWebGrid.StopWebServer();
-            }
-        }
+		#region Stop WebGrid
 
-        #endregion
+		public void StopWebGrid ()
+		{
+			if (_arshuWebGrid != null) {
+				_arshuWebGrid.StopWebServer ();
+			}
+		}
 
-        #region Reload WebGrid
+		#endregion
 
-        public void ReloadWebGrid()
-        {
-            InitWebGrid();
+		#region Reload WebGrid
 
-            if (_arshuWebGrid != null)
-            {
-                _arshuWebGrid.ConfigView();
-                _arshuWebGrid.ReloadView();
-                ConfigureWebView();
-            }
-        }
+		public void ReloadWebGrid ()
+		{
+			InitWebGrid ();
 
-        #endregion
+			if (_arshuWebGrid != null) {
+				_arshuWebGrid.ConfigView ();
+				_arshuWebGrid.ReloadView ();
+				ConfigureWebView ();
+			}
+		}
 
-        #region Configure WebView
+		#endregion
 
-        private void ConfigureWebView()
-        {
-            if (_arshuWebGrid != null)
-            {
-                if (_arshuWebGrid.MainWebView != null)
-                {
-                    // if this is false, page will be 'zoomed in' to normal size
-                    _arshuWebGrid.MainWebView.ScalesPageToFit = true;
+		#region Import App
 
-                    //_arshuWebGrid.MainWebView.UserInteractionEnabled = false;
-                    //_arshuWebGrid.MainWebView.ScrollView.ScrollEnabled = false;
-                    _arshuWebGrid.MainWebView.ScrollView.BouncesZoom = false;
-                    _arshuWebGrid.MainWebView.ScrollView.Bounces = false;
-                }
-            }
-        }
+		private void ImportApp ()
+		{
+			if (_arshuWebGrid != null) {
+				if (_appUri != null) {
+					_arshuWebGrid.ImportApp (_appUri.AbsoluteString);
+					_appUri = null;
+				}
+			}
+		}
 
-        #endregion
+		#endregion
 
-        #region Dummy Register
 
-        //Dummy Variable to Suppress the error could not create a dempendency map for System.Xml
+      
+		#region Configure WebView
+
+		private void ConfigureWebView ()
+		{
+			if (_arshuWebGrid != null) {
+				if (_arshuWebGrid.MainWebView != null) {
+					// if this is false, page will be 'zoomed in' to normal size
+					_arshuWebGrid.MainWebView.ScalesPageToFit = true;
+
+					//_arshuWebGrid.MainWebView.UserInteractionEnabled = false;
+					//_arshuWebGrid.MainWebView.ScrollView.ScrollEnabled = false;
+					_arshuWebGrid.MainWebView.ScrollView.BouncesZoom = false;
+					_arshuWebGrid.MainWebView.ScrollView.Bounces = false;
+				}
+			}
+		}
+
+		#endregion
+
+		#region Dummy Register
+
+		//Dummy Variable to Suppress the error could not create a dempendency map for System.Xml
 		System.Xml.XmlDocument _xmlDocument = null;
 		bool _isNull = false;
-		private void DummyObjectRegister()
+
+		private void DummyObjectRegister ()
 		{
 			//To Remove the error could not create a complete dempendency map
-			if ((_arshuWebGrid == null) && (_isNull==true)) {
+			if ((_arshuWebGrid == null) && (_isNull == true)) {
 				_xmlDocument = new System.Xml.XmlDocument ();
 			}
 
-			if ((_xmlDocument == null) && (_isNull ==false)) {
+			if ((_xmlDocument == null) && (_isNull == false)) {
 				_isNull = true;
 			}
 
-            //SqliteFactory sqliteFactory = new SqliteFactory();
-            //if ((sqliteFactory == null) && (_isNull == false))
-            //{
-            //    _isNull = true;
-            //}
+			SqliteFactory sqliteFactory = new SqliteFactory ();
+			if ((sqliteFactory == null) && (_isNull == false)) {
+				_isNull = true;
+			}
 		}
 
 		#endregion
-    }
+
+		#region Hide Status Bar
+
+		public override bool PrefersStatusBarHidden ()
+		{
+			return true;
+		}
+
+		#endregion
+
+		#region Quick Look Url
+
+		//        private class PreviewItem : QLPreviewItem
+		//        {
+		//            public string Title { get; set; }
+		//            public NSUrl Url { get; set; }
+		//
+		//            public override NSUrl ItemUrl { get { return Url; } }
+		//            public override string ItemTitle { get { return Title; } }
+		//        }
+		//
+		//        private class PreviewDataSource : QLPreviewControllerDataSource
+		//        {
+		//            private NSUrl _url;
+		//            private string _title;
+		//
+		//            public PreviewDataSource(NSUrl url, string title)
+		//            {
+		//                _url = url;
+		//                _title = title;
+		//            }
+		//
+		//            public override int PreviewItemCount(QLPreviewController controller)
+		//            {
+		//                return 1;
+		//            }
+		//
+		//            public override QLPreviewItem GetPreviewItem(QLPreviewController controller, int index)
+		//            {
+		//                return new PreviewItem { Title = _title, Url = _url };
+		//            }
+		//        }
+		//
+		//        public bool QuickLookUrl(NSUrl documentUrl, string title)
+		//        {
+		//            bool ret = false;
+		//            QLPreviewController qlPreview = new QLPreviewController();
+		//            qlPreview.DataSource = new PreviewDataSource(documentUrl, title);
+		//            this.PresentViewController(qlPreview, true, null);
+		//            ret = true;
+		//
+		//            return ret;
+		//        }
+
+		//private UIDocumentInteractionController _popup;
+		//private void ShareUrl(NSUrl fileUrl)
+		//{
+		//    if (_popup != null)
+		//    {
+		//        _popup.DismissMenu(true);
+		//        _popup = null;
+		//    }
+		//    else
+		//    {
+		//        _popup = new UIDocumentInteractionController()
+		//        {
+		//            Url = fileUrl
+		//        };
+		//        _popup.DidDismissOptionsMenu += (s, a) => _popup = null;
+		//        _popup.PresentOptionsMenu(_shareButton, true);
+		//    }
+		//}
+
+		#endregion
+	}
 }

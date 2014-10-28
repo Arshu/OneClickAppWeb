@@ -106,9 +106,9 @@
     <Compile Include="..\App.Secure\App_Service\App.Secure\ViewTemplate\Template.cs">
       <Link>App_Service\App.Secure\ViewTemplate\Template.cs</Link>
     </Compile>
-    <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebViewActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Drawable\icon.png" />
@@ -117,12 +117,6 @@
     <AndroidAsset Include="..\App.Secure\App_Data\SetupData.bson.txt">
       <Link>Assets\SetupData.bson.txt</Link>
     </AndroidAsset>
-    <Content Include="..\App.Secure\App_Service\App.Secure\View\Common\liTwoColumn.html">
-      <Link>App_Service\App.Secure\View\Common\liTwoColumn.html</Link>
-    </Content>
-    <Content Include="..\App.Secure\App_Service\App.Secure\View\Common\selectOption.html">
-      <Link>App_Service\App.Secure\View\Common\selectOption.html</Link>
-    </Content>
     <Content Include="Properties\AndroidManifest.xml" />
     <AndroidResource Include="Resources\Drawable\background.png" />
     <AndroidResource Include="Resources\Drawable\background_tiled.xml" />
@@ -136,11 +130,11 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <AndroidAsset Include="Assets\Apps\App.Secure.v1.zip" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Apps\App.Web.v1.zip" />
+    <AndroidAsset Include="..\..\InputWebApp\App.Secure.v1.pap">
+      <Link>Assets\Apps\App.Secure.v1.pap</Link>
+    </AndroidAsset>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

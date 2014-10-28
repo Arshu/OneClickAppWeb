@@ -5,10 +5,10 @@
     <color name="pitch_black">#FF000000</color>
     parent="android:Theme.NoTitleBar.Fullscreen"
     -->
-    <style name="Theme.GridBackground" parent="android:Theme.NoTitleBar">
-        <item name="android:windowBackground">@drawable/background_tiled</item>       
-        <!--
+    <style name="Theme.GridBackground" parent="android:Theme.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@drawable/background_tiled</item>               
         <item name="android:windowNoTitle">true</item>
+        <!--
         <item name="android:background">@drawable/background_tiled</item>                
         <item name="android:colorBackground">@drawable/background_tiled</item>
         <item name="android:colorBackground">@color/pitch_black</item>

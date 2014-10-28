@@ -153,6 +153,53 @@ function asyncJsonRequest(postRequestPath, request, progressElmId, endCallback) 
     }
 }
 
+window.requestId = -1;
+
+function processResponse(returnObj) {
+    var retData = returnObj;
+    if ((returnObj.hasOwnProperty('error') === false) && (returnObj.hasOwnProperty('Error') === false)) {
+        if (returnObj.hasOwnProperty('d')) {
+            retData = returnObj.d;
+        }
+        else if (returnObj.hasOwnProperty('result') || (returnObj.hasOwnProperty('Result'))) {
+            retData = returnObj.result || returnObj.Result;
+        }
+    }
+    else {
+        if (returnObj.hasOwnProperty('error') === true) {
+            retData = returnObj.error.name + ":" + returnObj.error.message;
+        }
+        else if (returnObj.hasOwnProperty('Error') === true) {
+            retData = returnObj.Error.name + ":" + returnObj.Error.message;
+        }
+    }
+
+    if (document.getElementById("message")) {
+        if (retData.hasOwnProperty('message')) {
+            document.getElementById("message").innerHTML = retData.message;
+        }
+        else if (retData.hasOwnProperty('Message')) {
+            document.getElementById("message").innerHTML = retData.Message;
+        }
+    }
+
+    if (document.getElementById("error")) {
+        if (retData.hasOwnProperty('error')) {
+            document.getElementById("error").innerHTML = retData.error;
+        }
+        else if (retData.hasOwnProperty('Error')) {
+            document.getElementById("error").innerHTML = retData.Error;
+        }
+    }
+
+    if (retData.hasOwnProperty('redirect')) {
+        window.location.replace(retData.redirect);
+    }
+    else if (retData.hasOwnProperty('Redirect')) {
+        window.location.replace(retData.Redirect);
+    }
+}
+
 /******************************************************************************************************************************************/
 
 function addLoadEvent(func) {
@@ -325,7 +372,7 @@ function toggleDisplay(showHideElmId, actionElmId) {
             }
         }
     } else {
-        alert("Element is Null[" + showHideElmId + "]");
+        console.log("Element is Null[" + showHideElmId + "]");
     }
 
 }
@@ -622,7 +669,7 @@ function showPopUp(headerText, contentDivId, popupWidth, popupHeight) {
         var contentTag = createPopUpContent(contentDivElm.innerHTML);
         showPopUpDiv(headerTag, contentTag, popupWidth, popupHeight);        
     } else {
-        alert("Content Element is Null[" + contentDivId + "]");
+        console.log("Content Element is Null [" + contentDivId + "]");
     }
 }
 
@@ -677,3 +724,5 @@ var ScrollSneak = function (prefix, wait) {
         return true;
     }
 }
+
+

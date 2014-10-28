@@ -1,1 +1,1 @@
-<%@ WebHandler Language="C#" Class="Arshu.Web.Http.HttpSecureHandler" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="Index.ashx.cs" Class="App.Secure.Index" %>

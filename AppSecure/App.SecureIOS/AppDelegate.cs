@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 
 namespace App.Secure
 {
@@ -73,5 +73,35 @@ namespace App.Secure
         }
 
         #endregion        
+
+        #region Open Url Delegate
+
+        public override bool OpenUrl(UIApplication application, NSUrl url, string sourceApplication, NSObject annotation)
+        {
+            Console.WriteLine("Invoked with OpenUrl: {0}", url.AbsoluteString);
+            if (viewController != null)
+            {
+                viewController._appUri = url;
+            }
+            //NSNotificationCenter.DefaultCenter.PostNotificationName("OpenUrl", url);
+            return true;
+        }
+
+        //NSNotificationCenter.DefaultCenter.AddObserver ("OpenUrl", OnOpenUrl);
+        //private void OnOpenUrl(NSNotification notification)
+        //{
+        //    _fileUrl = (NSUrl)notification.Object;
+        //}
+
+        #endregion
+
+        #region Local Notification
+
+        //public override void ReceivedLocalNotification(UIApplication application, UILocalNotification notification)
+        //{
+        //    base.ReceivedLocalNotification(application, notification);
+        //}
+
+        #endregion
     }
 }

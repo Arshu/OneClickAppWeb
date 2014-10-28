@@ -9,21 +9,15 @@
 	
     <!-- Kills text zoom in iOS.-->
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">    
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">     
 
     {{CommonHeader}}
 
 </head>
 <body style="padding: 0px;background-image:url('/App_Resource/background.png');">
 
-    <div id="{{PageId}}" data-role="page" style="padding: 0px;background-image:url('/App_Resource/background.png');"> 
-        <div data-role="content" style="padding: 0px;">
-            <div id="mainHeader" >{{MainHeader}}</div>
-            <div id="mainContent" data-role="content">{{MainContent}}</div>
-			<div id="mainFooter" style="padding:15px;">{{MainFooter}}</div>
-        </div>        
-    </div>
-    <div id="commonFooter">{{CommonFooter}}</div>
+    {{MainPage}}
+    {{CommonFooter}}
         
 </body>
 </html>

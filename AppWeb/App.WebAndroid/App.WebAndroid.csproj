@@ -76,20 +76,60 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Components\Android\Arshu.AppWeb.dll</HintPath>
     </Reference>
+    <Reference Include="Arshu.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=965eb7c7ced7f21b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Components\Android\Arshu.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Arshu.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=965eb7c7ced7f21b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Components\Android\Arshu.Web.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Data.Sqlite" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\datamodel\DataSecure.cs">
+      <Link>App_Service\App.Secure\DataModel\DataSecure.cs</Link>
+    </Compile>
+    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\datamodel\DataSource.cs">
+      <Link>App_Service\App.Secure\DataModel\DataSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\datasource\DataEntities.cs">
+      <Link>App_Service\App.Secure\DataSource\DataEntities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\datasource\DataSource.cs">
+      <Link>App_Service\App.Secure\DataSource\DataSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\datasource\FileSource.cs">
+      <Link>App_Service\App.Secure\DataSource\FileSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\service\JsonAuthSecureHandler.cs">
+      <Link>App_Service\App.Secure\Service\JsonAuthSecureHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\service\JsonSecureHandler.cs">
+      <Link>App_Service\App.Secure\Service\JsonSecureHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\viewtemplate\Template.cs">
+      <Link>App_Service\App.Secure\ViewTemplate\Template.cs</Link>
+    </Compile>
+    <Compile Include="..\App.Web\App_Service\App.Web\Service\JsonDbHandler.cs">
+      <Link>App_Service\App.Web\Service\JsonDbHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\App.Web\App_Service\App.Web\Service\JsonFileHandler.cs">
+      <Link>App_Service\App.Web\Service\JsonFileHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\App.Web\App_Service\App.Web\ViewTemplate\Template.cs">
+      <Link>App_Service\App.Web\ViewTemplate\Template.cs</Link>
+    </Compile>
     <Compile Include="Properties\AndroidAssemblyInfo.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
-    <Compile Include="MainActivity.cs" />
+    <Compile Include="WebViewActivity.cs" />
+    <Compile Include="WebViewImportActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Drawable\icon.png" />
@@ -111,8 +151,11 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <AndroidAsset Include="Assets\Apps\App.Web.v1.zip" />
+    <AndroidAsset Include="..\..\InputWebApp\App.Web.v1.pap">
+      <Link>Assets\Apps\App.Web.v1.pap</Link>
+    </AndroidAsset>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <PropertyGroup>

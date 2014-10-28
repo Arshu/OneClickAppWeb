@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A92F2987-E997-462B-8D4A-1B2309A40B7D}</ProjectGuid>
-    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
     <RootNamespace>App.Secure</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
@@ -142,21 +142,11 @@
     <BundleResource Include="..\app.secure\app_data\SetupData.bson.txt">
       <Link>Assets\SetupData.bson.txt</Link>
     </BundleResource>
-    <Content Include="..\app.secure\app_service\app.secure\view\common\liTwoColumn.html">
-      <Link>App_Service\App.Secure\View\Common\liTwoColumn.html</Link>
-    </Content>
-    <Content Include="..\app.secure\app_service\app.secure\view\common\selectOption.html">
-      <Link>App_Service\App.Secure\View\Common\selectOption.html</Link>
-    </Content>
-    <BundleResource Include="Assets\Apps\App.Secure.v1.zip" />
-    <BundleResource Include="Assets\Apps\App.Web.v1.zip" />
+    <BundleResource Include="..\..\InputWebApp\App.Secure.v1.pap">
+      <Link>Assets\Apps\App.Secure.v1.pap</Link>
+    </BundleResource>
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <ITunesArtwork Include="iTunesArtwork%402x" />
-    <ITunesArtwork Include="iTunesArtwork" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Arshu.AppWeb, Version=1.0.0.0, Culture=neutral, PublicKeyToken=965eb7c7ced7f21b, processorArchitecture=MSIL">
@@ -177,5 +167,8 @@
     <Reference Include="System.Xml" />
     <Reference Include="monotouch" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <BundleResource Include="App_Resource\background.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

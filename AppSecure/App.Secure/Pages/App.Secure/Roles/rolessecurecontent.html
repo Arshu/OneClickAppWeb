@@ -1,0 +1,217 @@
+<script type="text/javascript">
+
+var nextRequestId = 0;
+var jsonSecureHandler = "/Handler/JsonSecure.ashx";
+var jsonAuthSecureHandler = "/Handler/JsonAuthSecure.ashx";
+
+/*****************************************************************************************************************************
+                                                       WebService Methods (Secure Handler)
+******************************************************************************************************************************/
+
+//Add User to Role
+function addUserToRole(userId, userRole, msgElmId) {
+    var valid = true;
+
+    //Validate Arguments
+	
+    if (valid == true) {
+        var paramValues = '{';
+        paramValues += ', "userId" : "' + encodeURIComponent(userId) + '"';
+        paramValues += ', "roleName" : "' + encodeURIComponent(userRole) + '"';
+        paramValues += '}';
+
+        var request = {
+            id: ++nextRequestId,
+            method: "AddUserToRole",
+            params: paramValues
+        };
+
+        asyncJsonRequest(jsonAuthSecureHandler, request, msgElmId,
+           function (response) {
+               var haveResult = false;
+               if (response.hasOwnProperty('Result') === true) {
+                   var retResult = response.Result;
+                   if (retResult.hasOwnProperty('message') === true) {
+                       var retMessage = retResult.message;
+                       showSuccess(retMessage, msgElmId);
+                       if (typeof(refreshRoleUsersUvTag) === "function")
+                       {
+                            refreshRoleUsersUvTag();
+                       }
+                   }
+                   else if (retResult.hasOwnProperty('error') === true) {
+
+                       var retError = retResult.error;
+                       showError(retError, msgElmId);
+                   }
+               }
+           });
+    }
+}
+
+//Remove User to Role
+function removeUserFromRole(userId, userRole, msgElmId) {
+    var valid = true;
+
+    //Validate Arguments
+	
+    if (valid == true) {
+        var paramValues = '{';
+        paramValues += ', "userId" : "' + encodeURIComponent(userId) + '"';
+        paramValues += ', "roleName" : "' + encodeURIComponent(userRole) + '"';
+        paramValues += '}';
+
+        var request = {
+            id: ++nextRequestId,
+            method: "RemoveUserFromRole",
+            params: paramValues
+        };
+
+        asyncJsonRequest(jsonAuthSecureHandler, request, msgElmId,
+           function (response) {
+               var haveResult = false;
+               if (response.hasOwnProperty('Result') === true) {
+                   var retResult = response.Result;
+                   if (retResult.hasOwnProperty('message') === true) {
+                       var retMessage = retResult.message;
+                       showSuccess(retMessage, msgElmId);
+                       if (typeof(refreshRoleUsersUvTag) === "function")
+                       {
+                            refreshRoleUsersUvTag();
+                       }
+                   }
+                   else if (retResult.hasOwnProperty('error') === true) {
+
+                       var retError = retResult.error;
+                       showError(retError, msgElmId);
+                   }
+               }
+           });
+    }
+}
+
+/*****************************************************************************************************************************
+                                                       Action Methods (LogOff, Login, Register)
+******************************************************************************************************************************/
+
+    function fillRolesSelectTag(roleSelectElmId, msgElmId, selectIndex) {
+        loadSelectOption(jsonAuthSecureHandler, "GetRoleOptionList", roleSelectElmId, msgElmId, selectIndex);
+    }
+
+    function fillRoleUsersUvTag(placeHolderElmId, msgElmId, pageNo, itemsPerPage) {
+        loadULHtml(jsonAuthSecureHandler, "GetRoleUserListHtml", placeHolderElmId, msgElmId, pageNo, itemsPerPage);
+    }
+
+    function refreshRoleUsersUvTag()
+    {
+        fillRoleUsersUvTag('roleUserList', 'rolemsg', 1, 100);
+    }
+
+    $(document).bind('pageinit', function (event) {
+        fillRolesSelectTag('roleName', 'rolemsg', 0);
+        refreshRoleUsersUvTag();
+    });
+
+    $(document).bind("pageshow", function(event) 
+        {
+			//var data = ['C', 'Clojure', 'Java', 'Scala', 'Objective-C', 'C++', 'PHP', 'C#', '(Visual) Basic', 'Python', 'Perl', 'JavaScript', 'Ruby', 'Visual Basic .NET', 'Transact-SQL', 'Lisp', 'Pascal', 'Bash', 'PL/SQL', 'Delphi/Object Pascal', 'Ada', 'MATLAB'];
+			var dataSource = "/Handler/JsonAuthSecure.ashx?SearchUserList"
+
+			$("#userId").autocomplete({
+				target: $('#userlist'),
+				//source: data,
+				source: dataSource,
+				callback: function(e) {
+					var $a = $(e.currentTarget);
+					$('#userId').val($a.text());
+					$("#userId").autocomplete('clear');
+				},
+				dataHandler : function(jsonData)
+				{
+				    return jsonData.Result;
+				},
+		        minLength: 1,
+		        transition: 'fade',
+		        matchFromStart: true,
+		        termParam : 'userPattern',
+			});
+			
+		});
+				
+    function btnAddRemoveUserRole(addUser, userIdElmId, roleElmId, msgElmId) 
+    {        	
+        var msgElm = document.getElementById(msgElmId);
+        msgElm.innerHTML = "";
+        msgElm.className = "";
+    	
+        var userIdElm = document.getElementById(userIdElmId);
+        var roleElm = document.getElementById(roleElmId);
+
+        if ((userIdElm) && (roleElm)  
+            && (msgElm)) 
+            {
+            
+            if (userIdElm.value.length == 0) {
+                msgElm.className = "error";
+                msgElm.innerHTML = "Please enter User Id";
+                $(msgElm).show();
+            }
+            else if (roleElm.value.length == 0) {
+                msgElm.className = "error";
+                msgElm.innerHTML = "Please select User Role";
+                $(msgElm).show();
+            }
+            else {
+                if (addUser === true)
+                {
+                    //Add Role
+                    addUserToRole(userIdElm.value, roleElm.value, msgElmId);
+                }else
+                {
+                    //Remove Role
+                    removeUserFromRole(userIdElm.value, roleElm.value, msgElmId);
+                }            
+            }
+        }
+    }		
+    
+</script>
+
+<ul data-role="listview" data-inset="true" data-theme="a" data-divider-theme="b">
+    <li>
+        <label for="roleName">Role Name:</label>
+        <select name="roleName" id="roleName">
+            <option value="roleName1">No Roles Found</option>
+        </select>
+    </li>
+    <li>
+        <label for="userId">User Id:</label>
+        <input name="userId" id="userId" type="search" value="" placeholder="Search User Id...">    
+        <div>
+            <ul id="userlist" data-role="listview" data-inset="true"></ul>
+        </div>
+    </li>
+    <li>
+        <div id="rolemsg"></div>
+    </li>
+    <li>
+        <div class="ui-grid-a">
+            <div class="ui-block-a" style="padding-right: 5px;">
+                <button onclick="btnAddRemoveUserRole(true, 'userId', 'roleName', 'rolemsg')">
+                    Add</button>
+            </div>
+            <div class="ui-block-b" style="padding-left: 5px;">
+                <button onclick="btnAddRemoveUserRole(false, 'userId', 'roleName', 'rolemsg')">
+                    Remove</button>
+            </div>
+        </div>
+    </li>
+    <li data-role="list-divider">Role User List</li>
+    <li>
+        <div>
+            <ul id="roleUserList" data-role="listview" data-inset="true" data-theme="b">
+                {{RoleUserList}}
+            </ul>
+        </div>
+    </li>
+</ul>

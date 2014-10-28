@@ -1,0 +1,14 @@
+
+<li>
+    <a href="#"><h2>{{AppName}}</h2></a>       
+    <a href="#" id="deleteBtn" onclick="toggleConfirm('deleteBtn', 'confirmDelete')">Del</a>
+    <div class="ui-grid-a" id="confirmDelete" style="display:none;">
+        <div class="ui-block-a" style="padding-right: 5px;">
+            <a  href="#" class="ui-btn ui-mini ui-shadow ui-icon-back ui-btn-icon-left ui-btn-inline" onclick="toggleConfirm('confirmDelete', 'deleteBtn')">No</a>
+        </div>
+        <div class="ui-block-b" style="padding-left: 5px; white-space:normal">
+                <div id="progressDiv"></div>
+            <a  href="#" class="ui-btn ui-mini ui-btn-b ui-shadow ui-icon-check ui-btn-icon-left ui-btn-inline" onclick="return deleteInboxApp('{{AppId}}', 'progressDiv');">Yes</a>
+        </div>
+    </div>
+</li>

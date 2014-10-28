@@ -1,0 +1,98 @@
+<script type="text/javascript">
+
+    var nextRequestId = 0;
+    var jsonFileHandler = "/Handler/JsonFile.ashx";
+
+    //addLoadEvent(fillInbox);
+    $(document).bind('pageinit', function (event) {
+        fillInbox();
+    });
+
+    function fillInbox()
+    {
+        loadULHtml(jsonFileHandler, "GetDemoAppsListHtml", 'demoAppList', 'demomsg', 1, 100);
+    }
+
+    function loadULHtml(jsonHandler, jsonMethod, placeHolderElmId, msgElmId, pageNo, itemsPerPage) {
+
+        var valid = true;
+
+        //Validate Arguments
+
+        if (valid == true) {
+            var paramValues = '{';
+            paramValues += '"pageNo" : ' + pageNo;
+            paramValues += ', "itemsPerPage" : ' + itemsPerPage;
+            paramValues += '}';
+
+            var request = {
+                id: ++nextRequestId,
+                method: jsonMethod,
+                params: paramValues
+            };
+
+            asyncJsonRequest(jsonHandler, request, msgElmId,
+               function (response) {
+                   var haveResult = false;
+                   if (response.hasOwnProperty('Result') === true) {
+                       var retResult = response.Result;
+                       if (retResult.hasOwnProperty('error') === true) {
+                           var retError = retResult.error;
+                           showError(retError, msgElmId);
+                       }
+                       else {
+                           if (retResult.hasOwnProperty('html') === true) {
+                               var placeHolderElm = document.getElementById(placeHolderElmId);
+                               if (placeHolderElm) {
+                                   var elmPlaceHolder = '#' + placeHolderElmId;
+                                   $(elmPlaceHolder).html(retResult.html);
+                                   $(elmPlaceHolder).listview("refresh");
+                               }
+                           }
+                       }
+                   }
+               });
+        }
+    }
+
+</script>
+
+<div role="main" class="ui-content">
+   
+    <div data-role="collapsibleset" data-theme="a" data-content-theme="a" data-mini="true">
+
+         <div data-role="collapsible" data-collapsed="false">
+            <h3>Samples</h3>
+            <div>
+                <ol data-role="listview" data-inset="true" data-mini="true">
+                    <li data-role="list-divider">Sample AppWeb(s) </li>
+                    <li style="white-space:normal;">Download Btsync to your Mobile Device</li>
+                    <li style="white-space:normal;">Create a New Folder using the below Read Only Key</li>
+                    <li style="white-space:normal;">
+                        <span style="color:blue;font-size:x-small">BTEA5IFMBRNUHNC3E33YPE2I2MYSCBDLF</span>
+                        <div style="padding-left:25px;">                
+                            Or Use Link <a href="https://link.getsync.com/#f=InputWebApp&sz=85E4&s=IXYLXZDQ7GGJBW3SZ27LTQNHK7QTOV5Z&i=C3OYL6WDS2FDRTIRJNZCXA36GSVU6F5ZC&p=CBO2MU72D2YGGL6WU37W2KWSKSJJO2KZ">Sample Sync Folder</a>
+                        </div>            
+                    </li>
+                    <li style="white-space:normal;">Wait for the Sample Apps to Sync to your Mobile Device</li>
+                    <li style="white-space:normal;">Open the Sample Portable Apps</li>
+                </ol>
+            </div>
+        </div>
+
+        <div data-role="collapsible">
+            <h3>Demo App (s)</h3>
+            <div>
+                <ul id="demoAppList" data-role="listview" data-theme="b" data-split-icon="delete" data-split-theme="a" data-inset="true">
+                    <li>Please wait...</li>
+                </ul>
+                <div id="demomsg"></div>
+            </div>
+        </div>
+    </div>
+   
+    <div style="height:50px;">
+        &nbsp;
+    </div>
+
+</div>

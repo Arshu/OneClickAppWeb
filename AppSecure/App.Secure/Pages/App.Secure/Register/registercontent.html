@@ -1,0 +1,175 @@
+<script type="text/javascript">
+
+var nextRequestId = 0;
+var jsonSecureHandler = "/Handler/JsonSecure.ashx";
+var jsonAuthSecureHandler = "/Handler/JsonAuthSecure.ashx";
+
+$(document).bind('pageinit', function (event) {
+    fillRegisterUser('userId', 'registermsg');
+});
+
+/*****************************************************************************************************************************
+                                                       WebService Methods (Secure Handler)
+******************************************************************************************************************************/
+
+function fillRegisterUser(userIdElmId, msgElmId) {
+    var valid = true;
+
+    //Validate Arguments
+
+    if (valid == true) {
+        var paramValues = '{';
+        paramValues += '}';
+
+        var request = {
+            id: ++nextRequestId,
+            method: "IsTempUser",
+            params: paramValues
+        };
+
+        asyncJsonRequest(jsonAuthSecureHandler, request, msgElmId,
+           function (response) {
+               var haveResult = false;
+               if (response.hasOwnProperty('Result') === true) {
+                   var retResult = response.Result;
+                   if (retResult.hasOwnProperty('message') === true) {
+                       //var retMessage = retResult.message;
+                       //showSuccess(retMessage, msgElmId);
+                       if (retResult.hasOwnProperty('userid') === true) {
+                           var userIdElm = document.getElementById(userIdElmId);
+                           if (userIdElm) {
+                               userIdElm.value = retResult.hasOwnProperty('userid');
+                           }
+                       }
+                   }
+                   else if (retResult.hasOwnProperty('error') === true) {
+
+                       //var retError = retResult.error;
+                       //showError(retError, msgElmId);
+                   }
+               }
+           });
+    }
+}
+
+
+//Register User
+function registerUser(userId, userEmail, userPassword, msgElmId) {
+    var valid = true;
+
+    //Validate Arguments
+	
+    if (valid == true) {
+        var paramValues = '{';
+        paramValues += ', "userId" : "' + encodeURIComponent(userId) + '"';
+        paramValues += ', "userEmail" : "' + encodeURIComponent(userEmail) + '"';
+        paramValues += ', "userPassword" : "' + encodeURIComponent(userPassword) + '"';
+        paramValues += '}';
+
+        var request = {
+            id: ++nextRequestId,
+            method: "RegisterUser",
+            params: paramValues
+        };
+
+        asyncJsonRequest(jsonAuthSecureHandler, request, msgElmId,
+           function (response) {
+               var haveResult = false;
+               if (response.hasOwnProperty('Result') === true) {
+                   var retResult = response.Result;
+                   if (retResult.hasOwnProperty('message') === true) {
+                       var retMessage = retResult.message;
+                       showSuccess(retMessage, msgElmId);
+                   }
+                   else if (retResult.hasOwnProperty('error') === true) {
+
+                       var retError = retResult.error;
+                       showError(retError, msgElmId);
+                   }
+               }
+           });
+    }
+}
+
+/*****************************************************************************************************************************
+                                                       Action Methods (LogOff, Login, Register)
+******************************************************************************************************************************/
+
+function btnRegisterUser(userIdElmId, userEmailElmId, userPasswordElmId, userPasswordConfirmElmId, msgElmId) {
+	
+    var msgElm = document.getElementById(msgElmId);
+    msgElm.innerHTML = "";
+    msgElm.className = "";
+	
+    var userIdElm = document.getElementById(userIdElmId);
+    var userEmailElm = document.getElementById(userEmailElmId);
+    var userPasswordElm = document.getElementById(userPasswordElmId);
+    var userPasswordConfirmElm = document.getElementById(userPasswordConfirmElmId);
+
+    if ((userIdElm) && (userEmailElm)  
+        && (userPasswordElm) && (userPasswordConfirmElm)
+        && (msgElm)) 
+        {
+        
+        if (userIdElm.value.length == 0) {
+            msgElm.className = "error";
+            msgElm.innerHTML = "Please enter User Id";
+            $(msgElm).show();
+        }
+        else if (userEmailElm.value.length == 0) {
+            msgElm.className = "error";
+            msgElm.innerHTML = "Please enter User Email";
+            $(msgElm).show();
+        }
+        else if (userPasswordElm.value.length == 0) {
+            msgElm.className = "error";
+            msgElm.innerHTML = "Please enter User Password";
+            $(msgElm).show();
+        } 
+        else if (userPasswordConfirmElm.value.length == 0) {
+            msgElm.className = "error";
+            msgElm.innerHTML = "Please enter User Confirm Password";
+            $(msgElm).show();
+        } 
+        else if (userPasswordElm.value != userPasswordConfirmElm.value) {
+            msgElm.className = "error";
+            msgElm.innerHTML = "Please Enter the Password and Confirm Password as the Same";
+            $(msgElm).show();
+        } 
+        else {
+            //Register User
+            registerUser(userIdElm.value, userEmailElm.value, userPasswordElm.value, msgElmId);
+        }
+    }
+}
+
+</script>
+<ul data-role="listview" data-inset="true">
+    <li>
+        <label for="userId" class="ui-hidden-accessible">
+            User Id:</label>
+        <input name="userId" id="userId" type="text" value="" placeholder="Enter User Id..." />
+    </li>
+    <li>
+        <label for="userEmail" class="ui-hidden-accessible">
+            User Email:</label>
+        <input name="userEmail" id="userEmail" type="text" value="" placeholder="Enter User Email..." />
+    </li>
+    <li>
+        <label for="userPassword" class="ui-hidden-accessible">
+            User Password:</label>
+        <input name="userPassword" id="userPassword" type="password" value="" placeholder="Enter User Password..." />
+    </li>
+    <li>
+        <label for="userPasswordConfirm" class="ui-hidden-accessible">
+            Confirm Password:</label>
+        <input name="userPasswordConfirm" id="userPasswordConfirm" type="password" value="" placeholder="Enter Confirm Password..." />
+    </li>
+    <li>
+        <div id="registermsg"></div>
+    </li>
+    <li>
+        <button onclick="btnRegisterUser('userId', 'userEmail', 'userPassword', 'userPasswordConfirm', 'registermsg');">
+            Register</button>
+    </li>
+</ul>

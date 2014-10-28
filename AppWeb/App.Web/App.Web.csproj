@@ -53,11 +53,18 @@
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Arshu.Data">
+      <HintPath>..\..\Components\Win\Arshu.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Arshu.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=965eb7c7ced7f21b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Components\Win\Arshu.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\..\Components\SQLite\sqlite-netFx20-binary-bundle-Win32-2005-1.0.92.0\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
@@ -70,24 +77,29 @@
     <Content Include="App_Resource\Js\main.js" />
     <Content Include="App_Resource\Js\main.min.js" />
     <Content Include="App_Resource\Css\main.css" />
+    <Content Include="App_Service\App.Web\View\Common\liTwoColumn.html" />
+    <Content Include="App_Service\App.Web\View\Common\selectOption.html" />
+    <Content Include="App_Service\App.Web\View\List\InboxColumn.html" />
     <Content Include="Index.html" />
-    <Content Include="Pages\Info\AppWeb\appwebcontent.html" />
-    <Content Include="Pages\Info\AppWeb\appwebheader.html" />
-    <BundleResource Include="Pages\Info\Image\AppWeb.png" />
-    <BundleResource Include="Pages\Info\Image\github128x128.png" />
-    <BundleResource Include="Pages\Info\Image\OneClick.png" />
-    <BundleResource Include="Pages\Info\Image\PortableApp.png" />
-    <Content Include="Pages\Info\infocontent.html" />
-    <Content Include="Pages\Info\infoheader.html" />
-    <Content Include="Pages\Info\OneClick\oneclickcontent.html" />
-    <Content Include="Pages\Info\OneClick\oneclickheader.html" />
-    <Content Include="Pages\Info\PortableApp\portableappcontent.html" />
-    <Content Include="Pages\Info\PortableApp\portableappheader.html" />
+    <Content Include="Pages\App.Web\Demo\democontent.html" />
+    <Content Include="Pages\App.Web\Demo\demoheader.html" />
+    <Content Include="Pages\App.Web\Demo\demopage.html" />
+    <Content Include="Pages\App.Web\Demo\demotabbar.html" />
+    <Content Include="Pages\App.Web\Inbox\inboxcontent.html" />
+    <Content Include="Pages\App.Web\Inbox\inboxheader.html" />
+    <Content Include="Pages\App.Web\Inbox\inboxpage.html" />
+    <Content Include="Pages\App.Web\Inbox\inboxtabbar.html" />
+    <Content Include="Pages\Common\commonfooterinfo.html" />
+    <Content Include="Pages\Main\mainpage.html" />
+    <Content Include="Pages\Main\maintabbar.html" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Index.ashx" />
     <Content Include="JsonRpc.ashx" />
+    <Content Include="Handler\JsonDb.ashx" />
+    <Content Include="Handler\JsonFile.ashx" />
+    <Content Include="Handler\JsonTemplate.ashx" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -96,13 +108,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Service\App.Web\Service\JsonDbHandler.cs" />
+    <Compile Include="App_Service\App.Web\Service\JsonFileHandler.cs" />
+    <Compile Include="App_Service\App.Web\ViewTemplate\Template.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Resource\NotFound.png" />
     <Content Include="Pages\Common\commonfooter.html" />
     <Content Include="Pages\Common\commonheader.html" />
-    <Content Include="Pages\Common\mainfooter.html" />
     <Content Include="Pages\Main\maincontent.html" />
     <Content Include="Pages\Main\mainheader.html" />
   </ItemGroup>

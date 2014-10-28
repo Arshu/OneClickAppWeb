@@ -1,0 +1,85 @@
+<script type="text/javascript">
+
+var nextRequestId = 0;
+var jsonSecureHandler = "/Handler/JsonSecure.ashx";
+var jsonAuthSecureHandler = "/Handler/JsonAuthSecure.ashx";
+
+/*****************************************************************************************************************************
+                                                       WebService Methods (Secure Handler)
+******************************************************************************************************************************/
+
+//LogOff User
+function logOffUser(msgElmId) {
+    var valid = true;
+
+    //Validate Arguments
+
+    if (valid == true) {
+        var paramValues = '{';
+        paramValues += '}';
+
+        var request = {
+            id: ++nextRequestId,
+            method: "LogOffUser",
+            params: paramValues
+        };
+
+        asyncJsonRequest(jsonSecureHandler, request, msgElmId,
+           function (response) {
+               var haveResult = false;
+               if (response.hasOwnProperty('Result') === true) {
+                   var retResult = response.Result;
+                   if (retResult.hasOwnProperty('message') === true) {
+                       window.location.replace('/Index.ashx');
+                       var retMessage = retResult.message;
+                       showSuccess(retMessage, msgElmId);
+                   }
+                   else if (retResult.hasOwnProperty('error') === true) {
+
+                       var retError = retResult.error;
+                       showError(retError, msgElmId);
+                   }
+               }
+           });
+    }
+}
+
+/*****************************************************************************************************************************
+                                                       Action Methods (LogOff, Login, Register)
+******************************************************************************************************************************/
+
+function btnLogOffUser(msgElmId) {
+
+    var msgElm = document.getElementById(msgElmId);
+
+    if (msgElm) {
+
+        msgElm.innerHTML = "";
+        msgElm.className = "";
+
+        logOffUser(msgElmId);
+    }
+}
+
+</script>
+
+<div class="topaction" id="topaction" style="z-index: 100;">
+    <a title="Header Links" style="text-indent:20px;" class="toplink" onclick="hideObj('headerArrow'); toggleDisplay('actionbar');toggleDisplay('moreactionbar'); toggleObjClass('topaction', 'topaction-opened');">Secure</a>
+</div>
+<div id="actionbar">
+    <a href="/Index.ashx?Register" data-ajax="false">
+        <i class="ui-shadow ui-btn ui-corner-all ui-icon-user ui-btn-icon-notext ui-btn-inline">Register</i>
+    </a>
+    <a href="#" onclick="btnLogOffUser('logoffmsg')" class="pull-right" data-ajax="false" style="padding-right:50px">
+        <i class="ui-shadow ui-btn ui-corner-all ui-icon-refresh ui-btn-icon-notext ui-btn-inline">LogOff</i>
+    </a>
+</div>
+<div id="moreactionbar" style="display: none;">
+    <a href="/Index.ashx?Register" data-ajax="false">
+        <i class="ui-shadow ui-btn ui-corner-all ui-icon-user ui-btn-icon-notext ui-btn-inline">Register</i>
+    </a>
+    <a href="/Index.ashx?Roles" class="pull-right" data-ajax="false" style="padding-right:40px">
+        <i class="ui-shadow ui-btn ui-corner-all ui-icon-lock ui-btn-icon-notext ui-btn-inline">Roles</i>
+    </a>
+</div>
+ <div id="logoffmsg"></div>

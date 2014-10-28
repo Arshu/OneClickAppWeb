@@ -1,7 +1,75 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="preferExternal" package="app.web.v1" android:versionCode="1" android:versionName="Demo">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="preferExternal" package="app.web.v1" android:versionCode="1" android:versionName="Beta">
 	<uses-sdk android:minSdkVersion="8" />
-	<application android:allowBackup="true" android:label="AppWeb" android:icon="@drawable/icon"></application>
+	<application android:allowBackup="true" android:label="AppWeb" android:icon="@drawable/Icon">
+		<activity android:configChanges="orientation|screenSize" android:icon="@drawable/Icon" android:label="AppWeb" android:launchMode="singleTop" android:theme="@style/Theme.GridBackground" android:windowSoftInputMode="stateUnspecified|adjustPan" android:name="app.web.WebViewImportActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+				<data android:host="*" />
+				<data android:mimeType="*/*" />
+				<data android:scheme="https" />
+				<data android:pathPattern=".*\\.pap" />
+				<data android:pathPattern=".*\\..*\\.pap" />
+				<data android:pathPattern=".*\\..*\\..*\\.pap" />
+				<data android:pathPattern=".*\\..*\\..*\\..*\\.pap" />
+				<data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.pap" />
+			</intent-filter>
+			<intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+				<data android:host="*" />
+				<data android:mimeType="*/*" />
+				<data android:scheme="http" />
+				<data android:pathPattern=".*\\.pap" />
+				<data android:pathPattern=".*\\..*\\.pap" />
+				<data android:pathPattern=".*\\..*\\..*\\.pap" />
+				<data android:pathPattern=".*\\..*\\..*\\..*\\.pap" />
+				<data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.pap" />
+			</intent-filter>
+			<intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:host="*" />
+				<data android:mimeType="*/*" />
+				<data android:scheme="file" />
+				<data android:pathPattern=".*\\.pap" />
+				<data android:pathPattern=".*\\..*\\.pap" />
+				<data android:pathPattern=".*\\..*\\..*\\.pap" />
+				<data android:pathPattern=".*\\..*\\..*\\..*\\.pap" />
+				<data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.pap" />
+			</intent-filter>
+			<intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:host="*" />
+				<data android:mimeType="application/octet-stream" />
+				<data android:scheme="content" />
+				<data android:pathPattern=".*\\.pap" />
+				<data android:pathPattern=".*\\..*\\.pap" />
+				<data android:pathPattern=".*\\..*\\..*\\.pap" />
+				<data android:pathPattern=".*\\..*\\..*\\..*\\.pap" />
+				<data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.pap" />
+			</intent-filter>
+			<intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:host="*" />
+				<data android:mimeType="application/pap" />
+				<data android:scheme="content" />
+				<data android:pathPattern=".*\\.pap" />
+				<data android:pathPattern=".*\\..*\\.pap" />
+				<data android:pathPattern=".*\\..*\\..*\\.pap" />
+				<data android:pathPattern=".*\\..*\\..*\\..*\\.pap" />
+				<data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.pap" />
+			</intent-filter>
+		</activity>
+	</application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />

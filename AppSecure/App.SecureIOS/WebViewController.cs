@@ -1,10 +1,11 @@
 using System;
-using System.Drawing;
 using Mono.Data.Sqlite;
 
-using MonoTouch.CoreFoundation;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
+using CoreFoundation;
+using CoreGraphics;
+using UIKit;
+using Foundation;
+using QuickLook;
 
 using Arshu.Web.Common;
 using Arshu.AppWeb;
@@ -16,8 +17,9 @@ namespace App.Secure
     {
         #region Variable
 
-        ArshuWebGrid _arshuWebGrid = null;        
-        private float heightOffset = 25.0f;
+        public NSUrl _appUri;
+        private static ArshuWebGrid _arshuWebGrid = null;        
+        private float heightOffset = 0; //25.0f;
 
         #endregion
 
@@ -26,7 +28,7 @@ namespace App.Secure
         public WebViewController()
         {
             _arshuWebGrid = new ArshuWebGrid(this);
-
+            SetNeedsStatusBarAppearanceUpdate();
 			DummyObjectRegister ();
         }
 
@@ -65,35 +67,6 @@ namespace App.Secure
 
 		#endregion
 
-        #region Get Screen Rectangle
-
-        public Size GetScreenSize()
-        {
-            int deviceWidth = (int) UIScreen.MainScreen.Bounds.Width;
-            int deviceHeight = (int) UIScreen.MainScreen.Bounds.Height;
-
-            int screenWidth = deviceWidth;
-            int screenHeight = deviceHeight;
-
-            UIDeviceOrientation currentOrientation = UIDevice.CurrentDevice.Orientation;
-
-			if ((currentOrientation != UIDeviceOrientation.LandscapeLeft)
-				&& (currentOrientation != UIDeviceOrientation.LandscapeRight))
-            {
-                // portrait
-                screenWidth = deviceWidth;
-                screenHeight = deviceHeight;
-            }
-            else
-            {
-                // landsacpe
-                screenWidth = deviceHeight;
-                screenHeight = deviceWidth;
-            }
-            return new Size(screenWidth, screenHeight);
-        }
-
-        #endregion
 
 
 
@@ -108,8 +81,8 @@ namespace App.Secure
             DummyObjectRegister();
             UIView rootView = this.View;
 			if (_arshuWebGrid != null)
-			{				
-                Size screenSize = GetScreenSize();
+			{
+                CGSize screenSize = _arshuWebGrid.GetScreenSize();
                 _arshuWebGrid.InitView(rootView, screenSize.Width, screenSize.Height, heightOffset); 
 
 				_arshuWebGrid.CurrentPageAnimation = PageAnimation.FlipRight;
@@ -120,7 +93,6 @@ namespace App.Secure
                 _arshuWebGrid.ShowBackLink = true;
                 _arshuWebGrid.RestartOnRotate = false;
                 _arshuWebGrid.UseDocumentFolder = true;
-                _arshuWebGrid.SnapShotCount = 10;
 			}
 		}
 
@@ -133,8 +105,13 @@ namespace App.Secure
             if (_arshuWebGrid != null)
             {
                 _arshuWebGrid.ConfigView();
-                _arshuWebGrid.StartWebServer(false);
+
                 ConfigureWebView();
+                ImportApp();
+
+                _arshuWebGrid.StartWebServer(false);
+
+               
             }
         }
 
@@ -163,6 +140,22 @@ namespace App.Secure
                 _arshuWebGrid.ConfigView();
                 _arshuWebGrid.ReloadView();
                 ConfigureWebView();
+            }
+        }
+
+        #endregion
+
+        #region Import App
+
+        private void ImportApp()
+        {
+            if (_arshuWebGrid != null)
+            {
+                if (_appUri != null)
+                {
+                    _arshuWebGrid.ImportApp(_appUri.AbsoluteString);
+                    _appUri = null;
+                }
             }
         }
 
@@ -213,5 +206,79 @@ namespace App.Secure
 		}
 
 		#endregion
+
+        #region Hide Status Bar
+
+        public override bool PrefersStatusBarHidden()
+        {
+            return true;
+        }
+
+        #endregion
+
+        #region Quick Look Url
+
+        //private class PreviewItem : QLPreviewItem
+        //{
+        //    public string Title { get; set; }
+        //    public NSUrl Url { get; set; }
+
+        //    public override NSUrl ItemUrl { get { return Url; } }
+        //    public override string ItemTitle { get { return Title; } }
+        //}
+
+        //private class PreviewDataSource : QLPreviewControllerDataSource
+        //{
+        //    private NSUrl _url;
+        //    private string _title;
+
+        //    public PreviewDataSource(NSUrl url, string title)
+        //    {
+        //        _url = url;
+        //        _title = title;
+        //    }
+
+        //    public override int PreviewItemCount(QLPreviewController controller)
+        //    {
+        //        return 1;
+        //    }
+
+        //    public override QLPreviewItem GetPreviewItem(QLPreviewController controller, int index)
+        //    {
+        //        return new PreviewItem { Title = _title, Url = _url };
+        //    }
+        //}
+
+        //public bool QuickLookUrl(NSUrl documentUrl, string title)
+        //{
+        //    bool ret = false;
+        //    QLPreviewController qlPreview = new QLPreviewController();
+        //    qlPreview.DataSource = new PreviewDataSource(documentUrl, title);
+        //    this.PresentViewController(qlPreview, true, null);
+        //    ret = true;
+
+        //    return ret;
+        //}
+
+        //private UIDocumentInteractionController _popup;
+        //private void ShareUrl(NSUrl fileUrl)
+        //{
+        //    if (_popup != null)
+        //    {
+        //        _popup.DismissMenu(true);
+        //        _popup = null;
+        //    }
+        //    else
+        //    {
+        //        _popup = new UIDocumentInteractionController()
+        //        {
+        //            Url = fileUrl
+        //        };
+        //        _popup.DidDismissOptionsMenu += (s, a) => _popup = null;
+        //        _popup.PresentOptionsMenu(_shareButton, true);
+        //    }
+        //}
+
+        #endregion
     }
 }

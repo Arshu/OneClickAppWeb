@@ -11,7 +11,7 @@ namespace App.Web
     {
         public override string GetResponse(bool reload, string postFilePath, bool isGetRequest, string rawUrl, string requestJson, System.Collections.Generic.Dictionary<string, string> queryString, DateTime startTime, out string retContentType)
         {
-            HttpBaseHandler.DevelopmentTestMode = true;
+            //HttpBaseHandler.DevelopmentTestMode = true;
 
             return base.GetResponse(reload, postFilePath, isGetRequest, rawUrl, requestJson, queryString, startTime, out retContentType);
         }

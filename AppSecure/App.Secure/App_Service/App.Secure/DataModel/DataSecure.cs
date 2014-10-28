@@ -7,6 +7,7 @@ using Arshu.Web.Basic.Log;
 using Arshu.Web.Common;
 using Arshu.Web.Security;
 using Arshu.Web.Common.SMTP;
+using Arshu.Web.Http;
 
 using App.Secure.Entity;
 using App.Secure.Data;
@@ -40,7 +41,7 @@ namespace App.Secure
                     BaseSecurity.CreateRole(BaseSecurity.AuthorRole);
                     BaseSecurity.CreateRole(BaseSecurity.GuestRole);
 
-                    BaseSecurity.AssignRole(userId, BaseSecurity.AdminRole);
+                    BaseSecurity.AssignRole(userId, BaseSecurity.AdminRole, out message);
 
                     //Check if User exist in db
                     string userHash = DataSource.GetUserHash(userId, userPwd);
@@ -71,7 +72,7 @@ namespace App.Secure
                                 BaseSecurity.CreateRole(BaseSecurity.AuthorRole);
                                 BaseSecurity.CreateRole(BaseSecurity.GuestRole);
 
-                                BaseSecurity.AssignRole(userId, BaseSecurity.AdminRole);
+                                BaseSecurity.AssignRole(userId, BaseSecurity.AdminRole, out message);
                             }
                         }
                         else
@@ -88,6 +89,57 @@ namespace App.Secure
             else
             {
                 ret = true;
+            }
+
+            retMessage = message;
+            return ret;
+        }
+
+        #endregion
+
+        #region Auto Login
+
+        public static bool AutoLogin(out string retMessage)
+        {
+            bool ret = false;
+            string message = "";
+
+            ret = BaseSecurity.AutoLogin(out message);
+
+            retMessage = message;
+            return ret;
+        }
+
+        #endregion
+
+        #region IsTempUser
+
+        public static bool IsTempUser(string loginUserId)
+        {
+            bool ret = false;
+
+            ret = BaseSecurity.IsTempUser(loginUserId);
+
+            return ret;
+        }
+
+        #endregion
+
+        #region HaveRegisteredUser
+
+        public static bool HaveRegisteredUser(out string retMessage)
+        {
+            bool ret = false;
+            string message = "";
+
+            if (BaseSecurity.HaveUser(true) == true)
+            {
+                message = "Registered User Found";
+                ret = true;
+            }
+            else
+            {
+                message = "No Registered User Found";
             }
 
             retMessage = message;
@@ -178,11 +230,41 @@ namespace App.Secure
 
             bool validationFail = false;
 
-            bool haveUser = BaseSecurity.HaveUser(userId, out message);
-            if (haveUser == true)
+            bool isDefault = false;
+            string loginId = BaseSecurity.GetLoginUserID(out isDefault);
+
+            bool isLoginUserTempUser = false;
+            if (BaseSecurity.IsAuthenticated() == true)
             {
-                message = "User Id is already registered [" + message + "]";
-                validationFail = true;
+                if (BaseSecurity.IsTempUser(loginId) == true)
+                {
+                    isLoginUserTempUser = true;
+                    if (userId.ToUpper() == loginId.ToUpper())
+                    {
+                        message = "User Id cannot be Temp User Id. Please Change";
+                        validationFail = true;
+                    }
+                }
+            }
+
+            if (validationFail == false)
+            {
+                bool isTempUser = BaseSecurity.IsTempUser(userId);
+                if (isTempUser == true)
+                {
+                    message = "User Id cannot start with " + BaseSecurity.TempUserPrefix + " Prefix ";
+                    validationFail = true;
+                }
+            }
+
+            if (validationFail == false)
+            {
+                bool haveUser = BaseSecurity.HaveUser(userId, out message);
+                if (haveUser == true)
+                {
+                    message = "User Id is already registered [" + message + "]";
+                    validationFail = true;
+                }
             }
 
             if (validationFail == false)
@@ -240,7 +322,13 @@ namespace App.Secure
                 bool userCreated = BaseSecurity.CreateUser(userId, userPwd, userEmail, true, false, out message);
                 if (userCreated == true)
                 {
-                    BaseSecurity.AssignRole(userId, BaseSecurity.GuestRole);
+                    //Remove the Temporary User if any User is Registered
+                    if (isLoginUserTempUser == true)
+                    {
+                        BaseSecurity.RemoveUser(loginId);
+                    }
+
+                    BaseSecurity.AssignRole(userId, BaseSecurity.GuestRole, out message);
 
                     SYD_User sydUser = new SYD_User();
                     sydUser.UserAlias = userId;
@@ -349,8 +437,9 @@ namespace App.Secure
         public static bool AddUserToRole(string userId, string roleName)
         {
             bool ret = false;
+            string message = "";
 
-            ret = BaseSecurity.AssignRole(userId, roleName);
+            ret = BaseSecurity.AssignRole(userId, roleName, out message);
 
             return ret;
         }

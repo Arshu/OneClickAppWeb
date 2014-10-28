@@ -30,6 +30,75 @@ namespace App.Secure
     [JsonRpcHelp("Secure JsonService")]
     public class JsonSecureService : JsonRpcService
     {
+        #region Auto Login
+
+        [JsonRpcMethod("AutoLogin", Idempotent = false)]
+        [JsonRpcHelp("Auto Login and Returns Json[message, error]")]
+        public JsonObject AutoLogin()
+        {
+            JsonObject retMessage = new JsonObject();
+
+            string message = "";
+            bool ret = DataSecure.AutoLogin(out message);
+            if (ret == true)
+            {
+                retMessage.Add("message", "Successfully Auto Logged");
+            }
+            else
+            {
+                if (message.Trim().Length == 0)
+                {
+                    retMessage.Add("error", "Error in Auto Loging");
+                }
+                else
+                {
+                    retMessage.Add("error", message);
+                }
+            }
+
+            return retMessage;
+        }
+
+        #endregion
+
+        #region HaveRegisteredUser
+
+        [JsonRpcMethod("HaveRegisteredUser", Idempotent = true)]
+        [JsonRpcHelp("Check if have any registered user and Returns Json[message, error]")]
+        public JsonObject HaveRegisteredUser()
+        {
+            JsonObject retMessage = new JsonObject();
+
+            string message = "";
+            bool ret = DataSecure.HaveRegisteredUser(out message);
+            if (ret == true)
+            {
+                if (message.Trim().Length == 0)
+                {
+                    retMessage.Add("message", "Registered User found");
+                }
+                else
+                {
+                    retMessage.Add("message", message);
+                }
+            }
+            else
+            {
+                if (message.Trim().Length == 0)
+                {
+                    retMessage.Add("error", "No Registered User found");
+                }
+                else
+                {
+                    retMessage.Add("error", message);
+                }
+            }
+
+            return retMessage;
+        }
+
+        #endregion
+
         #region IsAuthenticated
 
         [JsonRpcMethod("IsAuthenticated", Idempotent = true)]

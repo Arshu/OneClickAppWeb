@@ -1,8 +1,44 @@
+Download the [Android App](https://play.google.com/store/apps/details?id=app.web.v1 "Android App") Offline AppWeb Viewer from Google Play Store.
+
+## App Web Viewer
+
+App Web Viewer is a Offline Web App Viewer for viewing of Portable Dynamic (Ajax) Web Apps without Internet in 3 easy steps.
+
+<ol>
+    <li>
+		Zip and Rename you Web App with (Portable App) .pap extension
+	</li>
+	<li>
+		Sync the Portable Web App to your mobile device using Btsync, Dropbox or any file manager
+	</li>
+	<li>
+		Open the Portable Web App (.pap) in the mobile device to open using the AppWeb Offline Web Viewer
+	</li>
+</ol>
+
+#### App Web Viewer Features
+
+<ol>
+    <li>
+		Manage (Inbox/Remove) all the imported web apps using the Left Round button
+	</li>
+	<li>
+		Inbox - Delete and Reimport all the imported webapp
+	</li>
+	<li>
+		Remove - Delete the currently imported web app from the viewerr
+	</li>
+	<li>
+		Reimport the embedded Web App for instructions
+	</li>
+</ol>
+
+
 ## Prerequisites
 
 <ol>
     <li>
-		Xamarin.IOS and Xamarin.Android License to build your own AppWeb Runtime(s)
+		Xamarin.IOS and Xamarin.Android License to build your own AppWeb Runtime/Viewer(s)
 	</li>    
 	<li>
 		Visual Studio, Mono Develop or Sharp Develop to build your own AppWebs
@@ -52,7 +88,7 @@
 	</li>
 </ol>
 
-## Creating a custom AppWeb Runtime 
+## Creating a custom AppWeb Runtime/Viewer 
 
 Open the provided example AppWeb Solution OneClickAppWeb.sln or OneClickAppSecure.sln to find example usable of the App Web Component to create your own AppWeb Runtime
 

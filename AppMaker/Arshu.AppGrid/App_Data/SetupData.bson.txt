@@ -1,8 +1,0 @@
-[{
-    "AppName" : "Mvp.AppMaker.v1",   
-	"AppLabel" : "AppMaker", 
-	"AppVersion" : "Mvp 1",        
-    "AppTypeGUID" : "a749db91-23e8-4cc6-a3ae-3c7fb8460384",           
-	"DefaultApp" :"Mvp.AppMaker.v1"	    
-}
-]

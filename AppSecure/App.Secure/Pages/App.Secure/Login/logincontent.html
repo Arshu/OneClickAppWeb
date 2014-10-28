@@ -1,0 +1,209 @@
+<script type="text/javascript">
+
+var nextRequestId = 0;
+var jsonSecureHandler = "/Handler/JsonSecure.ashx";
+var jsonAuthSecureHandler = "/Handler/JsonAuthSecure.ashx";
+
+$(document).bind('pageinit', function (event) {
+    setTempLogin('tempLogin', 'registermsg');
+});
+
+/*****************************************************************************************************************************
+                                                       WebService Methods (Secure Handler)
+******************************************************************************************************************************/
+
+function setTempLogin(tempLoginElmId, msgElmId) {
+    var valid = true;
+
+    //Validate Arguments
+
+    if (valid == true) {
+        var paramValues = '{';
+        paramValues += '}';
+
+        var request = {
+            id: ++nextRequestId,
+            method: "HaveRegisteredUser",
+            params: paramValues
+        };
+
+        asyncJsonRequest(jsonAuthSecureHandler, request, msgElmId,
+           function (response) {
+               var haveResult = false;
+               if (response.hasOwnProperty('Result') === true) {
+                   var retResult = response.Result;
+                   if (retResult.hasOwnProperty('message') === true) {
+                       //var retMessage = retResult.message;
+                       //showSuccess(retMessage, msgElmId);
+                       $('#' + tempLoginElmId).attr("disabled", "disabled");
+                   }
+                   else if (retResult.hasOwnProperty('error') === true) {
+
+                       //var retError = retResult.error;
+                       //showError(retError, msgElmId);
+                       $('#' + tempLoginElmId).removeAttr("disabled");
+                   }
+               }
+           });
+    }
+}
+
+
+
+//Login User
+function loginUser(userName, userPassword, rememberMe, msgElmId) {
+    var valid = true;
+
+    //Validate Arguments
+	
+    if (valid == true) {
+        var paramValues = '{';
+        paramValues += '"userName" : "' + encodeURIComponent(userName) + '"';
+        paramValues += ', "userPassword" : "' + encodeURIComponent(userPassword) + '"';
+        paramValues += ', "rememberMe" : ' + rememberMe;
+        paramValues += '}';
+
+        var request = {
+            id: ++nextRequestId,
+            method: "LoginUser",
+            params: paramValues
+        };
+
+        asyncJsonRequest(jsonSecureHandler, request, msgElmId,
+           function (response) {
+               var haveResult = false;
+               if (response.hasOwnProperty('Result') === true) {
+                   var retResult = response.Result;
+                   if (retResult.hasOwnProperty('message') === true) {
+                       window.location.replace('/Index.ashx');
+                       var retMessage = retResult.message;
+                       showSuccess(retMessage, msgElmId);
+                   }
+                   else if (retResult.hasOwnProperty('error') === true) {
+
+                       var retError = retResult.error;
+                       showError(retError, msgElmId);
+                   }
+               }
+           });
+    }
+}
+
+//Login User
+function autoLogin(msgElmId) {
+    var valid = true;
+
+    //Validate Arguments
+	
+    if (valid == true) {
+        var paramValues = '{';
+        paramValues += '}';
+
+        var request = {
+            id: ++nextRequestId,
+            method: "AutoLogin",
+            params: paramValues
+        };
+
+        asyncJsonRequest(jsonSecureHandler, request, msgElmId,
+           function (response) {
+               var haveResult = false;
+               if (response.hasOwnProperty('Result') === true) {
+                   var retResult = response.Result;
+                   if (retResult.hasOwnProperty('message') === true) {
+                       window.location.replace('/Index.ashx');
+                       var retMessage = retResult.message;
+                       showSuccess(retMessage, msgElmId);
+                   }
+                   else if (retResult.hasOwnProperty('error') === true) {
+
+                       var retError = retResult.error;
+                       showError(retError, msgElmId);
+                   }
+               }
+           });
+    }
+}
+
+/*****************************************************************************************************************************
+                                                       Action Methods (LogOff, Login, Register)
+******************************************************************************************************************************/
+
+function btnLoginUser(userNameElmId, userPasswordElmId, rememberElmId, msgElmId) {
+	
+    var msgElm = document.getElementById(msgElmId);
+	
+    var userNameElm = document.getElementById(userNameElmId);
+    var userPasswordElm = document.getElementById(userPasswordElmId);
+    var rememberElm = document.getElementById(rememberElmId);
+
+    if ((userNameElm) && (userPasswordElm) && (rememberElm) 
+        && (msgElm)) 
+        {
+        
+        msgElm.innerHTML = "";
+        msgElm.className = "";
+        
+        if (userNameElm.value.length == 0) {
+            msgElm.className = "error";
+            msgElm.innerHTML = "Please enter User Name";
+            $(msgElm).show();
+        }
+        else if (userPasswordElm.value.length == 0) {
+            msgElm.className = "error";
+            msgElm.innerHTML = "Please enter User Password";
+            $(msgElm).show();
+        }
+        else {
+            if (rememberElm.checked == true)
+            {
+                loginUser(userNameElm.value, userPasswordElm.value, true, msgElmId);
+            }
+            else
+            {
+                loginUser(userNameElm.value, userPasswordElm.value, false, msgElmId);
+            }            
+        }
+    }
+}
+
+function btnAutoLogin(msgElmId) {
+	
+    var msgElm = document.getElementById(msgElmId);
+	
+    if (msgElm)
+    {        
+        msgElm.innerHTML = "";
+        msgElm.className = "";
+        
+        autoLogin(msgElmId);
+    }
+}
+
+</script>
+
+<ul data-role="listview" data-inset="true">
+    <li data-role="list-divider">
+        <button name="tempLogin" id="tempLogin" onclick="btnAutoLogin('loginmsg');">Temp Login</button>    
+    </li>
+    <li>
+        <label for="userId">User Id:</label>
+        <input name="userId" id="userId" value="" type="text" placeholder="Enter User Id...">
+    </li>
+    <li>
+        <label for="userPassword">User Password:</label>
+        <input name="userPassword" id="userPassword" type="password" value="" placeholder="Enter User Password...">
+    </li>
+    <li>
+        <fieldset data-role="controlgroup">
+            <input name="rememberMe" id="rememberMe" type="checkbox">
+            <label for="rememberMe">Remember Me</label>
+        </fieldset>
+    </li>
+    <li>
+        <div id="loginmsg"></div>
+    </li>
+    <li>
+        <button onclick="btnLoginUser('userId', 'userPassword', 'rememberMe', 'loginmsg');">Login</button>
+    </li>
+</ul>

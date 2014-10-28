@@ -40,7 +40,7 @@ namespace App.Secure
 
             string message = "";
             bool ret = DataSecure.IsAuthenticated(out message);
-            if (ret == false)
+            if (ret == true)
             {
                 if (message.Trim().Length == 0)
                 {
@@ -56,6 +56,61 @@ namespace App.Secure
                 if (message.Trim().Length == 0)
                 {
                     retMessage.Add("error", "User is not authenticated");
+                }
+                else
+                {
+                    retMessage.Add("error", message);
+                }
+            }
+
+            return retMessage;
+        }
+
+        #endregion
+
+        #region IsTempUser
+
+        [JsonRpcMethod("IsTempUser", Idempotent = true)]
+        [JsonRpcHelp("Check if User is Temp User and Returns Json[userid, message, error]")]
+        public JsonObject IsTempUser()
+        {
+            JsonObject retMessage = new JsonObject();
+
+            string message = "";
+
+            if (DataSecure.IsAuthenticated(out message) == true)
+            {
+                string userId = DataSecure.GetLoginUser();
+
+                if (DataSecure.IsTempUser(userId) == true)
+                {
+                    retMessage.Add("userid", userId);
+                    if (message.Trim().Length == 0)
+                    {
+                        retMessage.Add("message", "User is Temp User");
+                    }
+                    else
+                    {
+                        retMessage.Add("message", message);
+                    }
+                }
+                else
+                {
+                    if (message.Trim().Length == 0)
+                    {
+                        retMessage.Add("error", "User is not temp");
+                    }
+                    else
+                    {
+                        retMessage.Add("error", message);
+                    }
+                }
+            }
+            else
+            {
+                if (message.Trim().Length == 0)
+                {
+                    retMessage.Add("error", "User is not logged in");
                 }
                 else
                 {
