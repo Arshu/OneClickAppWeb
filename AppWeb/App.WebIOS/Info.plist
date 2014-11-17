@@ -25,9 +25,9 @@
 		<string>Icon-Small.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>app.web</string>
+	<string>arshu.com.appweb</string>
 	<key>CFBundleVersion</key>
-	<string>2.0</string>
+	<string>3.0</string>
 	<key>MinimumOSVersion</key>
 	<string>5.2</string>
 	<key>UIDeviceFamily</key>
@@ -58,7 +58,7 @@
 	<key>UIPrerenderedIcon</key>
 	<false/>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0</string>
+	<string>3.0</string>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UIStatusBarHidden</key>

@@ -65,9 +65,9 @@ Xamarin Tools provide the additional facility to mix native UI where the Web bas
 		FREE - The Standalone AppWeb Component is free with minimum branding information displayed.   
 	</li>  	  
 	<li>
-		BASIC - The Standalone AppWeb Component can be customized with specific branding which includes AppWeb Branding for a licence fees of 199/- USD per year per customization.
+		BASIC - The Standalone AppWeb Component can be customized with specific branding which includes AppWeb Branding for a licence fees of 199/- USD per year per App per OS. (For entities with less than 100,000 USD Revenue/Transaction) 
 	</li>	  
 	<li>
-		ENTERPRISE - The AppWeb Component with Updateable AppWebs enabled can be customized  with specific branding which includes AppWeb Branding for a license fees of 999/- USD per year per customization. 
+		ENTERPRISE - The AppWeb Component can be customized  with specific branding which includes AppWeb Branding for a license fees of 999/- USD per year per app per OS. 
 	</li>
 </ol>
