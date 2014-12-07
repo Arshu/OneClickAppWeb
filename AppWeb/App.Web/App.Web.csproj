@@ -69,17 +69,36 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\SetupData.bson.txt" />
-    <Content Include="App_Resource\License.html" />
     <CodeAnalysisDictionary Include="App_Resource\background.png" />
     <Content Include="App_Resource\Css\main.min.css" />
     <None Include="App_Resource\icon.png" />
-    <Content Include="App_Resource\Image\architecture.png" />
+    <Content Include="App_Resource\JQueryMobile\AutoComplete\jqm.autoComplete-1.5.2.min.js" />
+    <Content Include="App_Resource\JQueryMobile\AutoComplete\jqm.autoComplete-1.5.2_.js" />
+    <Content Include="App_Resource\JQueryMobile\Datebox\jqm-datebox-1.4.5.min.css" />
+    <Content Include="App_Resource\JQueryMobile\Datebox\jqm-datebox.core.js" />
+    <Content Include="App_Resource\JQueryMobile\Datebox\jqm-datebox.core.min.js" />
+    <Content Include="App_Resource\JQueryMobile\Datebox\jqm-datebox.mode.calbox.js" />
+    <Content Include="App_Resource\JQueryMobile\Datebox\jqm-datebox.mode.calbox.min.js" />
+    <Content Include="App_Resource\JQueryMobile\Datebox\jqm-datebox.mode.customflip.js" />
+    <Content Include="App_Resource\JQueryMobile\Datebox\jqm-datebox.mode.customflip.min.js" />
+    <Content Include="App_Resource\JQueryMobile\Datebox\jqm-datebox.mode.datebox.js" />
+    <Content Include="App_Resource\JQueryMobile\Datebox\jqm-datebox.mode.datebox.min.js" />
+    <Content Include="App_Resource\JQueryMobile\Datebox\jqm-datebox.mode.flipbox.js" />
+    <Content Include="App_Resource\JQueryMobile\Datebox\jqm-datebox.mode.flipbox.min.js" />
+    <Content Include="App_Resource\JQueryMobile\Datebox\jqm-datebox.mode.slidebox.js" />
+    <Content Include="App_Resource\JQueryMobile\Datebox\jqm-datebox.mode.slidebox.min.js" />
+    <Content Include="App_Resource\JQueryMobile\images\ajax-loader.gif" />
+    <Content Include="App_Resource\JQueryMobile\jquery.mobile-1.4.5.min.css" />
+    <Content Include="App_Resource\JQueryMobile\jquery.mobile-1.4.5.min.js" />
+    <Content Include="App_Resource\JQueryMobile\jquery.mobile.inline-png-1.4.5.min.css" />
+    <Content Include="App_Resource\JQueryMobile\jquery.mobile.theme-1.4.5.min.css" />
+    <Content Include="App_Resource\JQuery\jquery-2.1.1.min.js" />
     <Content Include="App_Resource\Js\main.js" />
     <Content Include="App_Resource\Js\main.min.js" />
     <Content Include="App_Resource\Css\main.css" />
-    <Content Include="App_Service\App.Web\View\Common\liTwoColumn.html" />
-    <Content Include="App_Service\App.Web\View\Common\selectOption.html" />
-    <Content Include="App_Service\App.Web\View\List\InboxColumn.html" />
+    <Content Include="App_Resource\Js\service.js" />
+    <Content Include="App_Resource\Js\service.min.js" />
+    <Content Include="App_Resource\splash.png" />
     <Content Include="Index.html" />
     <Content Include="Pages\App.Web\Demo\democontent.html" />
     <Content Include="Pages\App.Web\Demo\demoheader.html" />
@@ -99,7 +118,7 @@
     <Content Include="JsonRpc.ashx" />
     <Content Include="Handler\JsonDb.ashx" />
     <Content Include="Handler\JsonFile.ashx" />
-    <Content Include="Handler\JsonTemplate.ashx" />
+    <Content Include="App_Resource\JQuery\jquery-2.1.1.min.map" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -108,9 +127,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Service\App.Web\Service\JsonDbHandler.cs" />
-    <Compile Include="App_Service\App.Web\Service\JsonFileHandler.cs" />
-    <Compile Include="App_Service\App.Web\ViewTemplate\Template.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

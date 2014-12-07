@@ -20,8 +20,7 @@ namespace App.Web
 
 		public NSUrl _appUri;
 		private static ArshuWebGrid _arshuWebGrid = null;
-		private float heightOffset = 0;
-		//25.0f;
+		private int heightTopOffset = 0; //25.0f;
 
 		#endregion
 
@@ -73,19 +72,65 @@ namespace App.Web
 
 
 
-		#region Init WebGrid
+        #region Root View
 
-		/// <summary>
+        UIView rootView;
+        private UIView GetRootView()
+        {
+            int deviceWidth = (int)this.View.Frame.Width;
+            int deviceHeight = (int)this.View.Frame.Height;
+
+            int screenWidth = deviceWidth;
+            int screenHeight = deviceHeight;
+
+            UIDeviceOrientation currentOrientation = UIDevice.CurrentDevice.Orientation;
+            if (currentOrientation == UIDeviceOrientation.Unknown)
+            {
+                // portrait
+                screenWidth = deviceWidth;
+                screenHeight = deviceHeight - heightTopOffset;
+            }
+            else if ((currentOrientation != UIDeviceOrientation.LandscapeLeft)
+                     && (currentOrientation != UIDeviceOrientation.LandscapeRight))
+            {
+                // portrait
+                screenHeight = deviceWidth - heightTopOffset;
+                screenWidth = deviceHeight;
+            }
+            else
+            {
+                // landsacpe
+                screenWidth = deviceHeight;
+                screenHeight = deviceWidth - heightTopOffset;
+            }
+
+            if (rootView != null)
+            {
+                rootView.RemoveFromSuperview();
+                rootView = null;
+            }
+
+            rootView = new UIView(new CGRect(0, 0, screenWidth, screenHeight));
+            this.View.AddSubview(rootView);
+            return rootView;
+        }
+
+        #endregion
+
+        #region Init WebGrid
+
+        /// <summary>
 		/// Inits the web grid.
 		/// </summary>
 		/// <param name="rootView">Root view.</param>
 		private void InitWebGrid ()
 		{
 			DummyObjectRegister ();
-			UIView rootView = this.View;
+			
 			if (_arshuWebGrid != null) {
-				CGSize screenSize = _arshuWebGrid.GetScreenSize ();
-				_arshuWebGrid.InitView (rootView, screenSize.Width, screenSize.Height, heightOffset); 
+
+                UIView rootView = GetRootView();
+                _arshuWebGrid.InitView(rootView); 
 
 				_arshuWebGrid.CurrentPageAnimation = PageAnimation.FlipRight;
 				_arshuWebGrid.RequireWifi = false;
@@ -94,6 +139,7 @@ namespace App.Web
 				_arshuWebGrid.ShowInstallLink = true;
 				_arshuWebGrid.ShowBackLink = true;
 				_arshuWebGrid.RestartOnRotate = true;
+                _arshuWebGrid.ShowMessages = false;
 				_arshuWebGrid.UseDocumentFolder = true;
 			}
 		}

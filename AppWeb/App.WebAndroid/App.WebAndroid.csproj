@@ -117,15 +117,6 @@
     <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\viewtemplate\Template.cs">
       <Link>App_Service\App.Secure\ViewTemplate\Template.cs</Link>
     </Compile>
-    <Compile Include="..\App.Web\App_Service\App.Web\Service\JsonDbHandler.cs">
-      <Link>App_Service\App.Web\Service\JsonDbHandler.cs</Link>
-    </Compile>
-    <Compile Include="..\App.Web\App_Service\App.Web\Service\JsonFileHandler.cs">
-      <Link>App_Service\App.Web\Service\JsonFileHandler.cs</Link>
-    </Compile>
-    <Compile Include="..\App.Web\App_Service\App.Web\ViewTemplate\Template.cs">
-      <Link>App_Service\App.Web\ViewTemplate\Template.cs</Link>
-    </Compile>
     <Compile Include="Properties\AndroidAssemblyInfo.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="WebViewActivity.cs" />

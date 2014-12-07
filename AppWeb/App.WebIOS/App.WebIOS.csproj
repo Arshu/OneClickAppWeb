@@ -164,15 +164,6 @@
     <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\viewtemplate\Template.cs">
       <Link>App_Service\App.Secure\ViewTemplate\Template.cs</Link>
     </Compile>
-    <Compile Include="..\app.web\app_service\app.web\service\JsonDbHandler.cs">
-      <Link>App_Service\App.Web\Service\JsonDbHandler.cs</Link>
-    </Compile>
-    <Compile Include="..\app.web\app_service\app.web\service\JsonFileHandler.cs">
-      <Link>App_Service\App.Web\Service\JsonFileHandler.cs</Link>
-    </Compile>
-    <Compile Include="..\app.web\app_service\app.web\viewtemplate\Template.cs">
-      <Link>App_Service\App.Web\ViewTemplate\Template.cs</Link>
-    </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Properties\IOSAssemblyInfo.cs" />

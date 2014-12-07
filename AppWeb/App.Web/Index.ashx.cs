@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web;
 using Arshu.Web.Http;
-using App.Web.Views;
 
 namespace App.Web
 {

@@ -93,15 +93,18 @@ function ajaxStop(progressAnchorElmId) {
     }
 }
 
-function showAjaxTiming(returnAjax, clear) {
-    if (returnAjax.hasOwnProperty('time') === true) {
+var maxTimeInfo = 10;
+function showAjaxTiming(startTime, returnAjax, clear) {
+    if (returnAjax.hasOwnProperty('Time') === true) {
         var ajaxTimeElm = document.getElementById('ajaxTime');
         if (ajaxTimeElm) {
             if (clear === true) ajaxTimeElm.innerHTML = "";
 
-            var ajaxTime = "(" + returnAjax.time + ")";
-            if (returnAjax.hasOwnProperty('serviceInfo') === true) {
-                ajaxTime = "(<span title='" + returnAjax.serviceInfo + "'>" + returnAjax.time + "</span>)"
+            var endTime = new Date().getTime();
+            var timeDiff = endTime - startTime;
+            var ajaxTime = "(" + returnAjax.Time + "-" + timeDiff + ")";
+            if (returnAjax.hasOwnProperty('ServiceInfo') === true) {
+                ajaxTime = "(<span title='" + returnAjax.ServiceInfo + "'>" + returnAjax.Time + "-" + timeDiff + "</span>)"
             }
 
             var ajaxTimeElmText = ajaxTimeElm.innerHTML.trim();
@@ -112,7 +115,7 @@ function showAjaxTiming(returnAjax, clear) {
                 if (ajaxTimeElmText.indexOf(",") == -1) {
                     ajaxTimeElm.innerHTML = ajaxTimeElmText + "," + ajaxTime;
                 } else {
-                    var ajaxTimeArr = ajaxTimeElmText.split(",", 4);
+                    var ajaxTimeArr = ajaxTimeElmText.split(",", maxTimeInfo - 1);
                     ajaxTimeElm.innerHTML = ajaxTimeArr.join(",") + "," + ajaxTime;
                 }
             }
@@ -122,6 +125,7 @@ function showAjaxTiming(returnAjax, clear) {
 
 function asyncJsonRequest(postRequestPath, request, progressElmId, endCallback) {
 
+    var startTime = new Date().getTime();
     ajaxStart(progressElmId);
 
     var http = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -135,7 +139,6 @@ function asyncJsonRequest(postRequestPath, request, progressElmId, endCallback) 
         http.send('{"id":' + request.id + ',"method":"' + request.method + '","paramsArray":' + request.paramsArray + '}');
     }
 
-
     http.onreadystatechange = function () {
         if (http.readyState == 4) {
             ajaxStop(progressElmId);
@@ -145,11 +148,58 @@ function asyncJsonRequest(postRequestPath, request, progressElmId, endCallback) 
                     response = JSON.parse(http.responseText);
                     response.text = http.responseText;
                     response.http = { text: http.responseText, headers: http.getAllResponseHeaders() };
-                    showAjaxTiming(response, false);
+                    showAjaxTiming(startTime, response, false);
                 }
             }
             if (typeof (endCallback) === "function") endCallback(response);
         }
+    }
+}
+
+window.requestId = -1;
+
+function processResponse(returnObj) {
+    var retData = returnObj;
+    if ((returnObj.hasOwnProperty('error') === false) && (returnObj.hasOwnProperty('Error') === false)) {
+        if (returnObj.hasOwnProperty('d')) {
+            retData = returnObj.d;
+        }
+        else if (returnObj.hasOwnProperty('result') || (returnObj.hasOwnProperty('Result'))) {
+            retData = returnObj.result || returnObj.Result;
+        }
+    }
+    else {
+        if (returnObj.hasOwnProperty('error') === true) {
+            retData = returnObj.error.name + ":" + returnObj.error.message;
+        }
+        else if (returnObj.hasOwnProperty('Error') === true) {
+            retData = returnObj.Error.name + ":" + returnObj.Error.message;
+        }
+    }
+
+    if (document.getElementById("message")) {
+        if (retData.hasOwnProperty('message')) {
+            document.getElementById("message").innerHTML = retData.message;
+        }
+        else if (retData.hasOwnProperty('Message')) {
+            document.getElementById("message").innerHTML = retData.Message;
+        }
+    }
+
+    if (document.getElementById("error")) {
+        if (retData.hasOwnProperty('error')) {
+            document.getElementById("error").innerHTML = retData.error;
+        }
+        else if (retData.hasOwnProperty('Error')) {
+            document.getElementById("error").innerHTML = retData.Error;
+        }
+    }
+
+    if (retData.hasOwnProperty('redirect')) {
+        window.location.replace(retData.redirect);
+    }
+    else if (retData.hasOwnProperty('Redirect')) {
+        window.location.replace(retData.Redirect);
     }
 }
 
@@ -325,7 +375,7 @@ function toggleDisplay(showHideElmId, actionElmId) {
             }
         }
     } else {
-        alert("Element is Null[" + showHideElmId + "]");
+        console.log("Element is Null[" + showHideElmId + "]");
     }
 
 }
@@ -437,33 +487,36 @@ function showMessage(message, msgLabelId) {
     }
 }
 
-function showSuccess(message, msgLabelId) {
+function showSuccess(message, msgLabelId, showTime) {
     var msgLabelElm = document.getElementById(msgLabelId);
     if (msgLabelElm) {
         msgLabelElm.style.display = "block";
         msgLabelElm.className = "success"
         msgLabelElm.innerHTML = "<span style='word-space:normal'>" + message + "</span>";
-        window.setTimeout("hideMessage('" + msgLabelId + "')", 5000);
+        if (!showTime) { showTime = 5000;}
+        window.setTimeout("hideMessage('" + msgLabelId + "')", showTime);
     }
 }
 
-function showError(message, msgLabelId) {
+function showError(message, msgLabelId, showTime) {
     var msgLabelElm = document.getElementById(msgLabelId);
     if (msgLabelElm) {
         msgLabelElm.style.display = "block";
         msgLabelElm.className = "error"
         msgLabelElm.innerHTML = "<span style='word-space:normal'>" + message + "</span>";
-        window.setTimeout("hideMessage('" + msgLabelId + "')", 5000);
+        if (!showTime) { showTime = 5000; }
+        window.setTimeout("hideMessage('" + msgLabelId + "')", showTime);
     }
 }
 
-function showWarning(message, msgLabelId) {
+function showWarning(message, msgLabelId, showTime) {
     var msgLabelElm = document.getElementById(msgLabelId);
     if (msgLabelElm) {        
         msgLabelElm.style.display = "block";
         msgLabelElm.className ="warning"
         msgLabelElm.innerHTML = "<span style='word-space:normal'>" + message + "</span>";
-        window.setTimeout("hideMessage('" + msgLabelId + "')", 5000);
+        if (!showTime) { showTime = 5000; }
+        window.setTimeout("hideMessage('" + msgLabelId + "')", showTime);
     }
 }
 
@@ -512,6 +565,15 @@ isTouchInside = function (e) {
     return touch_inside;
 };
 
+function findPos(obj) {
+    var curtop = 0;
+    if (obj.offsetParent) {
+        do {
+            curtop += obj.offsetTop;
+        } while (obj = obj.offsetParent);
+        return [curtop];
+    }
+}
 
 /*************************************************POPUP***********************************************************/
 
@@ -622,7 +684,7 @@ function showPopUp(headerText, contentDivId, popupWidth, popupHeight) {
         var contentTag = createPopUpContent(contentDivElm.innerHTML);
         showPopUpDiv(headerTag, contentTag, popupWidth, popupHeight);        
     } else {
-        alert("Content Element is Null[" + contentDivId + "]");
+        console.log("Content Element is Null [" + contentDivId + "]");
     }
 }
 
@@ -676,4 +738,35 @@ var ScrollSneak = function (prefix, wait) {
         if (top || left) window.name = prefix + '_' + left + '_' + top + '_' + pre_name;
         return true;
     }
+}
+
+/************************************************************************************************************************************/
+
+function getJsonField(jsonData, rowNo, fieldName)
+{
+    var fieldValue = "";
+    if (jsonData.length <= rowNo) rowNo = jsonData.length - 1;
+    for (var rowKey in jsonData) {
+        if (jsonData.hasOwnProperty(rowKey))
+        {
+            var rowData = jsonData[rowKey];
+            if (rowKey.toLowerCase() == fieldName.toLowerCase())
+            {
+                fieldValue = rowData;
+                break;
+            }
+            if (rowKey == rowNo) {
+                for (var colKey in rowData) {
+                    if (rowData.hasOwnProperty(colKey)) {
+                        if (colKey.toLowerCase() == fieldName.toLowerCase()) {
+                            fieldValue = rowData[colKey];
+                            break;
+                        }
+                    }
+                }
+            }
+            if (fieldValue.length > 0) break;
+        }
+    }
+    return fieldValue;
 }

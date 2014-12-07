@@ -93,15 +93,18 @@ function ajaxStop(progressAnchorElmId) {
     }
 }
 
-function showAjaxTiming(returnAjax, clear) {
-    if (returnAjax.hasOwnProperty('time') === true) {
+var maxTimeInfo = 10;
+function showAjaxTiming(startTime, returnAjax, clear) {
+    if (returnAjax.hasOwnProperty('Time') === true) {
         var ajaxTimeElm = document.getElementById('ajaxTime');
         if (ajaxTimeElm) {
             if (clear === true) ajaxTimeElm.innerHTML = "";
 
-            var ajaxTime = "(" + returnAjax.time + ")";
-            if (returnAjax.hasOwnProperty('serviceInfo') === true) {
-                ajaxTime = "(<span title='" + returnAjax.serviceInfo + "'>" + returnAjax.time + "</span>)"
+            var endTime = new Date().getTime();
+            var timeDiff = endTime - startTime;
+            var ajaxTime = "(" + returnAjax.Time + "-" + timeDiff + ")";
+            if (returnAjax.hasOwnProperty('ServiceInfo') === true) {
+                ajaxTime = "(<span title='" + returnAjax.ServiceInfo + "'>" + returnAjax.Time + "-" + timeDiff + "</span>)"
             }
 
             var ajaxTimeElmText = ajaxTimeElm.innerHTML.trim();
@@ -112,7 +115,7 @@ function showAjaxTiming(returnAjax, clear) {
                 if (ajaxTimeElmText.indexOf(",") == -1) {
                     ajaxTimeElm.innerHTML = ajaxTimeElmText + "," + ajaxTime;
                 } else {
-                    var ajaxTimeArr = ajaxTimeElmText.split(",", 4);
+                    var ajaxTimeArr = ajaxTimeElmText.split(",", maxTimeInfo - 1);
                     ajaxTimeElm.innerHTML = ajaxTimeArr.join(",") + "," + ajaxTime;
                 }
             }
@@ -122,6 +125,7 @@ function showAjaxTiming(returnAjax, clear) {
 
 function asyncJsonRequest(postRequestPath, request, progressElmId, endCallback) {
 
+    var startTime = new Date().getTime();
     ajaxStart(progressElmId);
 
     var http = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -135,7 +139,6 @@ function asyncJsonRequest(postRequestPath, request, progressElmId, endCallback) 
         http.send('{"id":' + request.id + ',"method":"' + request.method + '","paramsArray":' + request.paramsArray + '}');
     }
 
-
     http.onreadystatechange = function () {
         if (http.readyState == 4) {
             ajaxStop(progressElmId);
@@ -145,7 +148,7 @@ function asyncJsonRequest(postRequestPath, request, progressElmId, endCallback) 
                     response = JSON.parse(http.responseText);
                     response.text = http.responseText;
                     response.http = { text: http.responseText, headers: http.getAllResponseHeaders() };
-                    showAjaxTiming(response, false);
+                    showAjaxTiming(startTime, response, false);
                 }
             }
             if (typeof (endCallback) === "function") endCallback(response);
@@ -484,33 +487,36 @@ function showMessage(message, msgLabelId) {
     }
 }
 
-function showSuccess(message, msgLabelId) {
+function showSuccess(message, msgLabelId, showTime) {
     var msgLabelElm = document.getElementById(msgLabelId);
     if (msgLabelElm) {
         msgLabelElm.style.display = "block";
         msgLabelElm.className = "success"
         msgLabelElm.innerHTML = "<span style='word-space:normal'>" + message + "</span>";
-        window.setTimeout("hideMessage('" + msgLabelId + "')", 5000);
+        if (!showTime) { showTime = 5000;}
+        window.setTimeout("hideMessage('" + msgLabelId + "')", showTime);
     }
 }
 
-function showError(message, msgLabelId) {
+function showError(message, msgLabelId, showTime) {
     var msgLabelElm = document.getElementById(msgLabelId);
     if (msgLabelElm) {
         msgLabelElm.style.display = "block";
         msgLabelElm.className = "error"
         msgLabelElm.innerHTML = "<span style='word-space:normal'>" + message + "</span>";
-        window.setTimeout("hideMessage('" + msgLabelId + "')", 5000);
+        if (!showTime) { showTime = 5000; }
+        window.setTimeout("hideMessage('" + msgLabelId + "')", showTime);
     }
 }
 
-function showWarning(message, msgLabelId) {
+function showWarning(message, msgLabelId, showTime) {
     var msgLabelElm = document.getElementById(msgLabelId);
     if (msgLabelElm) {        
         msgLabelElm.style.display = "block";
         msgLabelElm.className ="warning"
         msgLabelElm.innerHTML = "<span style='word-space:normal'>" + message + "</span>";
-        window.setTimeout("hideMessage('" + msgLabelId + "')", 5000);
+        if (!showTime) { showTime = 5000; }
+        window.setTimeout("hideMessage('" + msgLabelId + "')", showTime);
     }
 }
 
@@ -559,6 +565,15 @@ isTouchInside = function (e) {
     return touch_inside;
 };
 
+function findPos(obj) {
+    var curtop = 0;
+    if (obj.offsetParent) {
+        do {
+            curtop += obj.offsetTop;
+        } while (obj = obj.offsetParent);
+        return [curtop];
+    }
+}
 
 /*************************************************POPUP***********************************************************/
 
@@ -725,4 +740,33 @@ var ScrollSneak = function (prefix, wait) {
     }
 }
 
+/************************************************************************************************************************************/
 
+function getJsonField(jsonData, rowNo, fieldName)
+{
+    var fieldValue = "";
+    if (jsonData.length <= rowNo) rowNo = jsonData.length - 1;
+    for (var rowKey in jsonData) {
+        if (jsonData.hasOwnProperty(rowKey))
+        {
+            var rowData = jsonData[rowKey];
+            if (rowKey.toLowerCase() == fieldName.toLowerCase())
+            {
+                fieldValue = rowData;
+                break;
+            }
+            if (rowKey == rowNo) {
+                for (var colKey in rowData) {
+                    if (rowData.hasOwnProperty(colKey)) {
+                        if (colKey.toLowerCase() == fieldName.toLowerCase()) {
+                            fieldValue = rowData[colKey];
+                            break;
+                        }
+                    }
+                }
+            }
+            if (fieldValue.length > 0) break;
+        }
+    }
+    return fieldValue;
+}

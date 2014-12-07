@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="preferExternal" package="app.web.v1" android:versionCode="3" android:versionName="3">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="preferExternal" package="app.web.v1" android:versionCode="6" android:versionName="6">
 	<uses-sdk android:minSdkVersion="8" />
 	<application android:allowBackup="true" android:label="AppWeb" android:icon="@drawable/Icon">
 		<activity android:configChanges="orientation|screenSize" android:icon="@drawable/Icon" android:label="AppWeb" android:launchMode="singleTop" android:theme="@style/Theme.GridBackground" android:windowSoftInputMode="stateUnspecified|adjustPan" android:name="app.web.WebViewImportActivity">

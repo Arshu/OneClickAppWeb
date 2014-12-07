@@ -125,6 +125,14 @@ namespace App.Web
 
 
 
+        #region Root View
+
+        private RelativeLayout GetRootLayout()
+        {
+            return new RelativeLayout(this);
+        }
+
+        #endregion
 
         #region Init Web Grid
 
@@ -135,9 +143,9 @@ namespace App.Web
         private void InitWebGrid()
         {
             DummyObjectRegister();
-            RelativeLayout rootView = new RelativeLayout(this);
             if (_arshuWebGrid != null)
             {
+                RelativeLayout rootView = GetRootLayout();
                 _arshuWebGrid.InitView(rootView);
 
                 _arshuWebGrid.CurrentPageAnimation = PageAnimation.FlipLeft;
@@ -148,6 +156,7 @@ namespace App.Web
                 _arshuWebGrid.ShowInstallLink = true;
                 _arshuWebGrid.ShowBackLink = true;
                 _arshuWebGrid.RestartOnRotate = true;
+                _arshuWebGrid.ShowMessages = false;
 
                 RelativeLayout.LayoutParams webviewLayoutParams = GetWebLayoutParams();
                 SetContentView(rootView, webviewLayoutParams);
