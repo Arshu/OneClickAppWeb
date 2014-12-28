@@ -140,30 +140,6 @@
     <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\datamodel\DataSecure.cs">
-      <Link>App_Service\App.Secure\DataModel\DataSecure.cs</Link>
-    </Compile>
-    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\datamodel\DataSource.cs">
-      <Link>App_Service\App.Secure\DataModel\DataSource.cs</Link>
-    </Compile>
-    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\datasource\DataEntities.cs">
-      <Link>App_Service\App.Secure\DataSource\DataEntities.cs</Link>
-    </Compile>
-    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\datasource\DataSource.cs">
-      <Link>App_Service\App.Secure\DataSource\DataSource.cs</Link>
-    </Compile>
-    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\datasource\FileSource.cs">
-      <Link>App_Service\App.Secure\DataSource\FileSource.cs</Link>
-    </Compile>
-    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\service\JsonAuthSecureHandler.cs">
-      <Link>App_Service\App.Secure\Service\JsonAuthSecureHandler.cs</Link>
-    </Compile>
-    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\service\JsonSecureHandler.cs">
-      <Link>App_Service\App.Secure\Service\JsonSecureHandler.cs</Link>
-    </Compile>
-    <Compile Include="..\..\appsecure\app.secure\app_service\app.secure\viewtemplate\Template.cs">
-      <Link>App_Service\App.Secure\ViewTemplate\Template.cs</Link>
-    </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Properties\IOSAssemblyInfo.cs" />

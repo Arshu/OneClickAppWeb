@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Android.Runtime.ResourceDesignerAttribute("AppWeb.Resource", IsApplication=true)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("App.Web.Resource", IsApplication=true)]
 
-namespace AppWeb
+namespace App.Web
 {
 	
 	
@@ -51,7 +51,7 @@ namespace AppWeb
 			public const int background_tiled = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int Icon = 2130837506;
+			public const int icon = 2130837506;
 			
 			// aapt resource value: 0x7f020003
 			public const int progress = 2130837507;

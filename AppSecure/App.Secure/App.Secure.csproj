@@ -145,8 +145,6 @@
     <Content Include="Pages\Main\mainpage.secure.html" />
     <Content Include="Pages\Main\mainsecurecontent.html" />
     <Content Include="Pages\Main\mainsecureheader.html" />
-    <Content Include="App_Service\App.Secure\View\Common\liTwoColumn.html" />
-    <Content Include="App_Service\App.Secure\View\Common\selectOption.html" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -163,14 +161,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Service\App.Secure\DataSource\DataEntities.cs" />
-    <Compile Include="App_Service\App.Secure\DataSource\DataSource.cs" />
-    <Compile Include="App_Service\App.Secure\DataSource\FileSource.cs" />
-    <Compile Include="App_Service\App.Secure\DataModel\DataSource.cs" />
-    <Compile Include="App_Service\App.Secure\ViewTemplate\Template.cs" />
-    <Compile Include="App_Service\App.Secure\DataModel\DataSecure.cs" />
-    <Compile Include="App_Service\App.Secure\Service\JsonAuthSecureHandler.cs" />
-    <Compile Include="App_Service\App.Secure\Service\JsonSecureHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

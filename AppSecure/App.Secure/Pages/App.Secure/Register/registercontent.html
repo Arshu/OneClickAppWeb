@@ -1,8 +1,8 @@
 <script type="text/javascript">
 
 var nextRequestId = 0;
-var jsonSecureHandler = "/Handler/JsonSecure.ashx";
-var jsonAuthSecureHandler = "/Handler/JsonAuthSecure.ashx";
+var jsonUserHandler = "/Handler/JsonUser.ashx";
+var jsonUserSecureHandler = "/Handler/JsonUserSecure.ashx";
 
 $(document).bind('pageinit', function (event) {
     fillRegisterUser('userId', 'registermsg');
@@ -27,7 +27,7 @@ function fillRegisterUser(userIdElmId, msgElmId) {
             params: paramValues
         };
 
-        asyncJsonRequest(jsonAuthSecureHandler, request, msgElmId,
+        asyncJsonRequest(jsonUserSecureHandler, request, msgElmId,
            function (response) {
                var haveResult = false;
                if (response.hasOwnProperty('Result') === true) {
@@ -72,7 +72,7 @@ function registerUser(userId, userEmail, userPassword, msgElmId) {
             params: paramValues
         };
 
-        asyncJsonRequest(jsonAuthSecureHandler, request, msgElmId,
+        asyncJsonRequest(jsonUserSecureHandler, request, msgElmId,
            function (response) {
                var haveResult = false;
                if (response.hasOwnProperty('Result') === true) {

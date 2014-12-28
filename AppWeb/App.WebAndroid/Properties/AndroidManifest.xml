@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="preferExternal" package="app.web.v1" android:versionCode="6" android:versionName="6">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="preferExternal" package="app.web.v1" android:versionCode="10" android:versionName="10">
 	<uses-sdk android:minSdkVersion="8" />
 	<application android:allowBackup="true" android:label="AppWeb" android:icon="@drawable/Icon">
 		<activity android:configChanges="orientation|screenSize" android:icon="@drawable/Icon" android:label="AppWeb" android:launchMode="singleTop" android:theme="@style/Theme.GridBackground" android:windowSoftInputMode="stateUnspecified|adjustPan" android:name="app.web.WebViewImportActivity">
@@ -67,6 +67,18 @@
 				<data android:pathPattern=".*\\..*\\..*\\.pap" />
 				<data android:pathPattern=".*\\..*\\..*\\..*\\.pap" />
 				<data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.pap" />
+			</intent-filter>
+    <intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:mimeType="text/pap" />
+        <data android:pathPattern=".*\\.pap" />
+        <data android:pathPattern=".*..*..*..*..*..*.pap" />
+        <data android:pathPattern=".*..*..*..*..*.pap" />
+        <data android:pathPattern=".*..*..*..*.pap" />
+        <data android:pathPattern=".*..*..*.pap" />
+        <data android:pathPattern=".*..*.pap" />
+        <data android:pathPattern=".*.pap" />     
 			</intent-filter>
 		</activity>
 	</application>

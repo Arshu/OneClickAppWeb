@@ -6,7 +6,10 @@ using Android.Widget;
 using Android.Util;
 using Android.OS;
 using Android.Graphics;
+
+using System.Data.Common;
 using Mono.Data.Sqlite;
+using Arshu.Data.Common;
 
 using Arshu.Web.Basic.Log;
 using Arshu.Web.Common;
@@ -149,7 +152,7 @@ namespace App.Web
                 _arshuWebGrid.InitView(rootView);
 
                 _arshuWebGrid.CurrentPageAnimation = PageAnimation.FlipLeft;
-                _arshuWebGrid.RequireWifi = false;
+                _arshuWebGrid.RequireWifi = true;
                 _arshuWebGrid.ThreadsPerProcessor = 1;
                 _arshuWebGrid.StartAnimationTime = 2000;
                 _arshuWebGrid.EndAnimationTime = 1000;
@@ -277,7 +280,7 @@ namespace App.Web
                             System.IO.File.Copy(appPath, inboxAppPath, true);
                             if (System.IO.File.Exists(inboxAppPath) == true)
                             {
-                                _arshuWebGrid.ImportApp(inboxAppPath);
+                                _arshuWebGrid.ImportApp(inboxAppPath, true);
                             }
                         }
                         else
@@ -355,6 +358,14 @@ namespace App.Web
             //To force load Mono.Data.Sqlite dll
             SqliteFactory sqliteFactory = new SqliteFactory();
             if ((sqliteFactory == null) && (_isNull == false))
+            {
+                _isNull = true;
+            }
+
+            string message = "";
+            string errorMessage = "";
+            DbProviderFactory dp = DataCommon.GetDBProviderFactory(DataCommon.SQLiteProviderNameFactory, out message, out errorMessage);
+            if ((dp == null) && (_isNull == false))
             {
                 _isNull = true;
             }

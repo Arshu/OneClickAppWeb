@@ -1,7 +1,7 @@
 ﻿
 var nextRequestId = 0;
-var jsonSecureHandler = "/Handler/JsonSecure.ashx";
-var jsonAuthSecureHandler = "/Handler/JsonAuthSecure.ashx";
+var jsonUserHandler = "/Handler/JsonUser.ashx";
+var jsonUserSecureHandler = "/Handler/JsonUserSecure.ashx";
 
 /*****************************************************************************************************************************
                                                        WebService Generic Methods 
@@ -135,11 +135,11 @@ function loadULHtml(jsonHandler, jsonMethod, placeHolderElmId, msgElmId, pageNo,
 ******************************************************************************************************************************/
 
 function fillRolesSelectTag(roleSelectElmId, msgElmId, selectIndex) {
-    loadSelectOption(jsonAuthSecureHandler, "GetRoleOptionList", roleSelectElmId, msgElmId, selectIndex);
+    loadSelectOption(jsonUserSecureHandler, "GetRoleOptionList", roleSelectElmId, msgElmId, selectIndex);
 }
 
 function fillRoleUsersUvTag(placeHolderElmId, msgElmId, pageNo, itemsPerPage) {
-    loadULHtml(jsonAuthSecureHandler, "GetRoleUserListHtml", placeHolderElmId, msgElmId, pageNo, itemsPerPage);
+    loadULHtml(jsonUserSecureHandler, "GetRoleUserListHtml", placeHolderElmId, msgElmId, pageNo, itemsPerPage);
 }
 
 /*****************************************************************************************************************************
@@ -162,7 +162,7 @@ function isAuthenticated(redirectUrl, msgElmId) {
             params: paramValues
         };
 
-        asyncJsonRequest(jsonSecureHandler, request, msgElmId,
+        asyncJsonRequest(jsonUserHandler, request, msgElmId,
            function (response) {
                var haveResult = false;
                if (response.hasOwnProperty('Result') === true) {
@@ -201,7 +201,7 @@ function fillUserId(fillElmId, msgElmId) {
             params: paramValues
         };
 
-        asyncJsonRequest(jsonAuthSecureHandler, request, msgElmId,
+        asyncJsonRequest(jsonUserSecureHandler, request, msgElmId,
            function (response) {
                var haveResult = false;
                if (response.hasOwnProperty('Result') === true) {
@@ -245,7 +245,7 @@ function logOffUser(msgElmId) {
             params: paramValues
         };
 
-        asyncJsonRequest(jsonSecureHandler, request, msgElmId,
+        asyncJsonRequest(jsonUserHandler, request, msgElmId,
            function (response) {
                var haveResult = false;
                if (response.hasOwnProperty('Result') === true) {
@@ -284,7 +284,7 @@ function loginUser(userName, userPassword, rememberMe, msgElmId, warnElmId) {
             params: paramValues
         };
 
-        asyncJsonRequest(jsonSecureHandler, request, msgElmId,
+        asyncJsonRequest(jsonUserHandler, request, msgElmId,
            function (response) {
                var haveResult = false;
                if (response.hasOwnProperty('Result') === true) {
@@ -329,7 +329,7 @@ function changePassword(userId, oldPassword, newPassword, msgElmId) {
             params: paramValues
         };
 
-        asyncJsonRequest(jsonAuthSecureHandler, request, msgElmId,
+        asyncJsonRequest(jsonUserSecureHandler, request, msgElmId,
            function (response) {
                var haveResult = false;
                if (response.hasOwnProperty('Result') === true) {
@@ -367,7 +367,7 @@ function registerUser(userId, userEmail, userPassword, msgElmId) {
             params: paramValues
         };
 
-        asyncJsonRequest(jsonAuthSecureHandler, request, msgElmId,
+        asyncJsonRequest(jsonUserSecureHandler, request, msgElmId,
            function (response) {
                var haveResult = false;
                if (response.hasOwnProperty('Result') === true) {
@@ -404,7 +404,7 @@ function addUserToRole(userId, userRole, msgElmId) {
             params: paramValues
         };
 
-        asyncJsonRequest(jsonAuthSecureHandler, request, msgElmId,
+        asyncJsonRequest(jsonUserSecureHandler, request, msgElmId,
            function (response) {
                var haveResult = false;
                if (response.hasOwnProperty('Result') === true) {
@@ -445,7 +445,7 @@ function removeUserFromRole(userId, userRole, msgElmId) {
             params: paramValues
         };
 
-        asyncJsonRequest(jsonAuthSecureHandler, request, msgElmId,
+        asyncJsonRequest(jsonUserSecureHandler, request, msgElmId,
            function (response) {
                var haveResult = false;
                if (response.hasOwnProperty('Result') === true) {

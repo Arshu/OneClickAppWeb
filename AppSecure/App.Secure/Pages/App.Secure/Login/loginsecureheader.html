@@ -1,8 +1,8 @@
 <script type="text/javascript">
 
 var nextRequestId = 0;
-var jsonSecureHandler = "/Handler/JsonSecure.ashx";
-var jsonAuthSecureHandler = "/Handler/JsonAuthSecure.ashx";
+var jsonUserHandler = "/Handler/JsonUser.ashx";
+var jsonUserSecureHandler = "/Handler/JsonUserSecure.ashx";
 
 /*****************************************************************************************************************************
                                                        WebService Methods (Secure Handler)
@@ -24,7 +24,7 @@ function logOffUser(msgElmId) {
             params: paramValues
         };
 
-        asyncJsonRequest(jsonSecureHandler, request, msgElmId,
+        asyncJsonRequest(jsonUserHandler, request, msgElmId,
            function (response) {
                var haveResult = false;
                if (response.hasOwnProperty('Result') === true) {

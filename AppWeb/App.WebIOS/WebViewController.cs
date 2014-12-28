@@ -1,11 +1,14 @@
 using System;
-using Mono.Data.Sqlite;
 
 using CoreFoundation;
 using CoreGraphics;
 using UIKit;
 using Foundation;
 using QuickLook;
+
+using System.Data.Common;
+using Mono.Data.Sqlite;
+using Arshu.Data.Common;
 
 using Arshu.Web.Basic.Log;
 using Arshu.Web.Common;
@@ -193,7 +196,7 @@ namespace App.Web
 		{
 			if (_arshuWebGrid != null) {
 				if (_appUri != null) {
-					_arshuWebGrid.ImportApp (_appUri.AbsoluteString);
+					_arshuWebGrid.ImportApp (_appUri.AbsoluteString, true);
 					_appUri = null;
 				}
 			}
@@ -243,6 +246,14 @@ namespace App.Web
 			if ((sqliteFactory == null) && (_isNull == false)) {
 				_isNull = true;
 			}
+
+            string message = "";
+            string errorMessage = "";
+            DbProviderFactory dp = DataCommon.GetDBProviderFactory(DataCommon.SQLiteProviderNameFactory, out message, out errorMessage);
+            if ((dp == null) && (_isNull == false))
+            {
+                _isNull = true;
+            }
 		}
 
 		#endregion

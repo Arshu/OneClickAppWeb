@@ -134,7 +134,12 @@ function asyncJsonRequest(postRequestPath, request, progressElmId, endCallback) 
     //http.setRequestHeader('Content-Type', 'text/plain; charset=utf-8');
     http.setRequestHeader('X-JSON-RPC', request.method);
     if (request.params) {
-        http.send('{"id":' + request.id + ',"method":"' + request.method + '","params":' + request.params + '}');
+        if (typeof (request.params) == "string") {
+            http.send('{"id":' + request.id + ',"method":"' + request.method + '","params":' + request.params + '}');
+        }
+        else {
+            http.send('{"id":' + request.id + ',"method":"' + request.method + '","params":' + JSON.stringify(request.params) + '}');
+        }
     } else if (request.paramsArray) {
         http.send('{"id":' + request.id + ',"method":"' + request.method + '","paramsArray":' + request.paramsArray + '}');
     }

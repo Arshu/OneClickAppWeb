@@ -1,8 +1,8 @@
 <script type="text/javascript">
 
 var nextRequestId = 0;
-var jsonSecureHandler = "/Handler/JsonSecure.ashx";
-var jsonAuthSecureHandler = "/Handler/JsonAuthSecure.ashx";
+var jsonUserHandler = "/Handler/JsonUser.ashx";
+var jsonUserSecureHandler = "/Handler/JsonUserSecure.ashx";
 
 $(document).bind('pageinit', function (event) {
     setTempLogin('tempLogin', 'registermsg');
@@ -27,7 +27,7 @@ function setTempLogin(tempLoginElmId, msgElmId) {
             params: paramValues
         };
 
-        asyncJsonRequest(jsonAuthSecureHandler, request, msgElmId,
+        asyncJsonRequest(jsonUserSecureHandler, request, msgElmId,
            function (response) {
                var haveResult = false;
                if (response.hasOwnProperty('Result') === true) {
@@ -69,7 +69,7 @@ function loginUser(userName, userPassword, rememberMe, msgElmId) {
             params: paramValues
         };
 
-        asyncJsonRequest(jsonSecureHandler, request, msgElmId,
+        asyncJsonRequest(jsonUserHandler, request, msgElmId,
            function (response) {
                var haveResult = false;
                if (response.hasOwnProperty('Result') === true) {
@@ -105,7 +105,7 @@ function autoLogin(msgElmId) {
             params: paramValues
         };
 
-        asyncJsonRequest(jsonSecureHandler, request, msgElmId,
+        asyncJsonRequest(jsonUserHandler, request, msgElmId,
            function (response) {
                var haveResult = false;
                if (response.hasOwnProperty('Result') === true) {
